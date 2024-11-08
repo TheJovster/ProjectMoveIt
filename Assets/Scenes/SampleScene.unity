@@ -1438,8 +1438,32 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2035951020663948126, guid: 322eda8909e7e5b458bbec1df952c18d, type: 3}
+      propertyPath: m_fJumpDelta
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 2035951020663948126, guid: 322eda8909e7e5b458bbec1df952c18d, type: 3}
+      propertyPath: m_fWalkSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2035951020663948126, guid: 322eda8909e7e5b458bbec1df952c18d, type: 3}
       propertyPath: m_fJumpHeight
-      value: 20
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2035951020663948126, guid: 322eda8909e7e5b458bbec1df952c18d, type: 3}
+      propertyPath: m_fCrouchDelta
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 2035951020663948126, guid: 322eda8909e7e5b458bbec1df952c18d, type: 3}
+      propertyPath: m_fSprintSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2035951020663948126, guid: 322eda8909e7e5b458bbec1df952c18d, type: 3}
+      propertyPath: m_fRotationSpeed
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2035951020663948126, guid: 322eda8909e7e5b458bbec1df952c18d, type: 3}
+      propertyPath: m_bIsInvertedYAxis
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2422502084970718316, guid: 322eda8909e7e5b458bbec1df952c18d, type: 3}
       propertyPath: m_Name
