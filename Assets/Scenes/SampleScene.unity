@@ -732,6 +732,21 @@ MonoBehaviour:
   m_fIntensitity: 5
   m_fFrequency: 0.1
   m_fSprintMultiplier: 2
+--- !u!114 &578214099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578214086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ac20e052d3791c40aca5659dcc6f7f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_currentWeapon: {fileID: 0}
+  m_WeaponList: []
+  m_WeaponIndex: -1
 --- !u!1 &707945453
 GameObject:
   m_ObjectHideFlags: 0
@@ -1525,6 +1540,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2422502084970718316, guid: 322eda8909e7e5b458bbec1df952c18d, type: 3}
       insertIndex: 4
       addedObject: {fileID: 578214093}
+    - targetCorrespondingSourceObject: {fileID: 2422502084970718316, guid: 322eda8909e7e5b458bbec1df952c18d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 578214099}
   m_SourcePrefab: {fileID: 100100000, guid: 322eda8909e7e5b458bbec1df952c18d, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
