@@ -76,12 +76,11 @@ namespace Characters.Player
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            m_fCurrentLookUpValue = 0.0f;
             m_fCurrentMoveSpeed = m_fWalkSpeed;
-
             m_vOriginalCameraPosition = m_mainCamera.transform.position;
             m_fOriginalHeight = m_cCharacterController.height;
             m_fHalfHeight = m_fOriginalHeight * 0.5f;
+            m_fCurrentLookUpValue = 0.0f;
         }
 
         #region Properties

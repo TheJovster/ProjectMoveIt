@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using Math;
 
 namespace Characters.Player 
 {
