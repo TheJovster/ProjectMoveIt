@@ -1,4 +1,6 @@
+using System;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,7 +18,6 @@ namespace Characters.Player
 
         #region Player Movement - On Land
         private Vector3 m_vMoveDirection;
-        [SerializeField] private float m_fJumpDelta = 10.0f;
         [SerializeField] private bool m_bIsInvertedYAxis = false;
         [SerializeField] private float m_fRotationSpeed = 30.0f;
         [SerializeField] private float m_fCurrentMoveSpeed;
@@ -40,21 +41,21 @@ namespace Characters.Player
         #region Gravity
         [SerializeField] private float m_fGravityValue = -9.81f;
         [SerializeField] private float m_fGroundedGravityValue = -2.0f;
+        [SerializeField] private float m_fFallingOffset = 3.0f; 
         #endregion
 
         #region Component Members
         private CharacterController m_cCharacterController;
         private InputSystem_Actions m_InputSystemActions;
         private PlayerCameraShake m_PlayerCameraShake;
+        #endregion
 
         #region Properties
-
         public bool IsSprinting => m_InputSystemActions.Player.Sprint.IsPressed();
         public Transform MainCamera => m_mainCamera.transform;
 
         #endregion
 
-        #endregion
         private void OnEnable()
         {
             if(m_InputSystemActions == null) 
@@ -104,31 +105,36 @@ namespace Characters.Player
             Crouch();
             Jump();
 
-            
 
-            if (m_bIsJumping) 
+            if (!m_bIsJumping)
             {
                 m_vMoveDirection.y = m_fGroundedGravityValue;
             }
-            else 
+            else
             {
                 m_vMoveDirection.y += m_fGravityValue * Time.deltaTime;
             }
 
-            m_cCharacterController.Move(new Vector3(m_vMoveDirection.x * m_fCurrentMoveSpeed * Time.deltaTime, m_vMoveDirection.y, m_vMoveDirection.z * m_fCurrentMoveSpeed * Time.deltaTime));
-            if(m_cCharacterController.velocity.magnitude != 0.0f)
-            {
-                m_PlayerCameraShake.CameraShakeRun(m_mainCamera);
-            }
-            else if(m_cCharacterController.velocity.magnitude <= float.Epsilon) 
-            {
-                //do nothing OR return to camera original pos
-            }
+            m_cCharacterController.Move(
+                new Vector3(
+                m_vMoveDirection.x * m_fCurrentMoveSpeed * Time.deltaTime,
+                m_vMoveDirection.y * Time.deltaTime * m_fFallingOffset,
+                m_vMoveDirection.z * m_fCurrentMoveSpeed * Time.deltaTime));
+
+
+            /*            if(m_cCharacterController.velocity.magnitude != 0.0f)
+                        {
+                            m_PlayerCameraShake.CameraShakeRun(m_mainCamera);
+                        }
+                        else if(m_cCharacterController.velocity.magnitude == 0.0f) 
+                        {
+                            m_PlayerCameraShake.ReturnCameraToNormal(m_mainCamera);
+                        }*/
         }
 
-        private void FixedUpdate()
+        private void FixedUpdate() 
         {
-            
+
         }
 
         private void MovePlayer() 
@@ -177,7 +183,7 @@ namespace Characters.Player
         {
             if (m_InputSystemActions.Player.Jump.WasPressedThisFrame() && m_cCharacterController.isGrounded && !m_bIsCrouching) 
             {
-                m_cCharacterController.Move(new Vector3(0.0f, Mathf.MoveTowards(m_vMoveDirection.y, Mathf.Sqrt(-2.0f * m_fJumpHeight * m_fGravityValue * Time.deltaTime), m_fJumpDelta)));
+                m_cCharacterController.Move(transform.up * Mathf.Sqrt(-2.0f * m_fJumpHeight * m_fGravityValue * m_fFallingOffset * Time.deltaTime));
                 Debug.Log("Jumping");
             }
         }
