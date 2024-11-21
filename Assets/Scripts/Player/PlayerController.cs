@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 //first commit
 
@@ -30,10 +31,9 @@ namespace Characters.Player
         [SerializeField] private Camera m_mainCamera;
         [SerializeField] private float m_fMaxLookUpValue = 60.0f;
         [SerializeField] private float m_fMinLookUpValue = -60.0f;
-        private float m_fCurrentLookUpValue;
-        private Vector3 m_vOriginalCameraPosition;
-        private float m_fOriginalHeight;
-        private float m_fHalfHeight;
+                         private float m_fCurrentLookUpValue;
+                         private float m_fOriginalHeight;
+                         private float m_fHalfHeight;
         [SerializeField] private bool m_bIsCrouching = false;
         [SerializeField] private float m_fCrouchDelta = 60.0f;
         #endregion
@@ -42,11 +42,18 @@ namespace Characters.Player
         [SerializeField] private float m_fGroundedGravityValue = -2.0f;
         #endregion
 
-
         #region Component Members
         private CharacterController m_cCharacterController;
         private InputSystem_Actions m_InputSystemActions;
         private PlayerCameraShake m_PlayerCameraShake;
+
+        #region Properties
+
+        public bool IsSprinting => m_InputSystemActions.Player.Sprint.IsPressed();
+        public Transform MainCamera => m_mainCamera.transform;
+
+        #endregion
+
         #endregion
         private void OnEnable()
         {
@@ -77,7 +84,6 @@ namespace Characters.Player
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             m_fCurrentMoveSpeed = m_fWalkSpeed;
-            m_vOriginalCameraPosition = m_mainCamera.transform.position;
             m_fOriginalHeight = m_cCharacterController.height;
             m_fHalfHeight = m_fOriginalHeight * 0.5f;
             m_fCurrentLookUpValue = 0.0f;
@@ -98,6 +104,7 @@ namespace Characters.Player
             Crouch();
             Jump();
 
+            
 
             if (m_bIsJumping) 
             {
@@ -109,6 +116,14 @@ namespace Characters.Player
             }
 
             m_cCharacterController.Move(new Vector3(m_vMoveDirection.x * m_fCurrentMoveSpeed * Time.deltaTime, m_vMoveDirection.y, m_vMoveDirection.z * m_fCurrentMoveSpeed * Time.deltaTime));
+            if(m_cCharacterController.velocity.magnitude != 0.0f)
+            {
+                m_PlayerCameraShake.CameraShakeRun(m_mainCamera);
+            }
+            else if(m_cCharacterController.velocity.magnitude <= float.Epsilon) 
+            {
+                //do nothing OR return to camera original pos
+            }
         }
 
         private void FixedUpdate()
@@ -184,6 +199,17 @@ namespace Characters.Player
                 }
             }
         }
+
+
+
+        #region Getters
+
+        public CharacterController GetCharacterController() 
+        {
+            return m_cCharacterController;        
+        }
+
+        #endregion
     }
 }
 
