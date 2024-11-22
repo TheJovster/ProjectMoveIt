@@ -48,6 +48,7 @@ namespace Characters.Player
         private CharacterController m_cCharacterController;
         private InputSystem_Actions m_InputSystemActions;
         private PlayerCameraShake m_PlayerCameraShake;
+        private PlayerWeaponInventory m_weaponInventory;
         #endregion
 
         #region Properties
@@ -78,6 +79,7 @@ namespace Characters.Player
             }
             m_cCharacterController = GetComponent<CharacterController>();
             m_PlayerCameraShake = GetComponent<PlayerCameraShake>();
+            m_weaponInventory = GetComponent<PlayerWeaponInventory>();
         }
 
         private void Start()
@@ -103,6 +105,7 @@ namespace Characters.Player
             LookUp();
             Sprint();
             Crouch();
+            TryFire();
             Jump();
 
 
@@ -158,6 +161,17 @@ namespace Characters.Player
 
             m_mainCamera.transform.localRotation = Quaternion.Euler(fClampedLookUpValue, 0.0f, 0.0f);
             
+        }
+
+        private void TryFire() 
+        {
+            if (m_InputSystemActions.Player.Attack.WasPressedThisFrame()) 
+            {
+                if (m_weaponInventory.GetCurrentWeapon()) 
+                {
+                    m_weaponInventory.GetCurrentWeapon().Fire();
+                }
+            }
         }
 
         private void RotatePlayer() 

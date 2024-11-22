@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class WeaponBase : MonoBehaviour
 {
+    public ProjectileBase m_weaponProjectile;
     public GameObject m_weaponModel;
-    public Transform m_MuzzlePosition;
+    public GameObject m_MuzzlePosition;
 
     public int Damage;
     public int Range;
