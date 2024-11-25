@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class ProjectileBase : MonoBehaviour
 {
-    [SerializeField] protected float m_Velocity = 30.0f; //30.0f by default. The speed the projectile travels with
+    [SerializeField] protected float m_fVelocity = 30.0f; //30.0f by default. The speed the projectile travels with
     [SerializeField] protected int m_Damage;
     protected Vector3 m_MoveDirection;
     protected WeaponBase m_Owner;

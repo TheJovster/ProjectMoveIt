@@ -7,7 +7,7 @@ public class TestProjectile : ProjectileBase
     private void Update()
     {
 
-        m_RigidBody.AddForce(m_MoveDirection * Time.deltaTime);
+        m_RigidBody.AddForce(transform.forward * m_fVelocity * Time.deltaTime, ForceMode.Impulse);
 
         m_LifeTimeCount += Time.deltaTime;
         Debug.Log(Time.deltaTime);
@@ -16,6 +16,20 @@ public class TestProjectile : ProjectileBase
         {
             Destroy(this.gameObject);
             Debug.Log("Destroying");
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Weapon")) 
+        {
+            return;
+        }
+        else 
+        {
+            //check if has health component
+            Destroy(this.gameObject);
+            
         }
     }
 
