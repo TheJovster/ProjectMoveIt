@@ -10,8 +10,6 @@ public class TestProjectile : ProjectileBase
         m_RigidBody.AddForce(transform.forward * m_fVelocity * Time.deltaTime, ForceMode.Impulse);
 
         m_LifeTimeCount += Time.deltaTime;
-        Debug.Log(Time.deltaTime);
-        Debug.Log(m_LifeTimeCount);
         if (m_LifeTimeCount >= m_LifeTime)
         {
             Destroy(this.gameObject);

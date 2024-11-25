@@ -31,7 +31,7 @@ public class WeaponBase : MonoBehaviour
 
     public virtual void Equip() { }
     public virtual void Fire() { }
-    public virtual void Load() { }
+    public virtual void Reload() { }
     public virtual void MeleeAttack() { }
    
 }

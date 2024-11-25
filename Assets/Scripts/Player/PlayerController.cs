@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 
 namespace Characters.Player 
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IInteract
     {
         #region Input
         private float m_fXInput => m_InputSystemActions.Player.Move.ReadValue<Vector2>().x;
@@ -55,6 +55,10 @@ namespace Characters.Player
         public bool IsSprinting => m_InputSystemActions.Player.Sprint.IsPressed();
         public Transform MainCamera => m_mainCamera.transform;
 
+        #endregion
+
+        #region Interface Layer
+        [SerializeField] private LayerMask InteractableLayer;
         #endregion
 
         private void OnEnable()
@@ -220,6 +224,20 @@ namespace Characters.Player
             }
         }
 
+
+        #region Interface Functions
+
+        public void Interact() 
+        {
+            RaycastHit hitInfo;
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hitInfo, 300.0f))
+            {
+                Debug.Log("Hit " + hitInfo.point);
+            }
+            else return;
+        }
+
+        #endregion
 
 
         #region Getters

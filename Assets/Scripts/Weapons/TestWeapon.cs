@@ -21,12 +21,11 @@ public class TestWeapon : WeaponBase
             m_weaponProjectile, 
             m_MuzzlePosition.transform.position,
             m_MuzzlePosition.transform.rotation);
-        Debug.Log(m_weaponProjectile + " at " +m_MuzzlePosition.transform.position);
     }
 
-    public override void Load()
+    public override void Reload()
     {
-        base.Load();
+        base.Reload();
     }
 
     public override void MeleeAttack()
