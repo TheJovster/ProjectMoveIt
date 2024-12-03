@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -90,54 +91,81 @@ public class Weapon : MonoBehaviour
 
     public void Fire()
     {
-        if (m_eType == Type.Pistol)
+        ProjectileBase projectile = null;
+
+        switch (m_eType)
         {
-            FireProjectile(AmmoObjectPool.Instance.GetPooledPistolAmmo());
-        }
-        if (m_eType == Type.Shotgun)
-        {
-            FireProjectile(AmmoObjectPool.Instance.GetPooledShotgunAmmo());
-        }
-        if (m_eType == Type.SMG)
-        {
-            FireProjectile(AmmoObjectPool.Instance.GetPooledSMGAmmo());
-        }
-        if (m_eType == Type.AssaultRifle)
-        {
-            FireProjectile(AmmoObjectPool.Instance.GetPooledAssaultRifleAmmo());
-        }
-        if (m_eType == Type.DMR)
-        {
-            FireProjectile(AmmoObjectPool.Instance.GetPooledDMRAmmo());
-        }
-        if (m_eType == Type.Sniper)
-        {
-            FireProjectile(AmmoObjectPool.Instance.GetPooledSniperAmmo());
+            case Type.Pistol:
+                projectile = AmmoObjectPool.Instance.GetPooledPistolAmmo();
+                break;
+            case Type.Shotgun:
+                projectile = AmmoObjectPool.Instance.GetPooledShotgunAmmo();
+                break;
+            case Type.SMG:
+                projectile = AmmoObjectPool.Instance.GetPooledSMGAmmo();
+                break;
+            case Type.AssaultRifle:
+                projectile = AmmoObjectPool.Instance.GetPooledAssaultRifleAmmo();
+                break;
+            case Type.DMR:
+                projectile = AmmoObjectPool.Instance.GetPooledDMRAmmo();
+                break;
+            case Type.Sniper:
+                projectile = AmmoObjectPool.Instance.GetPooledSniperAmmo();
+                break;
+            case Type.LMG:
+                projectile = AmmoObjectPool.Instance.GetPooledLMGAmmo();
+                break;
         }
 
-        if (m_eType == Type.LMG)
+        if (projectile)
         {
-            FireProjectile(AmmoObjectPool.Instance.GetPooledLMGAmmo());
+            FireProjectile(projectile);
         }
-        else return;
-        /*ProjectileBase bulletInstance =
-            Instantiate(m_weaponProjectile, m_MuzzlePosition.transform.position, m_MuzzlePosition.transform.rotation);
-        m_fTimeSinceLastShot = 0.0f;*/
+        else
+        {
+            Debug.LogWarning($"No available projectile in the pool for {m_eType} weapon!");
+        }
     }
 
     public void FireProjectile(ProjectileBase projectile)
     {
-        GameObject pooledProjectile = projectile.gameObject;
-
-        if (pooledProjectile)
+        if (projectile)
         {
+            GameObject pooledProjectile = projectile.gameObject;
             pooledProjectile.transform.position = m_MuzzlePosition.transform.position;
             pooledProjectile.transform.rotation = m_MuzzlePosition.transform.rotation;
+            switch (m_eType)
+            {
+                case Type.Pistol:
+                    AmmoObjectPool.Instance.PooledPistolAmmo.Remove(projectile);
+                    break;
+                case Type.Shotgun:
+                    AmmoObjectPool.Instance.PooledShotgunAmmo.Remove(projectile);
+                    break;
+                case Type.SMG:
+                    AmmoObjectPool.Instance.PooledSMGAmmo.Remove(projectile);
+                    break;
+                case Type.AssaultRifle:
+                    AmmoObjectPool.Instance.PooledAssaultRifleAmmo.Remove(projectile);
+                    break;
+                case Type.DMR:
+                    AmmoObjectPool.Instance.PooledDMRAmmo.Remove(projectile);
+                    break;
+                case Type.Sniper:
+                    AmmoObjectPool.Instance.PooledSniperAmmo.Remove(projectile);
+                    break;
+                case Type.LMG:
+                    AmmoObjectPool.Instance.PooledLMGAmmo.Remove(projectile);
+                    break;
+            }
             pooledProjectile.SetActive(true);
+            
+            // Additional tracking or initialization might be needed here
+            m_fTimeSinceLastShot = 0.0f;
         }
-        
     }
-    
+
     public void Reload() { }
     public void MeleeAttack() { }
    

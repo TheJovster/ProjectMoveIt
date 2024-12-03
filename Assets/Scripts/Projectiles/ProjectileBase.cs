@@ -1,3 +1,4 @@
+using System;
 using TMPro.EditorUtilities;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -6,6 +7,19 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class ProjectileBase : MonoBehaviour
 {
+    public enum AmmoType
+    {
+        Pistol,
+        Shotgun,
+        SMG,
+        AssaultRifle,
+        DMR,
+        Sniper,
+        LMG
+    }
+
+    [SerializeField] protected AmmoType Type;
+    
     [SerializeField] protected float m_fVelocity = 30.0f; //30.0f by default. The speed the projectile travels with
     [SerializeField] protected int m_Damage;
     protected Vector3 m_MoveDirection;
@@ -26,15 +40,6 @@ public class ProjectileBase : MonoBehaviour
     {
         m_Owner = GetComponentInParent<Weapon>();
     }
-
-
-    public virtual void SetOwner(Weapon owner)
-    {
-        m_Owner = owner;
-    }
-
-
-    public virtual void OnCollisionEnter(Collision other) { }
-
     
+    protected virtual void DeactivateObject(){}
 }

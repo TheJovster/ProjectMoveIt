@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 8155476329453415262}
   m_Layer: 0
   m_Name: TestWeaponAssaultRifle
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77,14 +77,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 256ec90d41ecc3a4c9a5fdaf17ed8d3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_weaponProjectile: {fileID: 6984080256427048817, guid: e8ed14e05878bc04cb4068504beef2ec, type: 3}
   m_weaponModel: {fileID: 6186937264269543501}
   m_MuzzlePosition: {fileID: 2166096106555645219}
   m_iDamage: 0
   m_iRange: 0
   m_bIsFullAuto: 0
   m_eType: 3
-  m_fRateOfFire: 0.4
+  m_fRateOfFire: 0.2
 --- !u!1 &6186937264269543501
 GameObject:
   m_ObjectHideFlags: 0
