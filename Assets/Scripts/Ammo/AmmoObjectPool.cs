@@ -46,7 +46,7 @@ public class AmmoObjectPool : MonoBehaviour
     public List<ProjectileBase> PooledDMRAmmo => m_lPooledDMRAmmo;
     public List<ProjectileBase> PooledAssaultRifleAmmo => m_lPooledAssaultRifleAmmo;
     public List<ProjectileBase> PooledSniperAmmo => m_lPooledSniperAmmo;
-    public List<ProjectileBase> PooledLMGAmmo => m_lPooledPistolAmmo;
+    public List<ProjectileBase> PooledLMGAmmo => m_lPooledLMGAmmo;
     #endregion 
     private void Awake()
     {
@@ -79,9 +79,7 @@ public class AmmoObjectPool : MonoBehaviour
         {
             TempObject = Instantiate(m_PistolAmmo);
             TempObject.gameObject.SetActive(false);
-            TempObject.gameObject.transform.SetParent(AmmoPoolParent.transform);
             m_lPooledPistolAmmo.Add(TempObject);
-            Debug.Log(AmmoPoolParent.transform.childCount);
         }
     }
 
@@ -92,9 +90,7 @@ public class AmmoObjectPool : MonoBehaviour
         {
             TempObject = Instantiate(m_ShotgunAmmo);
             TempObject.gameObject.SetActive(false);
-            TempObject.gameObject.transform.SetParent(AmmoPoolParent.transform);
-            m_lPooledPistolAmmo.Add(TempObject);
-            Debug.Log(AmmoPoolParent.transform.childCount);
+            m_lPooledShotgunAmmo.Add(TempObject);
         }
     }
 
@@ -105,9 +101,7 @@ public class AmmoObjectPool : MonoBehaviour
         {
             TempObject = Instantiate(m_DMRAmmo);
             TempObject.gameObject.SetActive(false);
-            TempObject.gameObject.transform.SetParent(AmmoPoolParent.transform);
-            m_lPooledPistolAmmo.Add(TempObject);
-            Debug.Log(AmmoPoolParent.transform.childCount);
+            m_lPooledDMRAmmo.Add(TempObject);
         }
     }
 
@@ -118,9 +112,7 @@ public class AmmoObjectPool : MonoBehaviour
         {
             TempObject = Instantiate(m_AssaultRifleAmmo);
             TempObject.gameObject.SetActive(false);
-            TempObject.gameObject.transform.SetParent(AmmoPoolParent.transform);
-            m_lPooledPistolAmmo.Add(TempObject);
-            Debug.Log(AmmoPoolParent.transform.childCount);
+            m_lPooledAssaultRifleAmmo.Add(TempObject);
         }
     }
 
@@ -131,9 +123,7 @@ public class AmmoObjectPool : MonoBehaviour
         {
             TempObject = Instantiate(m_SMGAmmo);
             TempObject.gameObject.SetActive(false);
-            TempObject.gameObject.transform.SetParent(AmmoPoolParent.transform);
-            m_lPooledPistolAmmo.Add(TempObject);
-            Debug.Log(AmmoPoolParent.transform.childCount);
+            m_lPooledSMGAmmo.Add(TempObject);
         }
     }
 
@@ -144,9 +134,7 @@ public class AmmoObjectPool : MonoBehaviour
         {
             TempObject = Instantiate(m_SniperAmmo);
             TempObject.gameObject.SetActive(false);
-            TempObject.transform.SetParent(AmmoPoolParent.transform);
-            m_lPooledPistolAmmo.Add(TempObject);
-            Debug.Log(AmmoPoolParent.transform.childCount);
+            m_lPooledSniperAmmo.Add(TempObject);
         }
     }
 
@@ -157,9 +145,7 @@ public class AmmoObjectPool : MonoBehaviour
         {
             TempObject = Instantiate(m_LMGAmmo);
             TempObject.gameObject.SetActive(false);
-            TempObject.gameObject.transform.SetParent(AmmoPoolParent.transform);
-            m_lPooledPistolAmmo.Add(TempObject);
-            Debug.Log(AmmoPoolParent.transform.childCount);
+            m_lPooledLMGAmmo.Add(TempObject);
         }
     }
     

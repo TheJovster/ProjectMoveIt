@@ -12,7 +12,7 @@ public class PlayerWeaponInventory : MonoBehaviour
 
     private void Awake()
     {
-        if(m_WeaponList.Count < 1) 
+        /*if(m_WeaponList.Count < 1) 
         {
             return;
         }
@@ -20,12 +20,12 @@ public class PlayerWeaponInventory : MonoBehaviour
         {
             m_WeaponIndex = 0;
         }
-        m_currentWeapon = m_WeaponList[m_WeaponIndex];
+        m_currentWeapon = m_WeaponList[m_WeaponIndex];*/
     }
 
     private void Start()
     {
-        EquipWeapon(m_currentWeapon, 0);
+        /*EquipWeapon(m_currentWeapon, 0);*/
     }
 
     public void AddWeaponToList(Weapon weapon) 

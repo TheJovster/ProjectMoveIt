@@ -10,7 +10,6 @@ public class Weapon : MonoBehaviour
 
     #endregion
     
-    public ProjectileBase m_weaponProjectile;
     public GameObject m_weaponModel;
     public GameObject m_MuzzlePosition;
 
@@ -91,10 +90,54 @@ public class Weapon : MonoBehaviour
 
     public void Fire()
     {
-        ProjectileBase bulletInstance =
+        if (m_eType == Type.Pistol)
+        {
+            FireProjectile(AmmoObjectPool.Instance.GetPooledPistolAmmo());
+        }
+        if (m_eType == Type.Shotgun)
+        {
+            FireProjectile(AmmoObjectPool.Instance.GetPooledShotgunAmmo());
+        }
+        if (m_eType == Type.SMG)
+        {
+            FireProjectile(AmmoObjectPool.Instance.GetPooledSMGAmmo());
+        }
+        if (m_eType == Type.AssaultRifle)
+        {
+            FireProjectile(AmmoObjectPool.Instance.GetPooledAssaultRifleAmmo());
+        }
+        if (m_eType == Type.DMR)
+        {
+            FireProjectile(AmmoObjectPool.Instance.GetPooledDMRAmmo());
+        }
+        if (m_eType == Type.Sniper)
+        {
+            FireProjectile(AmmoObjectPool.Instance.GetPooledSniperAmmo());
+        }
+
+        if (m_eType == Type.LMG)
+        {
+            FireProjectile(AmmoObjectPool.Instance.GetPooledLMGAmmo());
+        }
+        else return;
+        /*ProjectileBase bulletInstance =
             Instantiate(m_weaponProjectile, m_MuzzlePosition.transform.position, m_MuzzlePosition.transform.rotation);
-        m_fTimeSinceLastShot = 0.0f;
+        m_fTimeSinceLastShot = 0.0f;*/
     }
+
+    public void FireProjectile(ProjectileBase projectile)
+    {
+        GameObject pooledProjectile = projectile.gameObject;
+
+        if (pooledProjectile)
+        {
+            pooledProjectile.transform.position = m_MuzzlePosition.transform.position;
+            pooledProjectile.transform.rotation = m_MuzzlePosition.transform.rotation;
+            pooledProjectile.SetActive(true);
+        }
+        
+    }
+    
     public void Reload() { }
     public void MeleeAttack() { }
    
