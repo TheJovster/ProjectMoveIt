@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class WeaponBase : MonoBehaviour
 {
@@ -6,8 +7,17 @@ public class WeaponBase : MonoBehaviour
     public GameObject m_weaponModel;
     public GameObject m_MuzzlePosition;
 
-    public int Damage;
-    public int Range;
+    [SerializeField] protected int m_iDamage;
+    [SerializeField] protected int m_iRange;
+    [SerializeField] protected bool m_bIsFullAuto;
+
+    #region Properties
+
+    public bool IsFullAuto => m_bIsFullAuto;
+    public int Damage => m_iDamage;
+    public int Range => m_iRange;
+
+    #endregion Properties
     public enum Rarity
     {
         Common,
