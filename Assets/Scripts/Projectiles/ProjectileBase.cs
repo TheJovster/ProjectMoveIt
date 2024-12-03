@@ -13,7 +13,7 @@ public class ProjectileBase : MonoBehaviour
     protected GameObject m_SpawnPoint;
     protected Rigidbody m_RigidBody;
     protected SphereCollider m_SphereCollider;
-    protected float m_LifeTime = 5.0f;
+    protected float m_LifeTime = 3.0f;
     [SerializeField]protected float m_LifeTimeCount = 0.0f;
 
     protected virtual void OnEnable() 

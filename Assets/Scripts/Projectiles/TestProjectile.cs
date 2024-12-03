@@ -12,9 +12,14 @@ public class TestProjectile : ProjectileBase
         m_LifeTimeCount += Time.deltaTime;
         if (m_LifeTimeCount >= m_LifeTime)
         {
-            Destroy(this.gameObject);
-            Debug.Log("Destroying");
+            DestroyObject();
         }
+    }
+
+    private void DestroyObject()
+    {
+        Destroy(this.gameObject);
+        Debug.Log("Destroying");
     }
 
     private void OnCollisionEnter(Collision other)
@@ -26,7 +31,7 @@ public class TestProjectile : ProjectileBase
         else 
         {
             //check if has health component
-            Destroy(this.gameObject);
+            DestroyObject();
             
         }
     }
