@@ -40,9 +40,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5931912755153611634}
-  - component: {fileID: 3175181789169370035}
+  - component: {fileID: 8155476329453415262}
   m_Layer: 0
-  m_Name: TestWeapon
+  m_Name: TestWeaponDMR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ Transform:
   - {fileID: 7064129332916260248}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3175181789169370035
+--- !u!114 &8155476329453415262
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,14 +74,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 4471646871888620497}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb10a3c4d4a2a9a418420a4e270592d9, type: 3}
+  m_Script: {fileID: 11500000, guid: 256ec90d41ecc3a4c9a5fdaf17ed8d3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_weaponProjectile: {fileID: 6984080256427048817, guid: e8ed14e05878bc04cb4068504beef2ec, type: 3}
   m_weaponModel: {fileID: 6186937264269543501}
   m_MuzzlePosition: {fileID: 2166096106555645219}
-  Damage: 1
-  Range: 50
+  m_iDamage: 0
+  m_iRange: 0
+  m_bIsFullAuto: 0
+  m_eType: 6
+  m_fRateOfFire: 0.7
 --- !u!1 &6186937264269543501
 GameObject:
   m_ObjectHideFlags: 0

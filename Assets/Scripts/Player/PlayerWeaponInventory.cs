@@ -6,8 +6,8 @@ using UnityEngine;
 public class PlayerWeaponInventory : MonoBehaviour
 {
     [SerializeField] private Transform m_WeaponSocket;
-    [SerializeField] private WeaponBase m_currentWeapon;
-    [SerializeField] private List<WeaponBase> m_WeaponList = new List<WeaponBase>();
+    [SerializeField] private Weapon m_currentWeapon;
+    [SerializeField] private List<Weapon> m_WeaponList = new List<Weapon>();
     [SerializeField] private int m_WeaponIndex = -1;
 
     private void Awake()
@@ -28,18 +28,18 @@ public class PlayerWeaponInventory : MonoBehaviour
         EquipWeapon(m_currentWeapon, 0);
     }
 
-    public void AddWeaponToList(WeaponBase weapon) 
+    public void AddWeaponToList(Weapon weapon) 
     {
         m_WeaponList.Add(weapon);
 
     }
 
-    public void EquipWeapon(WeaponBase weapon, int weaponIndex) 
+    public void EquipWeapon(Weapon weapon, int weaponIndex) 
     {
         Instantiate(m_currentWeapon, m_WeaponSocket);
     }
 
-    public WeaponBase GetCurrentWeapon() 
+    public Weapon GetCurrentWeapon() 
     {
         return m_currentWeapon;
     }

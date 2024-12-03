@@ -9,7 +9,7 @@ public class ProjectileBase : MonoBehaviour
     [SerializeField] protected float m_fVelocity = 30.0f; //30.0f by default. The speed the projectile travels with
     [SerializeField] protected int m_Damage;
     protected Vector3 m_MoveDirection;
-    protected WeaponBase m_Owner;
+    protected Weapon m_Owner;
     protected GameObject m_SpawnPoint;
     protected Rigidbody m_RigidBody;
     protected SphereCollider m_SphereCollider;
@@ -24,11 +24,11 @@ public class ProjectileBase : MonoBehaviour
 
     protected virtual void Awake()
     {
-        m_Owner = GetComponentInParent<WeaponBase>();
+        m_Owner = GetComponentInParent<Weapon>();
     }
 
 
-    public virtual void SetOwner(WeaponBase owner)
+    public virtual void SetOwner(Weapon owner)
     {
         m_Owner = owner;
     }

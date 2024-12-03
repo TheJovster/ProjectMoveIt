@@ -169,12 +169,25 @@ namespace Characters.Player
 
         private void TryFire() 
         {
-            if (m_InputSystemActions.Player.Attack.WasPressedThisFrame()) 
+            if (m_InputSystemActions.Player.Attack.WasPressedThisFrame() && m_weaponInventory.GetCurrentWeapon())
             {
-                if (m_weaponInventory.GetCurrentWeapon()) 
+                if (m_weaponInventory.GetCurrentWeapon().TimeSinceLastShot >=
+                    m_weaponInventory.GetCurrentWeapon().RateOfFire &&
+                    !m_weaponInventory.GetCurrentWeapon().IsFullAuto)
                 {
                     m_weaponInventory.GetCurrentWeapon().Fire();
                 }
+                else return;
+            }
+            else if (m_InputSystemActions.Player.Attack.IsPressed() && m_weaponInventory.GetCurrentWeapon())
+            {
+                if (m_weaponInventory.GetCurrentWeapon().TimeSinceLastShot >=
+                    m_weaponInventory.GetCurrentWeapon().RateOfFire &&
+                    m_weaponInventory.GetCurrentWeapon().IsFullAuto)
+                {
+                    m_weaponInventory.GetCurrentWeapon().Fire();                    
+                }
+                
             }
         }
 
