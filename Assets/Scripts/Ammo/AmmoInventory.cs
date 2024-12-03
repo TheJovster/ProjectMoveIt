@@ -1,7 +1,47 @@
+using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class AmmoInventory : MonoBehaviour
 {
+    private int m_iPistolAmmoCount;
+    private int m_iShotgunAmmoCount;
+    private int m_iSMGAmmoCount;
+    private int m_iAssaultRifleAmmoCount;
+    private int m_iDMRAmmoCount;
+    private int m_iSniperAmmoCount;
+    private int m_iLMGAmmoCount;
 
+    [SerializeField] private int m_iMaxPistolAmmoCount = 120;
+    [SerializeField] private int m_iMaxShotgunAmmoCount = 36;
+    [SerializeField] private int m_iMaxSMGAmmoCount = 240;
+    [SerializeField] private int m_iMaxAssaultRifleAmmoCount = 360;
+    [SerializeField] private int m_iMaxDMRAmmoCount = 100;
+    [SerializeField] private int m_iMaxSniperAmmoCount = 60;
+    [SerializeField] private int m_iMaxLMGAmmoCount = 600;
     
+    #region Properties
+
+    public int CurrentPistolAmmoCount => m_iPistolAmmoCount;
+    public int CurrentShotgunAmmoCount => m_iShotgunAmmoCount;
+    public int CurrentSMGAmmoCount => m_iSMGAmmoCount;
+    public int CurrentAssaultRifleAmmoCount => m_iAssaultRifleAmmoCount;
+    public int CurrentDMRAmmoCount => m_iDMRAmmoCount;
+    public int CurrentSniperAmmoCount => m_iSniperAmmoCount;
+    public int CurrentLMGAmmoCount => m_iLMGAmmoCount;
+
+    #endregion Properties
+
+    private void OnEnable()
+    {
+        m_iPistolAmmoCount = m_iMaxPistolAmmoCount;
+        m_iShotgunAmmoCount = m_iMaxShotgunAmmoCount;
+        m_iSMGAmmoCount = m_iMaxSMGAmmoCount;
+        m_iAssaultRifleAmmoCount = m_iMaxAssaultRifleAmmoCount;
+        m_iDMRAmmoCount = m_iMaxDMRAmmoCount;
+        m_iSniperAmmoCount = m_iMaxSniperAmmoCount;
+        m_iLMGAmmoCount = m_iMaxLMGAmmoCount;
+    }
+    
+    //so this is gonna be a ducttape solution
 }
