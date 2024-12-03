@@ -9,7 +9,7 @@ public class AmmoObjectPool : MonoBehaviour
     
     #region Member Variables
 
-    [SerializeField] private int m_iAmmountToPool;
+    [SerializeField] private GameObject AmmoPoolParent;
     [SerializeField] private List<ProjectileBase> m_lPooledPistolAmmo = new List<ProjectileBase>();
     [SerializeField] private List<ProjectileBase> m_lPooledShotgunAmmo = new List<ProjectileBase>();
     [SerializeField] private List<ProjectileBase> m_lPooledSMGAmmo = new List<ProjectileBase>();
@@ -40,7 +40,6 @@ public class AmmoObjectPool : MonoBehaviour
     #endregion
 
     #region Properties
-    public int AmountToPool => m_iAmmountToPool;
     public List<ProjectileBase> PooledPistolAmmo => m_lPooledPistolAmmo;
     public List<ProjectileBase> PooledShotgunAmmo => m_lPooledShotgunAmmo;
     public List<ProjectileBase> PooledSMGAmmo => m_lPooledSMGAmmo;
@@ -80,8 +79,9 @@ public class AmmoObjectPool : MonoBehaviour
         {
             TempObject = Instantiate(m_PistolAmmo);
             TempObject.gameObject.SetActive(false);
+            TempObject.gameObject.transform.SetParent(AmmoPoolParent.transform);
             m_lPooledPistolAmmo.Add(TempObject);
-            Debug.Log(transform.childCount);
+            Debug.Log(AmmoPoolParent.transform.childCount);
         }
     }
 
@@ -92,8 +92,9 @@ public class AmmoObjectPool : MonoBehaviour
         {
             TempObject = Instantiate(m_ShotgunAmmo);
             TempObject.gameObject.SetActive(false);
+            TempObject.gameObject.transform.SetParent(AmmoPoolParent.transform);
             m_lPooledPistolAmmo.Add(TempObject);
-            Debug.Log(transform.childCount);
+            Debug.Log(AmmoPoolParent.transform.childCount);
         }
     }
 
@@ -104,8 +105,9 @@ public class AmmoObjectPool : MonoBehaviour
         {
             TempObject = Instantiate(m_DMRAmmo);
             TempObject.gameObject.SetActive(false);
+            TempObject.gameObject.transform.SetParent(AmmoPoolParent.transform);
             m_lPooledPistolAmmo.Add(TempObject);
-            Debug.Log(transform.childCount);
+            Debug.Log(AmmoPoolParent.transform.childCount);
         }
     }
 
@@ -116,8 +118,9 @@ public class AmmoObjectPool : MonoBehaviour
         {
             TempObject = Instantiate(m_AssaultRifleAmmo);
             TempObject.gameObject.SetActive(false);
+            TempObject.gameObject.transform.SetParent(AmmoPoolParent.transform);
             m_lPooledPistolAmmo.Add(TempObject);
-            Debug.Log(transform.childCount);
+            Debug.Log(AmmoPoolParent.transform.childCount);
         }
     }
 
@@ -128,8 +131,9 @@ public class AmmoObjectPool : MonoBehaviour
         {
             TempObject = Instantiate(m_SMGAmmo);
             TempObject.gameObject.SetActive(false);
+            TempObject.gameObject.transform.SetParent(AmmoPoolParent.transform);
             m_lPooledPistolAmmo.Add(TempObject);
-            Debug.Log(transform.childCount);
+            Debug.Log(AmmoPoolParent.transform.childCount);
         }
     }
 
@@ -140,8 +144,9 @@ public class AmmoObjectPool : MonoBehaviour
         {
             TempObject = Instantiate(m_SniperAmmo);
             TempObject.gameObject.SetActive(false);
+            TempObject.transform.SetParent(AmmoPoolParent.transform);
             m_lPooledPistolAmmo.Add(TempObject);
-            Debug.Log(transform.childCount);
+            Debug.Log(AmmoPoolParent.transform.childCount);
         }
     }
 
@@ -152,8 +157,95 @@ public class AmmoObjectPool : MonoBehaviour
         {
             TempObject = Instantiate(m_LMGAmmo);
             TempObject.gameObject.SetActive(false);
+            TempObject.gameObject.transform.SetParent(AmmoPoolParent.transform);
             m_lPooledPistolAmmo.Add(TempObject);
-            Debug.Log(transform.childCount);
+            Debug.Log(AmmoPoolParent.transform.childCount);
         }
+    }
+    
+    //getters
+
+    public ProjectileBase GetPooledPistolAmmo()
+    {    
+        for(int i = 0; i < m_iPistolAmmoToPool; i++)
+        {
+            if(!m_lPooledPistolAmmo[i].gameObject.activeInHierarchy)
+            {
+                return m_lPooledPistolAmmo[i];
+            }
+        }
+        return null;
+    }
+
+    public ProjectileBase GetPooledShotgunAmmo()
+    {
+        for(int i = 0; i < m_iShotgunAmmoToPool; i++)
+        {
+            if(!m_lPooledShotgunAmmo[i].gameObject.activeInHierarchy)
+            {
+                return m_lPooledShotgunAmmo[i];
+            }
+        }
+        return null;
+    }
+
+    public ProjectileBase GetPooledSMGAmmo()
+    {
+        for(int i = 0; i < m_iSMGAmmoToPool; i++)
+        {
+            if(!m_lPooledSMGAmmo[i].gameObject.activeInHierarchy)
+            {
+                return m_lPooledSMGAmmo[i];
+            }
+        }
+        return null;
+    }
+
+    public ProjectileBase GetPooledAssaultRifleAmmo()
+    {
+        for(int i = 0; i < m_iAssaultRifleAmountToPool; i++)
+        {
+            if(!m_lPooledAssaultRifleAmmo[i].gameObject.activeInHierarchy)
+            {
+                return m_lPooledAssaultRifleAmmo[i];
+            }
+        }
+        return null;
+    }
+
+    public ProjectileBase GetPooledDMRAmmo()
+    {
+        for(int i = 0; i < m_iDMRAmmoToPool; i++)
+        {
+            if(!m_lPooledDMRAmmo[i].gameObject.activeInHierarchy)
+            {
+                return m_lPooledDMRAmmo[i];
+            }
+        }
+        return null;
+    }
+
+    public ProjectileBase GetPooledSniperAmmo()
+    {
+        for(int i = 0; i < m_iSniperAmmoPool; i++)
+        {
+            if(!m_lPooledSniperAmmo[i].gameObject.activeInHierarchy)
+            {
+                return m_lPooledSniperAmmo[i];
+            }
+        }
+        return null;
+    }
+
+    public ProjectileBase GetPooledLMGAmmo()
+    {
+        for(int i = 0; i < m_iLMGAmmoPool; i++)
+        {
+            if(!m_lPooledLMGAmmo[i].gameObject.activeInHierarchy)
+            {
+                return m_lPooledLMGAmmo[i];
+            }
+        }
+        return null;
     }
 }

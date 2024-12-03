@@ -1413,7 +1413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26d8ad15ba1013c44b38f12c60e38834, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_iAmmountToPool: 0
+  AmmoPoolParent: {fileID: 1584494351}
   m_lPooledPistolAmmo: []
   m_lPooledShotgunAmmo: []
   m_lPooledSMGAmmo: []
