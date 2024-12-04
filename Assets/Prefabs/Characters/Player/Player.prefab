@@ -262,6 +262,7 @@ GameObject:
   - component: {fileID: 7169297767481056441}
   - component: {fileID: 2035951020663948126}
   - component: {fileID: 5549493371901807728}
+  - component: {fileID: 5957678841868334997}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -427,6 +428,25 @@ MonoBehaviour:
   - {fileID: 8970327209309384114}
   - {fileID: 5956154505244641664}
   m_WeaponIndex: 0
+--- !u!114 &5957678841868334997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2422502084970718316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59b71c1cca30ab94e99634df910fcf36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_iMaxPistolAmmoCount: 0
+  m_iMaxShotgunAmmoCount: 0
+  m_iMaxSMGAmmoCount: 0
+  m_iMaxAssaultRifleAmmoCount: 0
+  m_iMaxDMRAmmoCount: 0
+  m_iMaxSniperAmmoCount: 0
+  m_iMaxLMGAmmoCount: 0
 --- !u!1 &6094449160815636318
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,6 +612,10 @@ PrefabInstance:
     - target: {fileID: 5931912755153611634, guid: 4d9651817420aa5439c28c4f2d8accfd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8155476329453415262, guid: 4d9651817420aa5439c28c4f2d8accfd, type: 3}
+      propertyPath: m_WeaponType
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
