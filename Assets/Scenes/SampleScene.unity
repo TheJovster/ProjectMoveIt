@@ -159,6 +159,30 @@ Transform:
   - {fileID: 2048233373}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &62596520 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2422502084970718316, guid: 322eda8909e7e5b458bbec1df952c18d, type: 3}
+  m_PrefabInstance: {fileID: 5946539355493603789}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &62596528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62596520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59b71c1cca30ab94e99634df910fcf36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_iMaxPistolAmmoCount: 0
+  m_iMaxShotgunAmmoCount: 0
+  m_iMaxSMGAmmoCount: 0
+  m_iMaxAssaultRifleAmmoCount: 0
+  m_iMaxDMRAmmoCount: 0
+  m_iMaxSniperAmmoCount: 0
+  m_iMaxLMGAmmoCount: 0
 --- !u!1 &63590553
 GameObject:
   m_ObjectHideFlags: 0
@@ -1531,7 +1555,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2422502084970718316, guid: 322eda8909e7e5b458bbec1df952c18d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 62596528}
   m_SourcePrefab: {fileID: 100100000, guid: 322eda8909e7e5b458bbec1df952c18d, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

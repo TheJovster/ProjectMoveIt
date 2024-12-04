@@ -16,8 +16,8 @@ public class Weapon : MonoBehaviour
 
     [SerializeField] private int m_iDamage;
     [SerializeField] private int m_iRange;
-    [SerializeField] private bool m_bIsFullAuto;
-    [SerializeField] private Type m_eType;
+    [SerializeField] private bool m_bIsFullAuto; 
+    [SerializeField]public WeaponType m_WeaponType;
     [SerializeField] private float m_fRateOfFire;
     private float m_fTimeSinceLastShot;
     private bool m_bIsActive;
@@ -27,6 +27,7 @@ public class Weapon : MonoBehaviour
     public float TimeSinceLastShot => m_fTimeSinceLastShot;
     public float RateOfFire => m_fRateOfFire;
     public bool IsFullAuto => m_bIsFullAuto;
+    
     #endregion Properties
     public enum Rarity
     {
@@ -38,7 +39,7 @@ public class Weapon : MonoBehaviour
     }
     //does Rarity even make sense? Maybe?
 
-    public enum Type 
+    public enum WeaponType 
     {
         Pistol,
         SMG,
@@ -56,11 +57,11 @@ public class Weapon : MonoBehaviour
 
     private void Awake()
     {
-        if (m_eType == Type.AssaultRifle || m_eType == Type.LMG || m_eType == Type.SMG)
+        if (m_WeaponType == WeaponType.AssaultRifle || m_WeaponType == WeaponType.LMG || m_WeaponType == WeaponType.SMG)
         {
             m_bIsFullAuto = true;
         }
-        else if (m_eType == Type.Pistol || m_eType == Type.DMR || m_eType == Type.Sniper || m_eType == Type.Shotgun)
+        else if (m_WeaponType == WeaponType.Pistol || m_WeaponType == WeaponType.DMR || m_WeaponType == WeaponType.Sniper || m_WeaponType == WeaponType.Shotgun)
         {
             m_bIsFullAuto = false;
         }
@@ -93,27 +94,27 @@ public class Weapon : MonoBehaviour
     {
         ProjectileBase projectile = null;
 
-        switch (m_eType)
+        switch (m_WeaponType)
         {
-            case Type.Pistol:
+            case WeaponType.Pistol:
                 projectile = AmmoObjectPool.Instance.GetPooledPistolAmmo();
                 break;
-            case Type.Shotgun:
+            case WeaponType.Shotgun:
                 projectile = AmmoObjectPool.Instance.GetPooledShotgunAmmo();
                 break;
-            case Type.SMG:
+            case WeaponType.SMG:
                 projectile = AmmoObjectPool.Instance.GetPooledSMGAmmo();
                 break;
-            case Type.AssaultRifle:
+            case WeaponType.AssaultRifle:
                 projectile = AmmoObjectPool.Instance.GetPooledAssaultRifleAmmo();
                 break;
-            case Type.DMR:
+            case WeaponType.DMR:
                 projectile = AmmoObjectPool.Instance.GetPooledDMRAmmo();
                 break;
-            case Type.Sniper:
+            case WeaponType.Sniper:
                 projectile = AmmoObjectPool.Instance.GetPooledSniperAmmo();
                 break;
-            case Type.LMG:
+            case WeaponType.LMG:
                 projectile = AmmoObjectPool.Instance.GetPooledLMGAmmo();
                 break;
         }
@@ -124,7 +125,7 @@ public class Weapon : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"No available projectile in the pool for {m_eType} weapon!");
+            Debug.LogWarning($"No available projectile in the pool for {m_WeaponType} weapon!");
         }
     }
 
@@ -135,27 +136,27 @@ public class Weapon : MonoBehaviour
             GameObject pooledProjectile = projectile.gameObject;
             pooledProjectile.transform.position = m_MuzzlePosition.transform.position;
             pooledProjectile.transform.rotation = m_MuzzlePosition.transform.rotation;
-            switch (m_eType)
+            switch (m_WeaponType)
             {
-                case Type.Pistol:
+                case WeaponType.Pistol:
                     AmmoObjectPool.Instance.PooledPistolAmmo.Remove(projectile);
                     break;
-                case Type.Shotgun:
+                case WeaponType.Shotgun:
                     AmmoObjectPool.Instance.PooledShotgunAmmo.Remove(projectile);
                     break;
-                case Type.SMG:
+                case WeaponType.SMG:
                     AmmoObjectPool.Instance.PooledSMGAmmo.Remove(projectile);
                     break;
-                case Type.AssaultRifle:
+                case WeaponType.AssaultRifle:
                     AmmoObjectPool.Instance.PooledAssaultRifleAmmo.Remove(projectile);
                     break;
-                case Type.DMR:
+                case WeaponType.DMR:
                     AmmoObjectPool.Instance.PooledDMRAmmo.Remove(projectile);
                     break;
-                case Type.Sniper:
+                case WeaponType.Sniper:
                     AmmoObjectPool.Instance.PooledSniperAmmo.Remove(projectile);
                     break;
-                case Type.LMG:
+                case WeaponType.LMG:
                     AmmoObjectPool.Instance.PooledLMGAmmo.Remove(projectile);
                     break;
             }
@@ -165,8 +166,8 @@ public class Weapon : MonoBehaviour
             m_fTimeSinceLastShot = 0.0f;
         }
     }
-
+    
     public void Reload() { }
     public void MeleeAttack() { }
-   
+    
 }
