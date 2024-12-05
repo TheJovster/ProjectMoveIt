@@ -24,6 +24,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private int m_CurrentAmmoInMag;
     private float m_fTimeSinceLastShot;
     private bool m_bIsActive;
+    private bool m_canFire = true;
 
     #region Properties
 
@@ -70,8 +71,6 @@ public class Weapon : MonoBehaviour
         {
             m_bIsFullAuto = false;
         }
-
-
     }
 
     private void Start()
@@ -95,34 +94,53 @@ public class Weapon : MonoBehaviour
         {
             case WeaponType.Pistol:
                 return AmmoInventory.Instance.CurrentPistolAmmoCount;
-                break;
             case WeaponType.Shotgun:
                 return AmmoInventory.Instance.CurrentShotgunAmmoCount;
-                break;
             case WeaponType.SMG:
                 return AmmoInventory.Instance.CurrentSMGAmmoCount;
-                break;
-            case WeaponType.AssaultRifle :
+            case WeaponType.AssaultRifle:
                 return AmmoInventory.Instance.CurrentAssaultRifleAmmoCount;
-                break;
             case WeaponType.DMR:
                 return AmmoInventory.Instance.CurrentDMRAmmoCount;
-                break;
             case WeaponType.Sniper:
                 return AmmoInventory.Instance.CurrentSniperAmmoCount;
-                break;
             case WeaponType.LMG:
                 return AmmoInventory.Instance.CurrentLMGAmmoCount;
-                break;
             default:
                 return 0;
-                break;
         }
-
         return 0;
     }
 
-public void Equip()
+    public void SetAmmoInInventory(int amountToDecrease)
+    {
+        switch (m_WeaponType)
+        {
+            case WeaponType.Pistol:
+                AmmoInventory.Instance.DecreasePistolAmmo(amountToDecrease);
+                break;
+            case WeaponType.Shotgun:
+                AmmoInventory.Instance.DecreasePistolAmmo(amountToDecrease);
+                break;
+            case WeaponType.SMG:
+                AmmoInventory.Instance.DecreaseSMGAmmo(amountToDecrease);
+                break;
+            case WeaponType.AssaultRifle:
+                AmmoInventory.Instance.DecreaseAssaultRifleAmmo(amountToDecrease);
+                break;
+            case WeaponType.DMR:
+                AmmoInventory.Instance.DecreaseDMRAmmo(amountToDecrease);
+                break;
+            case WeaponType.Sniper:
+                AmmoInventory.Instance.DecreaseSniperAmmo(amountToDecrease);
+                break;
+            case WeaponType.LMG:
+                AmmoInventory.Instance.DecreaseLMGAmmo(amountToDecrease);
+                break;
+        }
+    }
+
+    public void Equip()
     {
         m_bIsActive = true;
         gameObject.SetActive(true);
@@ -191,8 +209,23 @@ public void Equip()
         {
             //try reload mag
         }
+        
+    }
 
+    public void StartReload()
+    {
+        float reloadTime = 0;
+        m_canFire = false;
+        while(!m_canFire){}
+        {
+            reloadTime += Time.deltaTime;
+        }
+        
+    }
 
+    public void EndReload()
+    {
+        m_canFire = true;
     }
 
     public void FireProjectile(ProjectileBase projectile)

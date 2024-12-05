@@ -127,5 +127,34 @@ public class AmmoInventory : MonoBehaviour
     {
         
     }
+
+    public void DecreasePistolAmmo(int newAmount)
+    {
+        m_iPistolAmmoCount -= newAmount;
+    }
+    public void DecreaseSMGAmmo(int newAmount)
+    {
+        m_iSMGAmmoCount -= newAmount;
+    }
+    public void DecreaseShotgunAmmo(int newAmount)
+    {
+        m_iShotgunAmmoCount -= newAmount;
+    }
+    public void DecreaseAssaultRifleAmmo(int newAmount)
+    {
+        m_iAssaultRifleAmmoCount -= newAmount;
+    }
+    public void DecreaseDMRAmmo(int newAmount)
+    {
+        m_iDMRAmmoCount -= newAmount;
+    }
+    public void DecreaseSniperAmmo(int newAmount)
+    {
+        m_iSniperAmmoCount -= newAmount;
+    }
+    public void DecreaseLMGAmmo(int newAmount)
+    {
+        m_iLMGAmmoCount -= newAmount;
+    }
     
 }
