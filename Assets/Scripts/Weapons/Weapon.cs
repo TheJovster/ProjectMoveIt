@@ -71,6 +71,11 @@ public class Weapon : MonoBehaviour
             m_bIsFullAuto = false;
         }
 
+
+    }
+
+    private void Start()
+    {
         m_CurrentAmmoInMag = m_magSize;
         HUDManager.Instance.UpdateAmmoCount(m_CurrentAmmoInMag, GetCurrentAmmoInInventory());
     }
@@ -142,30 +147,38 @@ public void Equip()
                 case WeaponType.Pistol:
                     projectile = AmmoObjectPool.Instance.GetPooledPistolAmmo();
                     m_CurrentAmmoInMag--;
+                    HUDManager.Instance.UpdateAmmoCount(m_CurrentAmmoInMag, GetCurrentAmmoInInventory());
                     break;
                 case WeaponType.Shotgun:
                     projectile = AmmoObjectPool.Instance.GetPooledShotgunAmmo();
                     m_CurrentAmmoInMag--;
+                    HUDManager.Instance.UpdateAmmoCount(m_CurrentAmmoInMag, GetCurrentAmmoInInventory());
                     break;
                 case WeaponType.SMG:
                     projectile = AmmoObjectPool.Instance.GetPooledSMGAmmo();
                     m_CurrentAmmoInMag--;
+                    HUDManager.Instance.UpdateAmmoCount(m_CurrentAmmoInMag, GetCurrentAmmoInInventory());
                     break;
                 case WeaponType.AssaultRifle:
                     projectile = AmmoObjectPool.Instance.GetPooledAssaultRifleAmmo();
                     m_CurrentAmmoInMag--;
+                    HUDManager.Instance.UpdateAmmoCount(m_CurrentAmmoInMag, GetCurrentAmmoInInventory());
                     break;
                 case WeaponType.DMR:
                     projectile = AmmoObjectPool.Instance.GetPooledDMRAmmo();
                     m_CurrentAmmoInMag--;
+                    HUDManager.Instance.UpdateAmmoCount(m_CurrentAmmoInMag, GetCurrentAmmoInInventory());
                     break;
                 case WeaponType.Sniper:
                     projectile = AmmoObjectPool.Instance.GetPooledSniperAmmo();
                     m_CurrentAmmoInMag--;
+                    HUDManager.Instance.UpdateAmmoCount(m_CurrentAmmoInMag, GetCurrentAmmoInInventory());
                     break;
                 case WeaponType.LMG:
                     projectile = AmmoObjectPool.Instance.GetPooledLMGAmmo();
                     m_CurrentAmmoInMag--;
+                    HUDManager.Instance.UpdateAmmoCount(m_CurrentAmmoInMag, GetCurrentAmmoInInventory());
+
                     break;
             }
 
