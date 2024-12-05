@@ -1,4 +1,5 @@
 using System;
+using UI;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -10,15 +11,17 @@ public class Weapon : MonoBehaviour
     private PlayerWeaponInventory m_playerWeaponInventroy;
 
     #endregion
-    
+
     public GameObject m_weaponModel;
     public GameObject m_MuzzlePosition;
 
     [SerializeField] private int m_iDamage;
     [SerializeField] private int m_iRange;
-    [SerializeField] private bool m_bIsFullAuto; 
-    [SerializeField]public WeaponType m_WeaponType;
+    [SerializeField] private bool m_bIsFullAuto;
+    [SerializeField] public WeaponType m_WeaponType;
     [SerializeField] private float m_fRateOfFire;
+    [SerializeField] private int m_magSize;
+    [SerializeField] private int m_CurrentAmmoInMag;
     private float m_fTimeSinceLastShot;
     private bool m_bIsActive;
 
@@ -27,8 +30,9 @@ public class Weapon : MonoBehaviour
     public float TimeSinceLastShot => m_fTimeSinceLastShot;
     public float RateOfFire => m_fRateOfFire;
     public bool IsFullAuto => m_bIsFullAuto;
-    
+
     #endregion Properties
+
     public enum Rarity
     {
         Common,
@@ -39,7 +43,7 @@ public class Weapon : MonoBehaviour
     }
     //does Rarity even make sense? Maybe?
 
-    public enum WeaponType 
+    public enum WeaponType
     {
         Pistol,
         SMG,
@@ -61,11 +65,14 @@ public class Weapon : MonoBehaviour
         {
             m_bIsFullAuto = true;
         }
-        else if (m_WeaponType == WeaponType.Pistol || m_WeaponType == WeaponType.DMR || m_WeaponType == WeaponType.Sniper || m_WeaponType == WeaponType.Shotgun)
+        else if (m_WeaponType == WeaponType.Pistol || m_WeaponType == WeaponType.DMR ||
+                 m_WeaponType == WeaponType.Sniper || m_WeaponType == WeaponType.Shotgun)
         {
             m_bIsFullAuto = false;
         }
-        
+
+        m_CurrentAmmoInMag = m_magSize;
+        HUDManager.Instance.UpdateAmmoCount(m_CurrentAmmoInMag, GetCurrentAmmoInInventory());
     }
 
     private void Update()
@@ -77,10 +84,43 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    public void Equip()
+    private int GetCurrentAmmoInInventory()
     {
-        this.m_bIsActive = true;
-        this.gameObject.SetActive(true);
+        switch (m_WeaponType)
+        {
+            case WeaponType.Pistol:
+                return AmmoInventory.Instance.CurrentPistolAmmoCount;
+                break;
+            case WeaponType.Shotgun:
+                return AmmoInventory.Instance.CurrentShotgunAmmoCount;
+                break;
+            case WeaponType.SMG:
+                return AmmoInventory.Instance.CurrentSMGAmmoCount;
+                break;
+            case WeaponType.AssaultRifle :
+                return AmmoInventory.Instance.CurrentAssaultRifleAmmoCount;
+                break;
+            case WeaponType.DMR:
+                return AmmoInventory.Instance.CurrentDMRAmmoCount;
+                break;
+            case WeaponType.Sniper:
+                return AmmoInventory.Instance.CurrentSniperAmmoCount;
+                break;
+            case WeaponType.LMG:
+                return AmmoInventory.Instance.CurrentLMGAmmoCount;
+                break;
+            default:
+                return 0;
+                break;
+        }
+
+        return 0;
+    }
+
+public void Equip()
+    {
+        m_bIsActive = true;
+        gameObject.SetActive(true);
     }
 
     public void Uneqip()
@@ -92,41 +132,54 @@ public class Weapon : MonoBehaviour
 
     public void Fire()
     {
-        ProjectileBase projectile = null;
-
-        switch (m_WeaponType)
+        if (m_CurrentAmmoInMag > 0)
         {
-            case WeaponType.Pistol:
-                projectile = AmmoObjectPool.Instance.GetPooledPistolAmmo();
-                break;
-            case WeaponType.Shotgun:
-                projectile = AmmoObjectPool.Instance.GetPooledShotgunAmmo();
-                break;
-            case WeaponType.SMG:
-                projectile = AmmoObjectPool.Instance.GetPooledSMGAmmo();
-                break;
-            case WeaponType.AssaultRifle:
-                projectile = AmmoObjectPool.Instance.GetPooledAssaultRifleAmmo();
-                break;
-            case WeaponType.DMR:
-                projectile = AmmoObjectPool.Instance.GetPooledDMRAmmo();
-                break;
-            case WeaponType.Sniper:
-                projectile = AmmoObjectPool.Instance.GetPooledSniperAmmo();
-                break;
-            case WeaponType.LMG:
-                projectile = AmmoObjectPool.Instance.GetPooledLMGAmmo();
-                break;
-        }
+            ProjectileBase projectile = null;
 
-        if (projectile)
-        {
-            FireProjectile(projectile);
+            switch (m_WeaponType)
+            {
+
+                case WeaponType.Pistol:
+                    projectile = AmmoObjectPool.Instance.GetPooledPistolAmmo();
+                    m_CurrentAmmoInMag--;
+                    break;
+                case WeaponType.Shotgun:
+                    projectile = AmmoObjectPool.Instance.GetPooledShotgunAmmo();
+                    m_CurrentAmmoInMag--;
+                    break;
+                case WeaponType.SMG:
+                    projectile = AmmoObjectPool.Instance.GetPooledSMGAmmo();
+                    m_CurrentAmmoInMag--;
+                    break;
+                case WeaponType.AssaultRifle:
+                    projectile = AmmoObjectPool.Instance.GetPooledAssaultRifleAmmo();
+                    m_CurrentAmmoInMag--;
+                    break;
+                case WeaponType.DMR:
+                    projectile = AmmoObjectPool.Instance.GetPooledDMRAmmo();
+                    m_CurrentAmmoInMag--;
+                    break;
+                case WeaponType.Sniper:
+                    projectile = AmmoObjectPool.Instance.GetPooledSniperAmmo();
+                    m_CurrentAmmoInMag--;
+                    break;
+                case WeaponType.LMG:
+                    projectile = AmmoObjectPool.Instance.GetPooledLMGAmmo();
+                    m_CurrentAmmoInMag--;
+                    break;
+            }
+
+            if (projectile)
+            {
+                FireProjectile(projectile);
+            }
         }
         else
         {
-            Debug.LogWarning($"No available projectile in the pool for {m_WeaponType} weapon!");
+            //try reload mag
         }
+
+
     }
 
     public void FireProjectile(ProjectileBase projectile)

@@ -5,6 +5,8 @@ using UnityEngine.Serialization;
 
 public class AmmoInventory : MonoBehaviour
 {
+    public static AmmoInventory Instance;
+    
     private PlayerWeaponInventory m_playerWeaponInventory;
     
     private int m_iPistolAmmoCount;
@@ -46,7 +48,19 @@ public class AmmoInventory : MonoBehaviour
         m_iLMGAmmoCount = m_iMaxLMGAmmoCount;
         m_playerWeaponInventory = GetComponent<PlayerWeaponInventory>();
     }
-    
+
+    private void Awake()
+    {
+        if (!Instance)
+        {
+            Instance = this;
+        }
+       else if (Instance)
+       {
+           Destroy(this);
+       }
+    }
+
     //so this is gonna be a ducttape solution
 
     public void DecreaseAmmo(Weapon currentWeapon, int amountToDecrease, int magSize)
