@@ -164,7 +164,6 @@ namespace Characters.Player
             float fClampedLookUpValue = Mathf.Clamp(m_fCurrentLookUpValue, m_fMinLookUpValue, m_fMaxLookUpValue);
 
             m_mainCamera.transform.localRotation = Quaternion.Euler(fClampedLookUpValue, 0.0f, 0.0f);
-            
         }
 
         private void TryFire() 
