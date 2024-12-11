@@ -882,6 +882,36 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 707945453}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &800239455 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6350577932635915963, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
+  m_PrefabInstance: {fileID: 4008139330195627704}
+  m_PrefabAsset: {fileID: 0}
+--- !u!143 &800239458
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800239455}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1568,6 +1598,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 280911406387150020, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
+    - target: {fileID: 913559007503684899, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
+      propertyPath: <MoveSpeed>k__BackingField
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 913559007503684899, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
       propertyPath: <EquippedWeapon>k__BackingField
       value: 
@@ -1637,6 +1675,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6350577932635915963, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 800239458}
     - targetCorrespondingSourceObject: {fileID: 138807091479855413, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1266737598}

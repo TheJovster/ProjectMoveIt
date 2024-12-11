@@ -30,13 +30,13 @@ namespace WeaponSystem
                 m_LayerMask);
             if (aim)
             {
-                m_AimDirection = MuzzlePoint.position - hit.normal;
-                Debug.DrawRay(MuzzlePoint.position, m_AimDirection, Color.green);
+                m_AimDirection = MuzzlePoint.position - hit.point;
+                Debug.DrawRay(MuzzlePoint.position, m_AimDirection * 1000.0f, Color.green);
             }
             else
             {
                 m_AimDirection = MuzzlePoint.forward;
-                Debug.DrawRay(MuzzlePoint.position, m_AimDirection, Color.green);
+                Debug.DrawRay(MuzzlePoint.position, m_AimDirection * 1000.0f, Color.green);
             }
 
         }
@@ -45,7 +45,7 @@ namespace WeaponSystem
         {
             Debug.Log("Projectile shot");
            
-            Projectile bulletInstance = Instantiate(projectile, m_AimDirection, MuzzlePoint.rotation);
+            Projectile bulletInstance = Instantiate(projectile, MuzzlePoint.position, MuzzlePoint.rotation);
         }
     }
 }
