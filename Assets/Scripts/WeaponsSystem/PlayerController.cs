@@ -1,5 +1,3 @@
-using System;
-using UnityEditor;
 using UnityEngine;
 
 namespace WeaponSystem
@@ -81,26 +79,33 @@ namespace WeaponSystem
         
         private void LookUp() 
         {
+            //get mouse delta
             Vector2 vMouseDelta = m_InputActions.Player.Look.ReadValue<Vector2>();
-
+            
+            //set the current look up value
             if(m_bIsInvertedYAxis)
                 m_fCurrentLookUpValue += vMouseDelta.y * m_fRotationSpeed * Time.deltaTime;
             else if (!m_bIsInvertedYAxis)
                 m_fCurrentLookUpValue -= vMouseDelta.y * m_fRotationSpeed * Time.deltaTime;
-
+            
+            //clamp look up value
             float fClampedLookUpValue = Mathf.Clamp(m_fCurrentLookUpValue, m_fMinLookUpValue, m_fMaxLookUpValue);
-
+            
+            //apply to camera
             m_Camera.transform.localRotation = Quaternion.Euler(fClampedLookUpValue, 0.0f, 0.0f);
         }
         
         private void RotatePlayer() 
         {
+            //get mouse delta
             Vector2 vMouseDelta = m_InputActions.Player.Look.ReadValue<Vector2>();
+            //apply to transform
             transform.Rotate(0.0f, vMouseDelta.x * m_fRotationSpeed * Time.deltaTime, 0.0f);
         }
 
         private void SetAimPoint()
         {
+            //Raycast
             RaycastHit outHit;
             Vector3 direction = m_Camera.transform.forward; 
 
@@ -112,30 +117,92 @@ namespace WeaponSystem
                 m_aimLayer
             );
 
-            AimPoint.position = rayCast ? outHit.point : direction;
-            
-            Debug.DrawRay(m_Camera.transform.position, direction * 1000.0f, Color.red);
+            // If raycast hits a valid target
+            if (rayCast)
+            {
+                Vector3 targetCenter = outHit.point;
+
+                // Periodically generate a new random aim point within the circle
+                if (m_fInterpolationProgress >= 1f)
+                {
+                    m_vCurrentAimPoint = m_vTargetAimPoint;
+                    m_vTargetAimPoint = GenerateRandomCirclePoint(targetCenter);
+                    m_fInterpolationProgress = 0f;
+                }
+
+                // Smoothly interpolate between current and target aim points
+                m_fInterpolationProgress += Time.deltaTime / m_fAimSmoothingTime;
+                Vector3 smoothAimPoint = Vector3.Lerp(m_vCurrentAimPoint, m_vTargetAimPoint, m_fInterpolationProgress);
+
+                AimPoint.position = smoothAimPoint;
+            }
+            else
+            {
+                // Go back to original direction if no hit detected
+                AimPoint.position = direction;
+            }
         }
 
         private void Fire()
         {
+            //rudimantary - TOOD: Expand the functinality
             if (m_InputActions.Player.Attack.WasPerformedThisFrame())
             {
                 EquippedWeapon.Shoot();
             }
         }
-
+        
         private void Move()
         {
+            //Get Forward and Right Directions
             Vector3 moveForward = transform.forward * m_InputActions.Player.Move.ReadValue<Vector2>().y;
             Vector3 moveRight = transform.right * m_InputActions.Player.Move.ReadValue<Vector2>().x;
 
+            //Add Forward and Right Vectors together and Normalize
             Vector3 moveDirection = moveForward + moveRight;
             moveDirection.Normalize();
 
+            //Apply to Movement
             m_CharacterController.Move(moveDirection * MoveSpeed * Time.deltaTime);
         }
         
+        private Vector3 GenerateRandomCirclePoint(Vector3 center)
+        {
+            // Generate a random point within the circle using polar coordinates
+            float angle = Random.Range(0f, 2f * Mathf.PI);
+            float randomRadius = Random.Range(0f, m_fCircleRadius);
+
+            // Convert polar coordinates to Cartesian
+            float x = center.x + randomRadius * Mathf.Cos(angle);
+            float y = center.y + randomRadius * Mathf.Sin(angle);
+
+            // Maintain the same height as the center point
+            return new Vector3(x, center.y, y);
+            
+            // Are the Polar Coordinates really necessary here? 
+            // I need to redo this
+        }
+
+        // Visalization
+        private void OnDrawGizmosSelected()
+        {
+            RaycastHit outHit;
+            Vector3 direction = m_Camera.transform.forward;
+
+            bool rayCast = Physics.Raycast(
+                m_Camera.transform.position,
+                direction,
+                out outHit,
+                1000.0f,
+                m_aimLayer
+            );
+
+            if (rayCast)
+            {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawWireSphere(outHit.point, m_fCircleRadius);
+            }
+        }
         
     }
 }
