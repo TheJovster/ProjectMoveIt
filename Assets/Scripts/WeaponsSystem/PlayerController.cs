@@ -8,11 +8,14 @@ namespace WeaponSystem
         private CharacterController m_CharacterController;
         private Camera m_Camera;
         [SerializeField] private bool m_bIsInvertedYAxis = false;
-        [SerializeField] private float m_fRotationSpeed = 30.0f;
-        private float m_fCurrentLookUpValue = 0.0f;
+        
+        [Header("Aiming and Look Values")]
         [SerializeField] private float m_fMinLookUpValue = -60.0f;
         [SerializeField] private float m_fMaxLookUpValue = 60.0f;
         [SerializeField] private LayerMask m_aimLayer;
+        [SerializeField] private float m_fRotationSpeed = 30.0f;
+        [SerializeField] private float m_fAimPointRaycastDistance = 1000.0f;
+        private float m_fCurrentLookUpValue = 0.0f;
         
         #region Properties
         [field:SerializeField] public Transform AimPoint { get; private set; }
@@ -109,11 +112,12 @@ namespace WeaponSystem
             RaycastHit outHit;
             Vector3 direction = m_Camera.transform.forward; 
 
-            bool rayCast = Physics.Raycast(
+            bool rayCast = Physics.Raycast
+            (
                 m_Camera.transform.position,
                 direction,
                 out outHit,
-                1000.0f, //TODO expose variable
+                m_fAimPointRaycastDistance, 
                 m_aimLayer
             );
 
@@ -176,11 +180,10 @@ namespace WeaponSystem
             float x = center.x + randomRadius * Mathf.Cos(angle);
             float y = center.y + randomRadius * Mathf.Sin(angle);
 
-            // Maintain the same height as the center point
+            // Maintain the same depth as the center point
             return new Vector3(x, y, center.z);
             
-            // Are the Polar Coordinates really necessary here? 
-            // I need to redo this
+            // Is there a better way to do this?
         }
 
         // Visalization
