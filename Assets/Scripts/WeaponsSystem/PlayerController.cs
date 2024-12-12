@@ -177,14 +177,14 @@ namespace WeaponSystem
             float y = center.y + randomRadius * Mathf.Sin(angle);
 
             // Maintain the same height as the center point
-            return new Vector3(x, center.y, y);
+            return new Vector3(x, y, center.z);
             
             // Are the Polar Coordinates really necessary here? 
             // I need to redo this
         }
 
         // Visalization
-        private void OnDrawGizmosSelected()
+        /*private void OnDrawGizmosSelected()
         {
             RaycastHit outHit;
             Vector3 direction = m_Camera.transform.forward;
@@ -202,7 +202,7 @@ namespace WeaponSystem
                 Gizmos.color = Color.yellow;
                 Gizmos.DrawWireSphere(outHit.point, m_fCircleRadius);
             }
-        }
+        }*/
         
     }
 }
