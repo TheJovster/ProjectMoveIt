@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace WeaponSystem
 {
@@ -15,7 +17,13 @@ namespace WeaponSystem
         [SerializeField] private LayerMask m_aimLayer;
         [SerializeField] private float m_fRotationSpeed = 30.0f;
         [SerializeField] private float m_fAimPointRaycastDistance = 1000.0f;
+        [SerializeField] private Transform m_weapon;
+        private Vector3 m_weaponOriginalPos;
+        [SerializeField]private Vector3 m_weaponAimPos => new Vector3(0.0f, m_weaponOriginalPos.y, m_weaponOriginalPos.z); //serialized for test purposes
+        private bool m_bIsAiming;
         private float m_fCurrentLookUpValue = 0.0f;
+        
+        
         
         #region Properties
         [field:SerializeField] public Transform AimPoint { get; private set; }
@@ -26,6 +34,7 @@ namespace WeaponSystem
         
         [Header("Aim Point Smoothing")]
         [SerializeField] private float m_fCircleRadius = 1f;
+        [SerializeField] private float m_fCircleAimRadius = 0.25f;
         [SerializeField] private float m_fAimSmoothingTime = 0.5f;
 
         private Vector3 m_vCurrentAimPoint;
@@ -39,6 +48,7 @@ namespace WeaponSystem
             {
                 m_InputActions = new InputSystem_Actions();
                 m_InputActions.Enable();
+                
             }
         }
 
@@ -64,10 +74,12 @@ namespace WeaponSystem
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+            m_weaponOriginalPos = m_weapon.localPosition;
         }
 
         void Update()
         {
+            m_bIsAiming = m_InputActions.Player.Aim.IsPressed();
             Move();
             LookUp();
             RotatePlayer();
@@ -75,7 +87,7 @@ namespace WeaponSystem
             SetAimPoint();
             Fire();
             
-            
+            Debug.Log(m_bIsAiming);
         }
         
         //custom functions
@@ -173,16 +185,33 @@ namespace WeaponSystem
         private Vector3 GenerateRandomCirclePoint(Vector3 center)
         {
             // Generate a random point within the circle using polar coordinates
-            float angle = Random.Range(0f, 2f * Mathf.PI);
-            float randomRadius = Random.Range(0f, m_fCircleRadius);
+            //m_bIsAiming determines the circle radius
+            if (!m_bIsAiming)
+            {
+                float angle = Random.Range(0f, 2f * Mathf.PI);
+                float randomRadius = Random.Range(0f, m_fCircleRadius);
+                
+                
+                // Convert polar coordinates to Cartesian
+                float x = center.x + randomRadius * Mathf.Cos(angle);
+                float y = center.y + randomRadius * Mathf.Sin(angle);
+                
+                // Maintain the same depth as the center point
+                return new Vector3(x, y, center.z);
+            }
+            else if (m_bIsAiming)
+            {
+                float angle = Random.Range(0f, 2f * Mathf.PI);
+                float randomRadius = Random.Range(0f, m_fCircleAimRadius);
 
-            // Convert polar coordinates to Cartesian
-            float x = center.x + randomRadius * Mathf.Cos(angle);
-            float y = center.y + randomRadius * Mathf.Sin(angle);
+                // Convert polar coordinates to Cartesian
+                float x = center.x + randomRadius * Mathf.Cos(angle);
+                float y = center.y + randomRadius * Mathf.Sin(angle);
 
-            // Maintain the same depth as the center point
-            return new Vector3(x, y, center.z);
-            
+                // Maintain the same depth as the center point
+                return new Vector3(x, y, center.z);
+            }
+            else throw new Exception("No aim point");
             // Is there a better way to do this?
         }
 

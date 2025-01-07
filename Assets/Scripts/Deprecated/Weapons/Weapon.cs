@@ -77,6 +77,7 @@ public class Weapon : MonoBehaviour
     {
         m_CurrentAmmoInMag = m_magSize;
         HUDManager.Instance.UpdateAmmoCount(m_CurrentAmmoInMag, GetCurrentAmmoInInventory());
+        
     }
 
     private void Update()
