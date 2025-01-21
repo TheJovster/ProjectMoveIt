@@ -22,7 +22,7 @@ namespace WeaponSystem
         public float TimeSinceLastShot => m_TimeSinceLastShot;
         public float RateOfFire => m_RateOfFire;
         public bool IsFullAuto => m_bIsFullAuto;
-        
+      
         #endregion'
 
         private void Awake()
@@ -32,6 +32,8 @@ namespace WeaponSystem
 
         private void Update()
         {
+            m_TimeSinceLastShot += Time.deltaTime;
+            
             //TODO create a look at position and do the math by hand
             this.transform.LookAt(m_Player.AimPoint.position);
 
@@ -65,6 +67,7 @@ namespace WeaponSystem
         {
             Debug.Log("Projectile shot");
             Projectile bulletInstance = Instantiate(projectile, MuzzlePoint.position, MuzzlePoint.rotation);
+            m_TimeSinceLastShot = 0;
         }
 
 

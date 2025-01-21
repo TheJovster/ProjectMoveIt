@@ -162,9 +162,20 @@ namespace WeaponSystem
         private void Fire()
         {
             //rudimantary - TOOD: Expand the functinality
-            if (m_InputActions.Player.Attack.WasPerformedThisFrame())
+            if (m_InputActions.Player.Attack.WasPerformedThisFrame() && !EquippedWeapon.IsFullAuto)
             {
-                EquippedWeapon.Fire();
+                if (EquippedWeapon.TimeSinceLastShot >= EquippedWeapon.RateOfFire)
+                {
+                    EquippedWeapon.Fire();
+                }
+
+            }
+            else if (m_InputActions.Player.Attack.IsPressed() && EquippedWeapon.IsFullAuto)
+            {
+                if (EquippedWeapon.TimeSinceLastShot >= EquippedWeapon.RateOfFire)
+                {
+                    EquippedWeapon.Fire();
+                }
             }
         }
         
