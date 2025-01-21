@@ -48,7 +48,6 @@ namespace WeaponSystem
             {
                 m_InputActions = new InputSystem_Actions();
                 m_InputActions.Enable();
-                
             }
         }
 
