@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8975621935831391093}
   - component: {fileID: 2457717627497651684}
   - component: {fileID: 2539891972830691819}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,9 +98,9 @@ GameObject:
   - component: {fileID: 8413532267764667522}
   - component: {fileID: 2226964092646024329}
   - component: {fileID: 6984080256427048817}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PistolAmmo
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -181,6 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5811a7ac02d40db4da38750030e0568b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 0
   m_fVelocity: 300
   m_Damage: 0
   m_LifeTimeCount: 0

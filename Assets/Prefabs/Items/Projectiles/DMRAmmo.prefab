@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8975621935831391093}
   - component: {fileID: 2457717627497651684}
   - component: {fileID: 2539891972830691819}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,9 +98,9 @@ GameObject:
   - component: {fileID: 8413532267764667522}
   - component: {fileID: 2226964092646024329}
   - component: {fileID: 6984080256427048817}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DMRAmmo
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

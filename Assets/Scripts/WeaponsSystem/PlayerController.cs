@@ -137,12 +137,12 @@ namespace WeaponSystem
             if (rayCast)
             {
                 Vector3 targetCenter = outHit.point;
-
+                
                 // Periodically generate a new random aim point within the circle
                 if (m_fInterpolationProgress >= 1f)
                 {
                     m_vCurrentAimPoint = m_vTargetAimPoint;
-                    m_vTargetAimPoint = GenerateRandomCirclePoint(targetCenter);
+                    m_vTargetAimPoint = GenerateRandomCirclePoint(targetCenter, outHit.normal);
                     m_fInterpolationProgress = 0f;
                 }
 
@@ -182,22 +182,43 @@ namespace WeaponSystem
             m_CharacterController.Move(moveDirection * MoveSpeed * Time.deltaTime);
         }
         
-        private Vector3 GenerateRandomCirclePoint(Vector3 center)
+        private Vector3 GenerateRandomCirclePoint(Vector3 center, Vector3 normal)
         {
             // Generate a random point within the circle using polar coordinates
             //m_bIsAiming determines the circle radius
             if (!m_bIsAiming)
             {
                 float angle = Random.Range(0f, 2f * Mathf.PI);
-                float randomRadius = Random.Range(0f, m_fCircleRadius);
+
+                //normal tangent
+                Vector3 tangent = new Vector3();
                 
+                //crossproduct
+                Vector3 t1 = Vector3.Cross(normal, Vector3.forward);
+                Vector3 t2 = Vector3.Cross(normal, Vector3.up);
+                if (t1.magnitude > t2.magnitude)
+                {
+                    tangent = t1;
+                }
+                else
+                {
+                    tangent = t2;
+                }
+                //normals
+                Vector3 upDirection = tangent;
+                Vector3 rightDirection = Vector3.Cross(normal, upDirection);
+                float randomRadius = Random.Range(0f, m_fCircleRadius);
                 
                 // Convert polar coordinates to Cartesian
                 float x = center.x + randomRadius * Mathf.Cos(angle);
                 float y = center.y + randomRadius * Mathf.Sin(angle);
+
+                Vector3 randomPoint = center + upDirection * randomRadius; 
+                randomPoint += rightDirection * Random.Range(-m_fCircleRadius, m_fCircleRadius);
                 
                 // Maintain the same depth as the center point
-                return new Vector3(x, y, center.z);
+                //return new Vector3(x, y, center.z);
+                return randomPoint;
             }
             else if (m_bIsAiming)
             {
