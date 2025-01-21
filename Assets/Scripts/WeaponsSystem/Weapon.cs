@@ -12,6 +12,7 @@ namespace WeaponSystem
         [SerializeField] private LayerMask m_LayerMask;
         private PlayerController m_Player;
         private Vector3 m_AimDirection;
+        [SerializeField]private ParticleSystem m_MuzzleFlash;
 
         private float m_TimeSinceLastShot;
         [SerializeField] private float m_RateOfFire = 0.5f;
@@ -22,6 +23,8 @@ namespace WeaponSystem
         public float TimeSinceLastShot => m_TimeSinceLastShot;
         public float RateOfFire => m_RateOfFire;
         public bool IsFullAuto => m_bIsFullAuto;
+
+        public ParticleSystem MuzzleFlash => m_MuzzleFlash;
       
         #endregion'
 
@@ -67,6 +70,7 @@ namespace WeaponSystem
         {
             Debug.Log("Projectile shot");
             Projectile bulletInstance = Instantiate(projectile, MuzzlePoint.position, MuzzlePoint.rotation);
+            m_MuzzleFlash?.Play();
             m_TimeSinceLastShot = 0;
         }
 
