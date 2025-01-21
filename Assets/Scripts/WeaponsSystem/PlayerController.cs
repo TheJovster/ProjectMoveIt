@@ -164,7 +164,7 @@ namespace WeaponSystem
             //rudimantary - TOOD: Expand the functinality
             if (m_InputActions.Player.Attack.WasPerformedThisFrame())
             {
-                EquippedWeapon.Shoot();
+                EquippedWeapon.Fire();
             }
         }
         

@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -11,6 +12,18 @@ namespace WeaponSystem
         [SerializeField] private LayerMask m_LayerMask;
         private PlayerController m_Player;
         private Vector3 m_AimDirection;
+
+        private float m_TimeSinceLastShot;
+        [SerializeField] private float m_RateOfFire = 0.5f;
+        [SerializeField] private bool m_bIsFullAuto;
+        
+        #region Properties
+
+        public float TimeSinceLastShot => m_TimeSinceLastShot;
+        public float RateOfFire => m_RateOfFire;
+        public bool IsFullAuto => m_bIsFullAuto;
+        
+        #endregion'
 
         private void Awake()
         {
@@ -41,12 +54,20 @@ namespace WeaponSystem
 
         }
 
-        public void Shoot()
+        public void SetActive()
+        {
+            this.GameObject().SetActive(true);
+        }
+
+
+        public void Fire()
         {
             Debug.Log("Projectile shot");
            
             Projectile bulletInstance = Instantiate(projectile, MuzzlePoint.position, MuzzlePoint.rotation);
         }
+
+
     }
 }
 
