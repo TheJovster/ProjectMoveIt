@@ -1489,10 +1489,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8470566525184341646, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
-      propertyPath: m_RateOfFire
-      value: 0.1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1897,7 +1893,7 @@ PrefabInstance:
       objectReference: {fileID: 1237988264}
     - target: {fileID: 5921120300281714683, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5966795714213730164, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
       propertyPath: m_WeaponSocket
