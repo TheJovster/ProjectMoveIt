@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 namespace WeaponSystem
@@ -15,6 +16,10 @@ namespace WeaponSystem
 
         #region Properties
 
+        public Weapon CurrentWeapon => m_CurrentWeapon;
+
+        #endregion
+        
         private void Start()
         {
             if (m_WeaponSocket != null)
@@ -33,16 +38,7 @@ namespace WeaponSystem
                 return m_iCurrentWeapoinIndex;
             }
         }
-
-        public Weapon CurrentWeapon
-        {
-            get
-            {
-                return m_CurrentWeapon;
-            }
-        }
-
-        #endregion
+        
     }
 }
 
