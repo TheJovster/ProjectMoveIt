@@ -209,10 +209,6 @@ namespace WeaponSystem
                 Vector3 rightDirection = Vector3.Cross(normal, upDirection);
                 float randomRadius = Random.Range(0f, m_fCircleRadius);
                 
-                // Convert polar coordinates to Cartesian
-                float x = center.x + randomRadius * Mathf.Cos(angle);
-                float y = center.y + randomRadius * Mathf.Sin(angle);
-
                 Vector3 randomPoint = center + upDirection * randomRadius; 
                 randomPoint += rightDirection * Random.Range(-m_fCircleRadius, m_fCircleRadius);
                 
@@ -223,14 +219,29 @@ namespace WeaponSystem
             else if (m_bIsAiming)
             {
                 float angle = Random.Range(0f, 2f * Mathf.PI);
-                float randomRadius = Random.Range(0f, m_fCircleAimRadius);
 
-                // Convert polar coordinates to Cartesian
-                float x = center.x + randomRadius * Mathf.Cos(angle);
-                float y = center.y + randomRadius * Mathf.Sin(angle);
-
+                //normal tangent
+                Vector3 tangent = new Vector3();
+                //crossproducts
+                Vector3 t1 = Vector3.Cross(normal, Vector3.forward);
+                Vector3 t2 = Vector3.Cross(normal, Vector3.up);
+                if (t1.magnitude > t2.magnitude)
+                {
+                    tangent = t1;
+                }
+                else
+                {
+                    tangent = t2;
+                }
+                //normals
+                Vector3 upDirection = tangent;
+                Vector3 rightDirection = Vector3.Cross(normal, upDirection);
+                float randomRadius = Random.Range(-m_fCircleAimRadius, m_fCircleAimRadius);
+                Vector3 randomPoint = center + upDirection * randomRadius;
+                randomPoint += rightDirection * Random.Range(-m_fCircleAimRadius, m_fCircleAimRadius);
+                
                 // Maintain the same depth as the center point
-                return new Vector3(x, y, center.z);
+                return randomPoint;
             }
             else throw new Exception("No aim point");
             // Is there a better way to do this?
