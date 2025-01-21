@@ -32,6 +32,7 @@ namespace WeaponSystem
 
         private void Update()
         {
+            //TODO create a look at position and do the math by hand
             this.transform.LookAt(m_Player.AimPoint.position);
 
             RaycastHit hit;
@@ -63,7 +64,6 @@ namespace WeaponSystem
         public void Fire()
         {
             Debug.Log("Projectile shot");
-           
             Projectile bulletInstance = Instantiate(projectile, MuzzlePoint.position, MuzzlePoint.rotation);
         }
 
