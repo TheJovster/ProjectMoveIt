@@ -302,7 +302,8 @@ namespace WeaponSystem
                 m_AmmoInventory.DecreaseAmmoCount(amountToSubtract, m_Type);
                 m_CurrentAmmoInMag = m_MaxAmmoInMag + 1;
             }
-            else if (m_AmmoInventory.GetAmmoCountByType(m_Type) < m_MaxAmmoInMag)
+            else if (m_AmmoInventory.GetAmmoCountByType(m_Type) < m_MaxAmmoInMag &&
+                     m_AmmoInventory.GetAmmoCountByType(m_Type) > 0)
             {
                 int amountToSubtract = m_AmmoInventory.GetAmmoCountByType(m_Type);
                 m_AmmoInventory.DecreaseAmmoCount(amountToSubtract, m_Type);
