@@ -368,7 +368,7 @@ MonoBehaviour:
   m_CurrentPistolAmmo: 0
   m_MaxPistolAmmo: 120
   m_CurrentAssaultRifleAmmo: 0
-  m_MaxAssaultRifleAmmo: 1
+  m_MaxAssaultRifleAmmo: 3
   m_CurrentSMGAmmo: 0
   m_MaxSMGAmmo: 300
   m_CurrentDMRAmmo: 0
