@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 913559007503684899}
   - component: {fileID: 4641367519115807856}
   - component: {fileID: 5966795714213730164}
+  - component: {fileID: 905849465566898629}
   m_Layer: 0
   m_Name: Player_V2_WeaponsSystem
   m_TagString: Untagged
@@ -309,7 +310,6 @@ MonoBehaviour:
   m_fMaxLookUpValue: 60
   m_fRotationSpeed: 30
   m_weapon: {fileID: 769407982216464940}
-  m_bIsFiring: 0
   <EquippedWeapon>k__BackingField: {fileID: 1656453425869981595}
   <MoveSpeed>k__BackingField: 10
 --- !u!143 &4641367519115807856
@@ -353,6 +353,24 @@ MonoBehaviour:
   m_CurrentWeapon: {fileID: 0}
   m_WeaponsList: []
   m_WeaponSocket: {fileID: 7221597561660826143}
+--- !u!114 &905849465566898629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6350577932635915963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 630b82a33ac0ccd42b1c53a215925c83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MaxPistolAmmo: 120
+  m_MaxAssaultRifleAmmo: 300
+  m_MaxSMGAmmo: 300
+  m_MaxDMRAmmo: 90
+  m_MaxSniperAmmo: 120
+  m_MaxLMGAmmo: 600
 --- !u!1001 &7165676696532218133
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -414,6 +432,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6857646963918435650}
     - target: {fileID: 8470566525184341646, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
+      propertyPath: m_MaxAmmoInMag
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470566525184341646, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
       propertyPath: m_fCircleRadius
       value: 0.15
       objectReference: {fileID: 0}
@@ -428,6 +450,10 @@ PrefabInstance:
     - target: {fileID: 8470566525184341646, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
       propertyPath: m_fAimSmoothingTime
       value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470566525184341646, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
+      propertyPath: m_kickbackAmplitude
+      value: 0.01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

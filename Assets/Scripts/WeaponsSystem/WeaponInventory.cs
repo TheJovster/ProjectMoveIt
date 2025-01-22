@@ -16,7 +16,9 @@ namespace WeaponSystem
         
         [SerializeField] private Transform m_WeaponSocket;
 
-
+        private AmmoInventory m_AmmoInventory;
+        
+        
         #region Properties
 
         public Weapon CurrentWeapon => m_CurrentWeapon;
@@ -33,6 +35,8 @@ namespace WeaponSystem
                 //TODO index 0 is the current weapon
                 m_CurrentWeapon = m_WeaponSocket.GetComponentInChildren<Weapon>();
             }
+
+            m_AmmoInventory = GetComponent<AmmoInventory>();
         }
 
         public int CurrentWeaponIndex

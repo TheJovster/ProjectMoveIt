@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography.X509Certificates;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ namespace WeaponSystem
         }
         
         [SerializeField] private Projectile projectile;
+        [SerializeField]private AmmoInventory m_AmmoInventory;
         [field:SerializeField] public Transform MuzzlePoint { get; private set;}
         [SerializeField] private LayerMask m_LayerMask;
         private PlayerController m_Player;
@@ -48,14 +50,21 @@ namespace WeaponSystem
         [SerializeField] private Transform m_aimPoint;
         
         private float m_timeSinceStarted = 0;
+        [SerializeField] private Vector3 m_originalPosition;
+        [SerializeField] private float m_kickbackForce = 10.0f;
+        [SerializeField] private float m_kickbackAmplitude = 0.5f;
+        private float m_kickbackTimer;
+        private int m_CurrentAmmoInMag;
+        [SerializeField] private int m_MaxAmmoInMag;
         
         #region Properties
 
         public float TimeSinceLastShot => m_TimeSinceLastShot;
         public float RateOfFire => m_RateOfFire;
         public bool IsFullAuto => m_bIsFullAuto;
-        
-        
+
+        public int CurrentAmmoInMag => m_CurrentAmmoInMag;
+
 
         public ParticleSystem MuzzleFlash => m_MuzzleFlash;
         
@@ -66,11 +75,19 @@ namespace WeaponSystem
         private void Awake()
         {
             m_Player = GetComponentInParent<PlayerController>();
+            m_AmmoInventory = GetComponentInParent<AmmoInventory>();
         }
 
+        private void Start()
+        {
+            m_originalPosition = transform.localPosition;
+            m_CurrentAmmoInMag = m_MaxAmmoInMag;
+        }
+        
         private void Update()
         {
             m_TimeSinceLastShot += Time.deltaTime;
+
             SetIsAiming();
             SetIsFiring();
             
@@ -115,7 +132,8 @@ namespace WeaponSystem
             Projectile bulletInstance = Instantiate(projectile, MuzzlePoint.position, MuzzlePoint.rotation);
             m_MuzzleFlash?.Play();
             m_TimeSinceLastShot = 0;
-
+            m_CurrentAmmoInMag--;
+            
             //decrement ammo
             switch (m_Type)
             {
@@ -149,14 +167,14 @@ namespace WeaponSystem
         private void SetIsFiring()
         {
             //TODO check if there is ammo in mag, if not return
-            m_bIsFiring = m_Player.PlayerActions.Player.Attack.IsPressed();
+            m_bIsFiring = m_Player.PlayerActions.Player.Attack.IsPressed() && m_CurrentAmmoInMag > 0;
             if (m_bIsFiring)
             {
-
-                m_timeSinceStarted += Time.deltaTime;
+                m_timeSinceStarted += Time.deltaTime; //do I even need this?
             }
             else
             {
+                //m_lastSavedTimeSinceStarted = m_timeSinceStarted;
                 m_timeSinceStarted = 0;
             }
         }
@@ -259,9 +277,9 @@ namespace WeaponSystem
                 {
                     m_aimPoint.position = smoothAimPoint;
                 }
-                else if(m_bIsFiring)
+                else if(m_bIsFiring && m_CurrentAmmoInMag > 0)
                 {
-                    m_aimPoint.position +=  m_aimPoint.up * (Time.deltaTime * m_timeSinceStarted); //TODO expose the value
+                    m_aimPoint.position += m_aimPoint.up * (Time.deltaTime * m_timeSinceStarted); //TODO expose the value
                 }
             }
             else
@@ -270,8 +288,28 @@ namespace WeaponSystem
                 m_aimPoint.position = direction;
             }
         }
-        
-        
+
+        public void Reload()
+        {
+            if (m_CurrentAmmoInMag <= 0 && m_AmmoInventory.GetAmmoCountByType(m_Type) > 0)
+            {
+                m_AmmoInventory.DecreaseAmmoCount(m_MaxAmmoInMag, m_Type);
+                m_CurrentAmmoInMag = m_MaxAmmoInMag;
+            }
+            else if (m_CurrentAmmoInMag > 0 && m_AmmoInventory.GetAmmoCountByType(m_Type) > 0)
+            {
+                int amountToDecrement = m_MaxAmmoInMag - m_CurrentAmmoInMag;
+                m_AmmoInventory.DecreaseAmmoCount(amountToDecrement, m_Type);
+                m_CurrentAmmoInMag = m_MaxAmmoInMag + 1;
+            }
+            //edgecase if the current weapon type ammo is 0
+
+        }
+
+        private void Kickback()
+        {
+                Debug.Log("Kickback triggered");
+        }
 
 
     }

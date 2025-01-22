@@ -1234,7 +1234,8 @@ PrefabInstance:
       propertyPath: m_Player
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8746789957340955258, guid: a3e2ff320b099b143b6ad6a8f977150b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1773,6 +1774,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1656453425869981595, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
+      propertyPath: m_MaxAmmoInMag
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 6350577932635915963, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
       propertyPath: m_Name
       value: Player_V2_WeaponsSystem

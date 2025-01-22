@@ -8,7 +8,7 @@ namespace WeaponSystem
 {
     public class PlayerController : MonoBehaviour
     {
-        private InputSystem_Actions _mInputActionses;
+        private InputSystem_Actions m_InputActions;
         private CharacterController m_CharacterController;
         private Camera m_Camera;
         [SerializeField] private bool m_bIsInvertedYAxis = false;
@@ -36,7 +36,7 @@ namespace WeaponSystem
 
         public Camera Camera => m_Camera;
 
-        public InputSystem_Actions PlayerActions => _mInputActionses;
+        public InputSystem_Actions PlayerActions => m_InputActions;
         
         [field: SerializeField] public Weapon EquippedWeapon { get; private set; }
         [field: SerializeField] public float MoveSpeed { get; private set; }
@@ -48,16 +48,16 @@ namespace WeaponSystem
 
         private void OnEnable()
         {
-            if (_mInputActionses == null)
+            if (m_InputActions == null)
             {
-                _mInputActionses = new InputSystem_Actions();
-                _mInputActionses.Enable();
+                m_InputActions = new InputSystem_Actions();
+                m_InputActions.Enable();
             }
         }
 
         private void OnDisable()
         {
-            _mInputActionses.Disable();
+            m_InputActions.Disable();
         }
 
         private void Awake()
@@ -88,16 +88,15 @@ namespace WeaponSystem
             RotatePlayer();
             
             Fire();
-
             SwitchFireMode();
-            
+            ReloadWeapon();
         }
 
 
 
         private void SwitchFireMode()
         {
-            if (_mInputActionses.Player.ToggleFireMode.WasPerformedThisFrame())
+            if (m_InputActions.Player.ToggleFireMode.WasPerformedThisFrame())
             {
                 EquippedWeapon.ToggleFireMode();;
             }
@@ -108,7 +107,7 @@ namespace WeaponSystem
         private void LookUp()
         {
             //get mouse delta
-            Vector2 vMouseDelta = _mInputActionses.Player.Look.ReadValue<Vector2>();
+            Vector2 vMouseDelta = m_InputActions.Player.Look.ReadValue<Vector2>();
 
             //set the current look up value
             if (m_bIsInvertedYAxis)
@@ -126,7 +125,7 @@ namespace WeaponSystem
         private void RotatePlayer()
         {
             //get mouse delta
-            Vector2 vMouseDelta = _mInputActionses.Player.Look.ReadValue<Vector2>();
+            Vector2 vMouseDelta = m_InputActions.Player.Look.ReadValue<Vector2>();
             //apply to transform
             transform.Rotate(0.0f, vMouseDelta.x * m_fRotationSpeed * Time.deltaTime, 0.0f);
         }
@@ -135,7 +134,9 @@ namespace WeaponSystem
         private void Fire()
         {
             //rudimantary - TOOD: Expand the functinality
-            if (_mInputActionses.Player.Attack.WasPerformedThisFrame() && !EquippedWeapon.IsFullAuto)
+            if (m_InputActions.Player.Attack.WasPerformedThisFrame() && 
+                !EquippedWeapon.IsFullAuto &&
+                EquippedWeapon.CurrentAmmoInMag > 0)
             {
                 if (EquippedWeapon.TimeSinceLastShot >= EquippedWeapon.RateOfFire)
                 {
@@ -143,7 +144,9 @@ namespace WeaponSystem
                 }
 
             }
-            else if (_mInputActionses.Player.Attack.IsPressed() && EquippedWeapon.IsFullAuto)
+            else if (m_InputActions.Player.Attack.IsPressed() && 
+                     EquippedWeapon.IsFullAuto &&
+                     EquippedWeapon.CurrentAmmoInMag > 0)
             {
                 if (EquippedWeapon.TimeSinceLastShot >= EquippedWeapon.RateOfFire)
                 {
@@ -152,11 +155,19 @@ namespace WeaponSystem
             }
         }
 
+        private void ReloadWeapon()
+        {
+            if (m_InputActions.Player.Reload.WasPerformedThisFrame())
+            {
+                EquippedWeapon.Reload();
+            }
+        }
+
         private void Move()
         {
             //Get Forward and Right Directions
-            Vector3 moveForward = transform.forward * _mInputActionses.Player.Move.ReadValue<Vector2>().y;
-            Vector3 moveRight = transform.right * _mInputActionses.Player.Move.ReadValue<Vector2>().x;
+            Vector3 moveForward = transform.forward * m_InputActions.Player.Move.ReadValue<Vector2>().y;
+            Vector3 moveRight = transform.right * m_InputActions.Player.Move.ReadValue<Vector2>().x;
 
             //Add Forward and Right Vectors together and Normalize
             Vector3 moveDirection = moveForward + moveRight;
