@@ -7,6 +7,16 @@ namespace WeaponSystem
 {
     public class Weapon : MonoBehaviour
     {
+        public enum WeaponType
+        {
+            Pistol,
+            AssaultRifle,
+            SMG,
+            DMR,
+            Sniper,
+            LMG
+        }
+        
         [SerializeField] private Projectile projectile;
         [field:SerializeField] public Transform MuzzlePoint { get; private set;}
         [SerializeField] private LayerMask m_LayerMask;
@@ -18,6 +28,8 @@ namespace WeaponSystem
         [SerializeField] private float m_RateOfFire = 0.5f;
         [SerializeField] private bool m_bIsFullAuto;
         
+        [SerializeField] private WeaponType m_Type;
+        
         #region Properties
 
         public float TimeSinceLastShot => m_TimeSinceLastShot;
@@ -25,6 +37,8 @@ namespace WeaponSystem
         public bool IsFullAuto => m_bIsFullAuto;
 
         public ParticleSystem MuzzleFlash => m_MuzzleFlash;
+        
+        public WeaponType Type => m_Type;
       
         #endregion'
 
@@ -68,12 +82,41 @@ namespace WeaponSystem
 
         public void Fire()
         {
+            //instantiate projectile
             Debug.Log("Projectile shot");
             Projectile bulletInstance = Instantiate(projectile, MuzzlePoint.position, MuzzlePoint.rotation);
             m_MuzzleFlash?.Play();
             m_TimeSinceLastShot = 0;
+
+            //decrement ammo
+            switch (m_Type)
+            {
+                case WeaponType.Pistol:
+                    //TOOD decrement pistol ammo
+                    break;
+                case WeaponType.AssaultRifle:
+                    //TODO decrement assault rifle ammo
+                    break;
+                case WeaponType.SMG:
+                    //TODO decrement SMG ammo
+                    break;
+                case WeaponType.DMR:
+                    //TODO Decerement DMR ammo;
+                    break;
+                case WeaponType.Sniper:
+                    //TODO decrement sniper ammo;
+                    break;
+                case WeaponType.LMG:
+                    //TODO decrement LMG ammo;
+                    break;
+            }
+            //do I add pooling system?
         }
 
+        public void ToggleFireMode()
+        {
+            m_bIsFullAuto = !m_bIsFullAuto;
+        }
 
     }
 }

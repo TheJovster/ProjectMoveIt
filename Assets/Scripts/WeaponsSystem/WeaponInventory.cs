@@ -8,15 +8,19 @@ namespace WeaponSystem
 {
     public class WeaponInventory : MonoBehaviour
     {
+
+        
         [SerializeField] private int m_iCurrentWeapoinIndex;
         [SerializeField] private Weapon m_CurrentWeapon;
         [SerializeField] private List<Weapon> m_WeaponsList = new List<Weapon>();
         
         [SerializeField] private Transform m_WeaponSocket;
 
+
         #region Properties
 
         public Weapon CurrentWeapon => m_CurrentWeapon;
+
 
         #endregion
         
