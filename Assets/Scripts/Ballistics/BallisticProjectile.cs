@@ -59,6 +59,7 @@ namespace WeaponSystem
         m_vStartPosition = transform.position;
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     private void HandleImpact(RaycastHit hit)
     {
         //stop movement
