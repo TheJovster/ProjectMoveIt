@@ -298,10 +298,20 @@ namespace WeaponSystem
             }
             else if (m_CurrentAmmoInMag > 0 && m_AmmoInventory.GetAmmoCountByType(m_Type) > 0)
             {
-                int amountToDecrement = m_MaxAmmoInMag - m_CurrentAmmoInMag;
-                m_AmmoInventory.DecreaseAmmoCount(amountToDecrement, m_Type);
+                int amountToSubtract = m_MaxAmmoInMag - m_CurrentAmmoInMag;
+                m_AmmoInventory.DecreaseAmmoCount(amountToSubtract, m_Type);
                 m_CurrentAmmoInMag = m_MaxAmmoInMag + 1;
             }
+            else if (m_AmmoInventory.GetAmmoCountByType(m_Type) < m_MaxAmmoInMag)
+            {
+                int amountToSubtract = m_AmmoInventory.GetAmmoCountByType(m_Type);
+                m_AmmoInventory.DecreaseAmmoCount(amountToSubtract, m_Type);
+                m_CurrentAmmoInMag += amountToSubtract;
+                //I need to sketch this
+                //too tired
+                //need food
+            }
+            else return;
             //edgecase if the current weapon type ammo is 0
 
         }
