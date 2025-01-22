@@ -47,6 +47,8 @@ namespace WeaponSystem
         [SerializeField] private LayerMask m_aimLayer;
         [SerializeField] private Transform m_aimPoint;
         
+        private float m_timeSinceStarted = 0;
+        
         #region Properties
 
         public float TimeSinceLastShot => m_TimeSinceLastShot;
@@ -148,6 +150,15 @@ namespace WeaponSystem
         {
             //TODO check if there is ammo in mag, if not return
             m_bIsFiring = m_Player.PlayerActions.Player.Attack.IsPressed();
+            if (m_bIsFiring)
+            {
+
+                m_timeSinceStarted += Time.deltaTime;
+            }
+            else
+            {
+                m_timeSinceStarted = 0;
+            }
         }
         
         private Vector3 GenerateRandomCirclePoint(Vector3 center, Vector3 normal)
@@ -156,8 +167,6 @@ namespace WeaponSystem
             //m_bIsAiming determines the circle radius
             if (!m_bIsAiming)
             {
-                float angle = UnityEngine.Random.Range(0f, 2f * Mathf.PI);
-
                 //normal tangent
                 Vector3 tangent = new Vector3();
 
@@ -187,8 +196,6 @@ namespace WeaponSystem
             }
             else if (m_bIsAiming)
             {
-                float angle = UnityEngine.Random.Range(0f, 2f * Mathf.PI);
-
                 //normal tangent
                 Vector3 tangent = new Vector3();
                 //crossproducts
@@ -248,8 +255,14 @@ namespace WeaponSystem
                 // Smoothly interpolate between current and target aim points
                 m_fInterpolationProgress += Time.deltaTime / m_fAimSmoothingTime;
                 Vector3 smoothAimPoint = Vector3.Lerp(m_vCurrentAimPoint, m_vTargetAimPoint, m_fInterpolationProgress);
-
-                m_aimPoint.position = smoothAimPoint;
+                if(!m_bIsFiring)
+                {
+                    m_aimPoint.position = smoothAimPoint;
+                }
+                else if(m_bIsFiring)
+                {
+                    m_aimPoint.position +=  m_aimPoint.up * (Time.deltaTime * m_timeSinceStarted); //TODO expose the value
+                }
             }
             else
             {
