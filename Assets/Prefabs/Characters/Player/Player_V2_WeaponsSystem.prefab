@@ -365,11 +365,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 630b82a33ac0ccd42b1c53a215925c83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_CurrentPistolAmmo: 0
   m_MaxPistolAmmo: 120
-  m_MaxAssaultRifleAmmo: 300
+  m_CurrentAssaultRifleAmmo: 0
+  m_MaxAssaultRifleAmmo: 1
+  m_CurrentSMGAmmo: 0
   m_MaxSMGAmmo: 300
+  m_CurrentDMRAmmo: 0
   m_MaxDMRAmmo: 90
+  m_CurrentSniperAmmo: 0
   m_MaxSniperAmmo: 120
+  m_CurrentLMGAmmo: 0
   m_MaxLMGAmmo: 600
 --- !u!1001 &7165676696532218133
 PrefabInstance:
