@@ -278,9 +278,11 @@ namespace WeaponSystem
                 {
                     m_aimPoint.position = smoothAimPoint;
                 }
-                else if(m_bIsFiring && m_CurrentAmmoInMag > 0)
+                else if(m_bIsFiring &&
+                        m_CurrentAmmoInMag > 0 &&
+                        m_bIsFullAuto)
                 {
-                    m_aimPoint.position += m_aimPoint.up * (Time.deltaTime * m_timeSinceStarted); //TODO expose the value
+                    m_aimPoint.position += m_aimPoint.up * (Time.deltaTime * m_timeSinceStarted); 
                 }
             }
             else
