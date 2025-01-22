@@ -12,20 +12,18 @@ public class Target : MonoBehaviour
         _meshRenderer = GetComponent<MeshRenderer>();
         _meshRenderer.material = _materials[0];
     }
+    
 
-    private void OnCollisionEnter(Collision other)
+    public void SetActive()
     {
-        if (other.gameObject.CompareTag("Projectile"))
+        _isActive = !_isActive;
+        if (_isActive)
         {
-            _isActive = !_isActive;
-            if (_isActive)
-            {
-                _meshRenderer.material = _materials[1];
-            }
-            else if (!_isActive)
-            {
-                _meshRenderer.material = _materials[0];
-            }
+            _meshRenderer.material = _materials[1];
+        }
+        else if (!_isActive)
+        {
+            _meshRenderer.material = _materials[0];
         }
     }
 }

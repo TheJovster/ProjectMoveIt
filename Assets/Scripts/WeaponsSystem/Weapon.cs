@@ -17,7 +17,7 @@ namespace WeaponSystem
             LMG
         }
         
-        [SerializeField] private Projectile projectile;
+        [SerializeField] private BallisticProjectile projectile;
         [SerializeField]private AmmoInventory m_AmmoInventory;
         [field:SerializeField] public Transform MuzzlePoint { get; private set;}
         [SerializeField] private LayerMask m_LayerMask;
@@ -129,7 +129,8 @@ namespace WeaponSystem
         public void Fire()
         {
             //instantiate projectile
-            Projectile bulletInstance = Instantiate(projectile, MuzzlePoint.position, MuzzlePoint.rotation);
+            BallisticProjectile bulletInstance = Instantiate(projectile, MuzzlePoint.position, MuzzlePoint.rotation);
+            bulletInstance.Fire(MuzzlePoint.forward);
             m_MuzzleFlash?.Play();
             m_TimeSinceLastShot = 0;
             m_CurrentAmmoInMag--;
