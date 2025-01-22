@@ -1,67 +1,63 @@
 using System;
+using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
 namespace WeaponSystem
 {
     public class PlayerController : MonoBehaviour
     {
-        private InputSystem_Actions m_InputActions;
+        private InputSystem_Actions _mInputActionses;
         private CharacterController m_CharacterController;
         private Camera m_Camera;
         [SerializeField] private bool m_bIsInvertedYAxis = false;
-
-        [Header("Aiming and Look Values")] [SerializeField]
+        [Header("Aiming Values")] [SerializeField]
         private float m_fMinLookUpValue = -60.0f;
 
         [SerializeField] private float m_fMaxLookUpValue = 60.0f;
-        [SerializeField] private LayerMask m_aimLayer;
         [SerializeField] private float m_fRotationSpeed = 30.0f;
-        [SerializeField] private float m_fAimPointRaycastDistance = 1000.0f;
         [SerializeField] private Transform m_weapon;
         private Vector3 m_weaponOriginalPos;
+
+
+
 
         [SerializeField]
         private Vector3 m_weaponAimPos =>
             new Vector3(0.0f, m_weaponOriginalPos.y, m_weaponOriginalPos.z); //serialized for test purposes
 
-        private bool m_bIsAiming;
+
         private float m_fCurrentLookUpValue = 0.0f;
 
 
 
         #region Properties
 
-        [field: SerializeField] public Transform AimPoint { get; private set; }
+        public Camera Camera => m_Camera;
+
+        public InputSystem_Actions PlayerActions => _mInputActionses;
+        
         [field: SerializeField] public Weapon EquippedWeapon { get; private set; }
         [field: SerializeField] public float MoveSpeed { get; private set; }
-
+        
         #endregion Properties
 
-        [Header("Aim Point Smoothing")] [SerializeField]
-        private float m_fCircleRadius = 1f;
 
-        [SerializeField] private float m_fCircleAimRadius = 0.25f;
-        [SerializeField] private float m_fAimSmoothingTime = 0.5f;
-
-
-        private Vector3 m_vCurrentAimPoint;
-        private Vector3 m_vTargetAimPoint;
-        private float m_fInterpolationProgress = 1f;
 
 
         private void OnEnable()
         {
-            if (m_InputActions == null)
+            if (_mInputActionses == null)
             {
-                m_InputActions = new InputSystem_Actions();
-                m_InputActions.Enable();
+                _mInputActionses = new InputSystem_Actions();
+                _mInputActionses.Enable();
             }
         }
 
         private void OnDisable()
         {
-            m_InputActions.Disable();
+            _mInputActionses.Disable();
         }
 
         private void Awake()
@@ -86,23 +82,22 @@ namespace WeaponSystem
 
         void Update()
         {
-            m_bIsAiming = m_InputActions.Player.Aim.IsPressed();
+
             Move();
             LookUp();
             RotatePlayer();
-
-            SetAimPoint();
+            
             Fire();
 
             SwitchFireMode();
             
-
-            Debug.Log(m_bIsAiming);
         }
+
+
 
         private void SwitchFireMode()
         {
-            if (m_InputActions.Player.ToggleFireMode.WasPerformedThisFrame())
+            if (_mInputActionses.Player.ToggleFireMode.WasPerformedThisFrame())
             {
                 EquippedWeapon.ToggleFireMode();;
             }
@@ -113,7 +108,7 @@ namespace WeaponSystem
         private void LookUp()
         {
             //get mouse delta
-            Vector2 vMouseDelta = m_InputActions.Player.Look.ReadValue<Vector2>();
+            Vector2 vMouseDelta = _mInputActionses.Player.Look.ReadValue<Vector2>();
 
             //set the current look up value
             if (m_bIsInvertedYAxis)
@@ -131,56 +126,16 @@ namespace WeaponSystem
         private void RotatePlayer()
         {
             //get mouse delta
-            Vector2 vMouseDelta = m_InputActions.Player.Look.ReadValue<Vector2>();
+            Vector2 vMouseDelta = _mInputActionses.Player.Look.ReadValue<Vector2>();
             //apply to transform
             transform.Rotate(0.0f, vMouseDelta.x * m_fRotationSpeed * Time.deltaTime, 0.0f);
         }
 
-        private void SetAimPoint()
-        {
-            //Raycast
-            RaycastHit outHit;
-            Vector3 direction = m_Camera.transform.forward;
-
-            bool rayCast = Physics.Raycast
-            (
-                m_Camera.transform.position,
-                direction,
-                out outHit,
-                m_fAimPointRaycastDistance,
-                m_aimLayer
-            );
-
-            // If raycast hits a valid target
-            if (rayCast)
-            {
-                Vector3 targetCenter = outHit.point;
-
-                // Periodically generate a new random aim point within the circle
-                if (m_fInterpolationProgress >= 1f)
-                {
-                    m_vCurrentAimPoint = m_vTargetAimPoint;
-                    m_vTargetAimPoint = GenerateRandomCirclePoint(targetCenter, outHit.normal);
-                    m_fInterpolationProgress = 0f;
-                }
-
-                // Smoothly interpolate between current and target aim points
-                m_fInterpolationProgress += Time.deltaTime / m_fAimSmoothingTime;
-                Vector3 smoothAimPoint = Vector3.Lerp(m_vCurrentAimPoint, m_vTargetAimPoint, m_fInterpolationProgress);
-
-                AimPoint.position = smoothAimPoint;
-            }
-            else
-            {
-                // Go back to original direction if no hit detected
-                AimPoint.position = direction;
-            }
-        }
 
         private void Fire()
         {
             //rudimantary - TOOD: Expand the functinality
-            if (m_InputActions.Player.Attack.WasPerformedThisFrame() && !EquippedWeapon.IsFullAuto)
+            if (_mInputActionses.Player.Attack.WasPerformedThisFrame() && !EquippedWeapon.IsFullAuto)
             {
                 if (EquippedWeapon.TimeSinceLastShot >= EquippedWeapon.RateOfFire)
                 {
@@ -188,7 +143,7 @@ namespace WeaponSystem
                 }
 
             }
-            else if (m_InputActions.Player.Attack.IsPressed() && EquippedWeapon.IsFullAuto)
+            else if (_mInputActionses.Player.Attack.IsPressed() && EquippedWeapon.IsFullAuto)
             {
                 if (EquippedWeapon.TimeSinceLastShot >= EquippedWeapon.RateOfFire)
                 {
@@ -200,8 +155,8 @@ namespace WeaponSystem
         private void Move()
         {
             //Get Forward and Right Directions
-            Vector3 moveForward = transform.forward * m_InputActions.Player.Move.ReadValue<Vector2>().y;
-            Vector3 moveRight = transform.right * m_InputActions.Player.Move.ReadValue<Vector2>().x;
+            Vector3 moveForward = transform.forward * _mInputActionses.Player.Move.ReadValue<Vector2>().y;
+            Vector3 moveRight = transform.right * _mInputActionses.Player.Move.ReadValue<Vector2>().x;
 
             //Add Forward and Right Vectors together and Normalize
             Vector3 moveDirection = moveForward + moveRight;
@@ -211,72 +166,7 @@ namespace WeaponSystem
             m_CharacterController.Move(moveDirection * MoveSpeed * Time.deltaTime);
         }
 
-        private Vector3 GenerateRandomCirclePoint(Vector3 center, Vector3 normal)
-        {
-            // Generate a random point within the circle using polar coordinates
-            //m_bIsAiming determines the circle radius
-            if (!m_bIsAiming)
-            {
-                float angle = Random.Range(0f, 2f * Mathf.PI);
-
-                //normal tangent
-                Vector3 tangent = new Vector3();
-
-                //crossproduct
-                Vector3 t1 = Vector3.Cross(normal, Vector3.forward);
-                Vector3 t2 = Vector3.Cross(normal, Vector3.up);
-                if (t1.magnitude > t2.magnitude)
-                {
-                    tangent = t1;
-                }
-                else
-                {
-                    tangent = t2;
-                }
-
-                //normals
-                Vector3 upDirection = tangent;
-                Vector3 rightDirection = Vector3.Cross(normal, upDirection);
-                float randomRadius = Random.Range(0f, m_fCircleRadius);
-
-                Vector3 randomPoint = center + upDirection * randomRadius;
-                randomPoint += rightDirection * Random.Range(-m_fCircleRadius, m_fCircleRadius);
-
-                // Maintain the same depth as the center point
-                //return new Vector3(x, y, center.z);
-                return randomPoint;
-            }
-            else if (m_bIsAiming)
-            {
-                float angle = Random.Range(0f, 2f * Mathf.PI);
-
-                //normal tangent
-                Vector3 tangent = new Vector3();
-                //crossproducts
-                Vector3 t1 = Vector3.Cross(normal, Vector3.forward);
-                Vector3 t2 = Vector3.Cross(normal, Vector3.up);
-                if (t1.magnitude > t2.magnitude)
-                {
-                    tangent = t1;
-                }
-                else
-                {
-                    tangent = t2;
-                }
-
-                //normals
-                Vector3 upDirection = tangent;
-                Vector3 rightDirection = Vector3.Cross(normal, upDirection);
-                float randomRadius = Random.Range(-m_fCircleAimRadius, m_fCircleAimRadius);
-                Vector3 randomPoint = center + upDirection * randomRadius;
-                randomPoint += rightDirection * Random.Range(-m_fCircleAimRadius, m_fCircleAimRadius);
-
-                // Maintain the same depth as the center point
-                return randomPoint;
-            }
-            else throw new Exception("No aim point");
-            // Is there a better way to do this?
-        }
+        
 
 
 
