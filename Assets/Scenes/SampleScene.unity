@@ -1778,6 +1778,18 @@ PrefabInstance:
       propertyPath: m_MaxAssaultRifleAmmo
       value: 300
       objectReference: {fileID: 0}
+    - target: {fileID: 1656453425869981595, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
+      propertyPath: m_aimLayer.m_Bits
+      value: 123
+      objectReference: {fileID: 0}
+    - target: {fileID: 1656453425869981595, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
+      propertyPath: m_fSingleFireReciolAmount
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1656453425869981595, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
+      propertyPath: m_fSingleFireRecoilAmount
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6350577932635915963, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
       propertyPath: m_Name
       value: Player_V2_WeaponsSystem

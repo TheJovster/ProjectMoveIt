@@ -37,7 +37,7 @@ namespace WeaponSystem
             m_CurrentSMGAmmo = m_MaxSMGAmmo;
             m_CurrentDMRAmmo = m_MaxDMRAmmo;
             m_CurrentLMGAmmo = m_MaxLMGAmmo;
-            m_CurrentSniperAmmo = m_MaxLMGAmmo;
+            m_CurrentSniperAmmo = m_MaxSniperAmmo;
         }
 
         public void DecreaseAmmoCount(int amountToDecrease, Weapon.WeaponType type)

@@ -21,7 +21,7 @@ namespace WeaponSystem
         [SerializeField] private BallisticProjectile projectile;
         [SerializeField]private AmmoInventory m_AmmoInventory;
         [field:SerializeField] public Transform MuzzlePoint { get; private set;}
-        [SerializeField] private LayerMask m_LayerMask;
+
         private PlayerController m_Player;
         private Vector3 m_AimDirection;
         [SerializeField]private ParticleSystem m_MuzzleFlash;
@@ -44,8 +44,10 @@ namespace WeaponSystem
         private float m_fInterpolationProgress = 1f;
 
         [SerializeField]private bool m_bIsAiming; //exposed for testing
-        [SerializeField]private bool m_bIsFiring;
+        [SerializeField]private bool m_bIsFiring = false;
         [SerializeField]private bool m_bSingleFireTriggered = false;
+        private bool m_bFireButtonHeld;
+        private bool m_bFireButtonPressed;
         
         [SerializeField] private float m_fAimPointRaycastDistance = 1000.0f;
         [SerializeField] private LayerMask m_aimLayer;
@@ -54,8 +56,8 @@ namespace WeaponSystem
         private float m_timeSinceStarted = 0;
         [SerializeField] private float m_fSingleFireRecoilAmount = 3.0f; //default setting at 3.
         [SerializeField] private Vector3 m_originalPosition;
-        [SerializeField] private float m_kickbackForce = 10.0f;
-        [SerializeField] private float m_kickbackAmplitude = 0.5f;
+        /*[SerializeField] private float m_kickbackForce = 10.0f;
+        [SerializeField] private float m_kickbackAmplitude = 0.5f;*/
         private float m_kickbackTimer;
         private int m_CurrentAmmoInMag;
         [SerializeField] private int m_MaxAmmoInMag;
@@ -104,7 +106,7 @@ namespace WeaponSystem
                 MuzzlePoint.position - m_aimPoint.position, 
                 out hit, 
                 1000.0f, 
-                m_LayerMask);
+                m_aimLayer);
             if (aim)
             {
                 m_AimDirection = MuzzlePoint.position - hit.point;
@@ -147,29 +149,29 @@ namespace WeaponSystem
         private void SetIsFiring()
         {
             //check if button pressed and if there is ammo in mag, if not return
-            m_bIsFiring = m_Player.PlayerActions.Player.Attack.IsPressed() && m_CurrentAmmoInMag > 0;
-            if (m_bIsFiring)
+            m_bFireButtonHeld = m_Player.PlayerActions.Player.Attack.IsPressed();
+            m_bFireButtonPressed = m_Player.PlayerActions.Player.Attack.WasPerformedThisFrame();
+            if (m_bFireButtonHeld && m_bIsFullAuto && m_CurrentAmmoInMag > 0)
             {
-                if (!m_bIsFullAuto && !m_bSingleFireTriggered)
-                {
-                    m_bIsFiring = true;
-                    m_bSingleFireTriggered = true;
-                }
-                else if(m_Player.PlayerActions.Player.Attack.WasReleasedThisFrame() &&
-                        !m_bIsFiring &&
-                        !m_bIsFullAuto &&
-                        m_bSingleFireTriggered)
-                {
-                    m_bSingleFireTriggered = false;
-                }
-                if (m_bIsFiring && m_bIsFullAuto)
-                {
-                    m_timeSinceStarted += Time.deltaTime; //do I even need this?
-                }
-                else
-                {
-                    m_timeSinceStarted = 0;
-                }
+                m_bIsFiring = true;
+            }
+            else if (m_bFireButtonPressed && !m_bIsFullAuto && m_CurrentAmmoInMag > 0)
+            {
+                m_bIsFiring = true;
+                m_bSingleFireTriggered = true;
+            }
+            else
+            {
+                m_bIsFiring = false;
+                m_bSingleFireTriggered = false;
+            }
+            if (m_bIsFiring && m_bIsFullAuto)
+            {
+                m_timeSinceStarted += Time.deltaTime; //do I even need this?
+            }
+            else
+            {
+                m_timeSinceStarted = 0;
             }
         }
         
@@ -277,7 +279,7 @@ namespace WeaponSystem
                     {
                         m_aimPoint.position += m_aimPoint.up * (Time.deltaTime * m_timeSinceStarted); 
                     }
-                    else if(!m_bIsFullAuto && m_bSingleFireTriggered)
+                    if(!m_bIsFullAuto && m_bSingleFireTriggered)
                     {
                         m_aimPoint.position += m_aimPoint.up * (Time.deltaTime * m_fSingleFireRecoilAmount); 
                     }
