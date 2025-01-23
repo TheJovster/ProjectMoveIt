@@ -311,9 +311,6 @@ namespace WeaponSystem
                 int amountToSubtract = m_AmmoInventory.GetAmmoCountByType(m_Type);
                 m_AmmoInventory.DecreaseAmmoCount(amountToSubtract, m_Type);
                 m_CurrentAmmoInMag += amountToSubtract;
-                //I need to sketch this
-                //too tired
-                //need food
             }
             else if((m_AmmoInventory.GetAmmoCountByType(m_Type) + m_CurrentAmmoInMag) < m_MaxAmmoInMag)
             {
@@ -328,7 +325,7 @@ namespace WeaponSystem
 
         private void Kickback()
         {
-                Debug.Log("Kickback triggered");
+            Debug.Log("Kickback triggered");
         }
 
 
