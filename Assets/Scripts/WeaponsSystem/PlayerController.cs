@@ -134,6 +134,7 @@ namespace WeaponSystem
         private void Fire()
         {
             //rudimantary - TOOD: Expand the functinality
+            //tiered if statements don't really do anything in terms of performance
             if (m_InputActions.Player.Attack.WasPerformedThisFrame() && 
                 !EquippedWeapon.IsFullAuto &&
                 EquippedWeapon.CurrentAmmoInMag > 0)

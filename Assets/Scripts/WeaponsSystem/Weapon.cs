@@ -2,6 +2,7 @@ using System;
 using System.Security.Cryptography.X509Certificates;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace WeaponSystem
 {
@@ -43,13 +44,15 @@ namespace WeaponSystem
         private float m_fInterpolationProgress = 1f;
 
         [SerializeField]private bool m_bIsAiming; //exposed for testing
-        [SerializeField] private bool m_bIsFiring;
+        [SerializeField]private bool m_bIsFiring;
+        [SerializeField]private bool m_bSingleFireTriggered = false;
         
         [SerializeField] private float m_fAimPointRaycastDistance = 1000.0f;
         [SerializeField] private LayerMask m_aimLayer;
         [SerializeField] private Transform m_aimPoint;
         
         private float m_timeSinceStarted = 0;
+        [SerializeField] private float m_fSingleFireRecoilAmount = 3.0f; //default setting at 3.
         [SerializeField] private Vector3 m_originalPosition;
         [SerializeField] private float m_kickbackForce = 10.0f;
         [SerializeField] private float m_kickbackAmplitude = 0.5f;
@@ -134,30 +137,6 @@ namespace WeaponSystem
             m_MuzzleFlash?.Play();
             m_TimeSinceLastShot = 0;
             m_CurrentAmmoInMag--;
-            
-            //decrement ammo
-            switch (m_Type)
-            {
-                case WeaponType.Pistol:
-                    //TOOD decrement pistol ammo
-                    break;
-                case WeaponType.AssaultRifle:
-                    //TODO decrement assault rifle ammo
-                    break;
-                case WeaponType.SMG:
-                    //TODO decrement SMG ammo
-                    break;
-                case WeaponType.DMR:
-                    //TODO Decerement DMR ammo;
-                    break;
-                case WeaponType.Sniper:
-                    //TODO decrement sniper ammo;
-                    break;
-                case WeaponType.LMG:
-                    //TODO decrement LMG ammo;
-                    break;
-            }
-            //do I add pooling system?
         }
 
         public void ToggleFireMode()
@@ -167,16 +146,30 @@ namespace WeaponSystem
         
         private void SetIsFiring()
         {
-            //TODO check if there is ammo in mag, if not return
+            //check if button pressed and if there is ammo in mag, if not return
             m_bIsFiring = m_Player.PlayerActions.Player.Attack.IsPressed() && m_CurrentAmmoInMag > 0;
             if (m_bIsFiring)
             {
-                m_timeSinceStarted += Time.deltaTime; //do I even need this?
-            }
-            else
-            {
-                //m_lastSavedTimeSinceStarted = m_timeSinceStarted;
-                m_timeSinceStarted = 0;
+                if (!m_bIsFullAuto && !m_bSingleFireTriggered)
+                {
+                    m_bIsFiring = true;
+                    m_bSingleFireTriggered = true;
+                }
+                else if(m_Player.PlayerActions.Player.Attack.WasReleasedThisFrame() &&
+                        !m_bIsFiring &&
+                        !m_bIsFullAuto &&
+                        m_bSingleFireTriggered)
+                {
+                    m_bSingleFireTriggered = false;
+                }
+                if (m_bIsFiring && m_bIsFullAuto)
+                {
+                    m_timeSinceStarted += Time.deltaTime; //do I even need this?
+                }
+                else
+                {
+                    m_timeSinceStarted = 0;
+                }
             }
         }
         
@@ -278,11 +271,16 @@ namespace WeaponSystem
                 {
                     m_aimPoint.position = smoothAimPoint;
                 }
-                else if(m_bIsFiring &&
-                        m_CurrentAmmoInMag > 0 &&
-                        m_bIsFullAuto)
+                else if(m_bIsFiring && m_CurrentAmmoInMag > 0)
                 {
-                    m_aimPoint.position += m_aimPoint.up * (Time.deltaTime * m_timeSinceStarted); 
+                    if (m_bIsFullAuto)
+                    {
+                        m_aimPoint.position += m_aimPoint.up * (Time.deltaTime * m_timeSinceStarted); 
+                    }
+                    else if(!m_bIsFullAuto && m_bSingleFireTriggered)
+                    {
+                        m_aimPoint.position += m_aimPoint.up * (Time.deltaTime * m_fSingleFireRecoilAmount); 
+                    }
                 }
             }
             else
