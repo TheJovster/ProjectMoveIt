@@ -96,7 +96,6 @@ namespace WeaponSystem
         {
             //Destroy(gameObject);
         }
-        
 
         //more stuff?
         if (!m_bIsFlying) Destroy(gameObject);
