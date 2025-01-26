@@ -3,19 +3,19 @@ using Unity.VisualScripting;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using Update = UnityEngine.PlayerLoop.Update;
 
 namespace WeaponSystem
 {
     public class BallisticProjectile : MonoBehaviour
 {
-    [Header("Ballistic Projectile Settings")] [SerializeField]
-    private float m_fInitialProjectileVelocity = 30.0f; // I am assuming I will have to make this a lot faster later on
-
     //gravity and drag
     [Header("Projectile Physics")]
+    [SerializeField] private float m_fInitialProjectileVelocity = 30.0f; // I am assuming I will have to make this a lot faster later on
     [SerializeField] private float m_fGravityValue = -9.81f;
     [SerializeField, Range(0.0f, 1.0f)] private float m_fDragCoeficient = 0.1f;
-
+    [SerializeField] private float m_fCollisionRadius = 0.01f; // Add collision radius
+    
     //velocity and movement variables
     private Vector3 m_vCurrentVelocity;
     private Vector3 m_vStartPosition;
@@ -33,6 +33,11 @@ namespace WeaponSystem
     private void Start()
     {
         m_bIsFlying = true;
+    }
+
+    private void Update()
+    {
+        
     }
 
     private void FixedUpdate()
@@ -63,7 +68,7 @@ namespace WeaponSystem
         Vector3 direction = transform.position - m_vStartPosition;
         float distance = direction.magnitude;
 
-        if (Physics.Raycast(m_vStartPosition, direction.normalized, out hit, distance))
+        if (Physics.SphereCast(m_vStartPosition, m_fCollisionRadius,  direction.normalized, out hit, distance))
         {
             HandleImpact(hit, direction.normalized);
         }
@@ -75,24 +80,9 @@ namespace WeaponSystem
     private void HandleImpact(RaycastHit hit, Vector3 incomingDirection)
     {
         
-        //ricochet logic
-        if (m_iRicochetCount < m_iMaxRicochetCount)
-        {
-            float incidentAngle = Vector3.Angle(incomingDirection, hit.normal);
+        if (HandleRicochet(hit, incomingDirection)) return;
 
-            if (incidentAngle >= m_fMinRicochetAngle && incidentAngle <= m_fMaxRicochetAngle)
-            {
-                Vector3 reflectedVelocity = Vector3.Reflect(m_vCurrentVelocity, hit.normal);
-                m_vCurrentVelocity = reflectedVelocity * (1.0f - m_fRicochetVelocityLoss);
 
-                m_iRicochetCount++;
-
-                transform.position = hit.point + hit.normal * 0.1f;
-
-                return;
-            }
-        }
-        
         //stop movement
         m_bIsFlying = false;
         
@@ -110,6 +100,31 @@ namespace WeaponSystem
 
         //more stuff?
         if (!m_bIsFlying) Destroy(gameObject);
+    }
+
+    private bool HandleRicochet(RaycastHit hit, Vector3 incomingDirection)
+    {
+        //ricochet logic
+        if (m_iRicochetCount < m_iMaxRicochetCount)
+        {
+            float incidentAngle = Vector3.Angle(incomingDirection, hit.normal);
+
+            if (incidentAngle >= m_fMinRicochetAngle && incidentAngle <= m_fMaxRicochetAngle)
+            {
+                Vector3 reflectedVelocity = Vector3.Reflect(m_vCurrentVelocity, hit.normal);
+                m_vCurrentVelocity = reflectedVelocity * (1.0f - m_fRicochetVelocityLoss);
+
+                m_iRicochetCount++;
+
+                transform.position = hit.point + hit.normal * 0.1f;
+
+                Debug.Log("Ricochet");
+                
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void Fire(Vector3 direction)
