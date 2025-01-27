@@ -2003,7 +2003,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 905849465566898629, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
       propertyPath: m_MaxAssaultRifleAmmo
-      value: 10
+      value: 999
       objectReference: {fileID: 0}
     - target: {fileID: 1656453425869981595, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
       propertyPath: m_aimLayer.m_Bits

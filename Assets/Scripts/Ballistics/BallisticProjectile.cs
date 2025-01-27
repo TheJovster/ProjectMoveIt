@@ -30,6 +30,7 @@ namespace WeaponSystem
     [SerializeField] private float m_fMinRicochetAngle = 10.0f;
     [SerializeField] private float m_fMaxRicochetAngle = 60.0f;
     [SerializeField, Range(0.0f, 1.0f)] private float m_fRicochetChance = 1.0f; //the chance of ricochet spawning
+    [SerializeField] private GameObject m_ImpactParticle;
     private int m_iRicochetCount = 0;
     
     private void Start()
@@ -50,7 +51,7 @@ namespace WeaponSystem
             m_fTimeInFlight += Time.fixedDeltaTime;
 
             //apply gravity to the projectile
-            m_vCurrentVelocity.y += m_fGravityValue * Time.fixedDeltaTime;
+            m_vCurrentVelocity.y += -(m_fGravityValue * m_fGravityValue) * Time.fixedDeltaTime;
 
             //apply drag (or air resistance)
             /*float f_currentVelocityMagnitude = m_vCurrentVelocity.magnitude;*/
@@ -93,7 +94,10 @@ namespace WeaponSystem
         }
         else if (!hit.transform.CompareTag("Player"))
         {
+            GameObject particleInstance = Instantiate(m_ImpactParticle, hit.point, Quaternion.identity);
+            particleInstance.GetComponent<ParticleSystem>().Play();             
             //Destroy(gameObject);
+            Destroy(particleInstance, 0.2f);
         }
 
         if (!m_bIsFlying) Destroy(gameObject);
@@ -103,7 +107,7 @@ namespace WeaponSystem
     {
         float currentRicochetChance = Random.Range(0.0f, 1.0f);
 
-        if (currentRicochetChance >= m_fRicochetChance)
+        if (currentRicochetChance <= m_fRicochetChance)
         {
             //ricochet logic
             if (m_iRicochetCount < m_iMaxRicochetCount)
