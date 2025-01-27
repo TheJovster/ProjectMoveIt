@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using Random = UnityEngine.Random;
 using Update = UnityEngine.PlayerLoop.Update;
 
 namespace WeaponSystem
@@ -28,6 +29,7 @@ namespace WeaponSystem
     [SerializeField, Range(0.0f, 1.0f)] private float m_fRicochetVelocityLoss = 0.5f;
     [SerializeField] private float m_fMinRicochetAngle = 10.0f;
     [SerializeField] private float m_fMaxRicochetAngle = 60.0f;
+    [SerializeField, Range(0.0f, 1.0f)] private float m_fRicochetChance = 1.0f; //the chance of ricochet spawning
     private int m_iRicochetCount = 0;
     
     private void Start()
@@ -99,23 +101,27 @@ namespace WeaponSystem
 
     private bool HandleRicochet(RaycastHit hit, Vector3 incomingDirection)
     {
-        //ricochet logic
-        if (m_iRicochetCount < m_iMaxRicochetCount)
+        float currentRicochetChance = Random.Range(0.0f, 1.0f);
+
+        if (currentRicochetChance >= m_fRicochetChance)
         {
-            float ricochetIncidentAngle = Vector3.Angle(-incomingDirection, hit.normal);
-
-            if (ricochetIncidentAngle >= m_fMinRicochetAngle && ricochetIncidentAngle <= m_fMaxRicochetAngle)
+            Debug.Log("Ricochet Spawnned");
+            //ricochet logic
+            if (m_iRicochetCount < m_iMaxRicochetCount)
             {
-                Vector3 reflectedVelocity = Vector3.Reflect(m_vCurrentVelocity, hit.normal);
-                m_vCurrentVelocity = reflectedVelocity * (1.0f - m_fRicochetVelocityLoss);
+                float ricochetIncidentAngle = Vector3.Angle(-incomingDirection, hit.normal);
 
-                m_iRicochetCount++;
+                if (ricochetIncidentAngle >= m_fMinRicochetAngle && ricochetIncidentAngle <= m_fMaxRicochetAngle)
+                {
+                    Vector3 reflectedVelocity = Vector3.Reflect(m_vCurrentVelocity, hit.normal);
+                    m_vCurrentVelocity = reflectedVelocity * (1.0f - m_fRicochetVelocityLoss);
 
-                transform.position = hit.point + hit.normal * 0.1f;
+                    m_iRicochetCount++;
 
-                Debug.Log("Ricochet");
-                
-                return true;
+                    transform.position = hit.point + hit.normal * 0.1f;
+                    
+                    return true;
+                }
             }
         }
         return false;

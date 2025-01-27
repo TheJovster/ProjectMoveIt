@@ -139,3 +139,4 @@ MonoBehaviour:
   m_fRicochetVelocityLoss: 0.2
   m_fMinRicochetAngle: 10
   m_fMaxRicochetAngle: 60
+  m_fRicochetChance: 0.5
