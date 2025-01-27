@@ -70,7 +70,8 @@ namespace WeaponSystem
 
         public int CurrentAmmoInMag => m_CurrentAmmoInMag;
 
-
+        public AmmoInventory AmmoInventory => m_AmmoInventory;
+        
         public ParticleSystem MuzzleFlash => m_MuzzleFlash;
         
         public WeaponType Type => m_Type;
@@ -87,6 +88,7 @@ namespace WeaponSystem
         {
             m_originalPosition = transform.localPosition;
             m_CurrentAmmoInMag = m_MaxAmmoInMag;
+            HUDManager.Instance.UpdateAmmoInMag(m_CurrentAmmoInMag);
         }
         
         private void Update()
@@ -139,6 +141,7 @@ namespace WeaponSystem
             m_MuzzleFlash?.Play();
             m_TimeSinceLastShot = 0;
             m_CurrentAmmoInMag--;
+            HUDManager.Instance.UpdateAmmoInMag(m_CurrentAmmoInMag);
         }
 
         public void ToggleFireMode()
@@ -320,6 +323,10 @@ namespace WeaponSystem
             }
             else return;
             //edgecase if the current weapon type ammo is 0
+            
+            //Update HUD
+            HUDManager.Instance.UpdateAmmoInMag(m_CurrentAmmoInMag);
+            HUDManager.Instance.UpdateMaxAmmo((m_AmmoInventory.GetAmmoCountByType(m_Type)));
 
         }
 

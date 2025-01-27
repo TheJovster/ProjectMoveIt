@@ -34,6 +34,8 @@ namespace WeaponSystem
 
         #region Properties
 
+        public static PlayerController Instance;
+        
         public Camera Camera => m_Camera;
 
         public InputSystem_Actions PlayerActions => m_InputActions;
@@ -52,6 +54,14 @@ namespace WeaponSystem
             {
                 m_InputActions = new InputSystem_Actions();
                 m_InputActions.Enable();
+            }
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
             }
         }
 
