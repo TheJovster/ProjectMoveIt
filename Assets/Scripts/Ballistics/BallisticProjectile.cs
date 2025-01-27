@@ -105,7 +105,6 @@ namespace WeaponSystem
 
         if (currentRicochetChance >= m_fRicochetChance)
         {
-            Debug.Log("Ricochet Spawned");
             //ricochet logic
             if (m_iRicochetCount < m_iMaxRicochetCount)
             {
