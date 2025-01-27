@@ -297,36 +297,41 @@ namespace WeaponSystem
 
         public void Reload()
         {
-            if (m_CurrentAmmoInMag <= 0 && m_AmmoInventory.GetAmmoCountByType(m_Type) > m_MaxAmmoInMag)
+            if (m_AmmoInventory.GetAmmoCountByType(m_Type) > 0)
             {
-                m_AmmoInventory.DecreaseAmmoCount(m_MaxAmmoInMag, m_Type);
-                m_CurrentAmmoInMag = m_MaxAmmoInMag;
+                //case 1: current mag is empty
+                if (m_CurrentAmmoInMag <= 0 && m_AmmoInventory.GetAmmoCountByType(m_Type) > m_MaxAmmoInMag)
+                {
+                    m_AmmoInventory.DecreaseAmmoCount(m_MaxAmmoInMag, m_Type);
+                    m_CurrentAmmoInMag = m_MaxAmmoInMag;
+                }
+                //case 2: current mag has less than max ammo in mag
+                if (m_CurrentAmmoInMag < m_MaxAmmoInMag)
+                {
+                    int amountToDecrease = m_MaxAmmoInMag - m_CurrentAmmoInMag;
+                    m_AmmoInventory.DecreaseAmmoCount(amountToDecrease, m_Type);
+                    m_CurrentAmmoInMag = m_MaxAmmoInMag;
+                }
+                //case 3: current mag has less than max ammo in mag - CASE 3 NOT WORKING AS INTENDED
+                if (m_AmmoInventory.GetAmmoCountByType(m_Type) < m_MaxAmmoInMag)
+                {
+                    int amountToDecrease = m_AmmoInventory.GetAmmoCountByType(m_Type);
+                    m_CurrentAmmoInMag += amountToDecrease;
+                    m_AmmoInventory.DecreaseAmmoCount(amountToDecrease, m_Type);
+                }
+                //case 4: if current mag and current inventory is less than the current max ammo in mag
+                if (m_AmmoInventory.GetAmmoCountByType(m_Type) + m_CurrentAmmoInMag < m_MaxAmmoInMag)
+                {
+                    int amountInMag = m_CurrentAmmoInMag + m_AmmoInventory.GetAmmoCountByType(m_Type);
+                    int amountToDecrease = m_AmmoInventory.GetAmmoCountByType(m_Type);
+                    m_CurrentAmmoInMag = amountInMag;
+                    m_AmmoInventory.DecreaseAmmoCount(amountToDecrease, m_Type);
+                }
+                
+                //Update HUD
+                HUDManager.Instance.UpdateAmmoInMag(m_CurrentAmmoInMag);
+                HUDManager.Instance.UpdateMaxAmmo((m_AmmoInventory.GetAmmoCountByType(m_Type)));
             }
-            else if (m_CurrentAmmoInMag > 0 && m_AmmoInventory.GetAmmoCountByType(m_Type) > 0)
-            {
-                int amountToSubtract = m_MaxAmmoInMag - m_CurrentAmmoInMag;
-                m_AmmoInventory.DecreaseAmmoCount(amountToSubtract, m_Type);
-                m_CurrentAmmoInMag = m_MaxAmmoInMag + 1;
-            }
-            else if (m_AmmoInventory.GetAmmoCountByType(m_Type) < m_MaxAmmoInMag &&
-                     m_AmmoInventory.GetAmmoCountByType(m_Type) > 0)
-            {
-                int amountToSubtract = m_AmmoInventory.GetAmmoCountByType(m_Type);
-                m_AmmoInventory.DecreaseAmmoCount(amountToSubtract, m_Type);
-                m_CurrentAmmoInMag += amountToSubtract;
-            }
-            else if((m_AmmoInventory.GetAmmoCountByType(m_Type) + m_CurrentAmmoInMag) < m_MaxAmmoInMag)
-            {
-                int amount = m_CurrentAmmoInMag + m_AmmoInventory.GetAmmoCountByType(m_Type);
-                m_AmmoInventory.DecreaseAmmoCount(m_AmmoInventory.GetAmmoCountByType(m_Type), m_Type);
-                m_CurrentAmmoInMag = amount;
-            }
-            else return;
-            //edgecase if the current weapon type ammo is 0
-            
-            //Update HUD
-            HUDManager.Instance.UpdateAmmoInMag(m_CurrentAmmoInMag);
-            HUDManager.Instance.UpdateMaxAmmo((m_AmmoInventory.GetAmmoCountByType(m_Type)));
 
         }
 
