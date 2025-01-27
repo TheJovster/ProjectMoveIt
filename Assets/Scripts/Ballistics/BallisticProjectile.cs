@@ -51,7 +51,7 @@ namespace WeaponSystem
             m_vCurrentVelocity.y += m_fGravityValue * Time.fixedDeltaTime;
 
             //apply drag (or air resistance)
-            float f_currentVelocityMagnitude = m_vCurrentVelocity.magnitude;
+            /*float f_currentVelocityMagnitude = m_vCurrentVelocity.magnitude;*/
             float f_dragForce = -m_fDragCoeficient * m_vCurrentVelocity.magnitude;
             m_vCurrentVelocity += m_vCurrentVelocity.normalized * (f_dragForce * Time.fixedDeltaTime);
 
@@ -75,14 +75,11 @@ namespace WeaponSystem
 
         m_vStartPosition = transform.position;
     }
-
-    // ReSharper disable Unity.PerformanceAnalysis
+    
     private void HandleImpact(RaycastHit hit, Vector3 incomingDirection)
     {
-        
         if (HandleRicochet(hit, incomingDirection)) return;
-
-
+        
         //stop movement
         m_bIsFlying = false;
         
@@ -97,7 +94,6 @@ namespace WeaponSystem
             //Destroy(gameObject);
         }
 
-        //more stuff?
         if (!m_bIsFlying) Destroy(gameObject);
     }
 
@@ -106,9 +102,9 @@ namespace WeaponSystem
         //ricochet logic
         if (m_iRicochetCount < m_iMaxRicochetCount)
         {
-            float incidentAngle = Vector3.Angle(incomingDirection, hit.normal);
+            float ricochetIncidentAngle = Vector3.Angle(-incomingDirection, hit.normal);
 
-            if (incidentAngle >= m_fMinRicochetAngle && incidentAngle <= m_fMaxRicochetAngle)
+            if (ricochetIncidentAngle >= m_fMinRicochetAngle && ricochetIncidentAngle <= m_fMaxRicochetAngle)
             {
                 Vector3 reflectedVelocity = Vector3.Reflect(m_vCurrentVelocity, hit.normal);
                 m_vCurrentVelocity = reflectedVelocity * (1.0f - m_fRicochetVelocityLoss);
@@ -122,7 +118,6 @@ namespace WeaponSystem
                 return true;
             }
         }
-
         return false;
     }
 

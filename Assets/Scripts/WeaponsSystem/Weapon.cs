@@ -316,7 +316,7 @@ namespace WeaponSystem
                 if (m_AmmoInventory.GetAmmoCountByType(m_Type) < m_MaxAmmoInMag)
                 {
                     int amountToDecrease = m_AmmoInventory.GetAmmoCountByType(m_Type);
-                    m_CurrentAmmoInMag += amountToDecrease;
+                    m_CurrentAmmoInMag += amountToDecrease; //shouldn't compound this
                     m_AmmoInventory.DecreaseAmmoCount(amountToDecrease, m_Type);
                 }
                 //case 4: if current mag and current inventory is less than the current max ammo in mag
