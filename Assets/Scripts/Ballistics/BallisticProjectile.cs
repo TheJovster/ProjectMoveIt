@@ -105,7 +105,7 @@ namespace WeaponSystem
 
         if (currentRicochetChance >= m_fRicochetChance)
         {
-            Debug.Log("Ricochet Spawnned");
+            Debug.Log("Ricochet Spawned");
             //ricochet logic
             if (m_iRicochetCount < m_iMaxRicochetCount)
             {
@@ -115,11 +115,8 @@ namespace WeaponSystem
                 {
                     Vector3 reflectedVelocity = Vector3.Reflect(m_vCurrentVelocity, hit.normal);
                     m_vCurrentVelocity = reflectedVelocity * (1.0f - m_fRicochetVelocityLoss);
-
                     m_iRicochetCount++;
-
                     transform.position = hit.point + hit.normal * 0.1f;
-                    
                     return true;
                 }
             }
@@ -134,6 +131,11 @@ namespace WeaponSystem
         m_bIsFlying = true;
         m_fTimeInFlight = 0.0f;
         m_vStartPosition = transform.position;
+    }
+
+    private void AnimateMovement()
+    {
+        
     }
 }
 }

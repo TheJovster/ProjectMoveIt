@@ -47,26 +47,32 @@ namespace WeaponSystem
                 case Weapon.WeaponType.Pistol:
                     if(m_CurrentPistolAmmo > 0)
                         m_CurrentPistolAmmo -= amountToDecrease;
+                    if (m_CurrentPistolAmmo <= 0) m_CurrentPistolAmmo = 0;
                     break;
                 case Weapon.WeaponType.AssaultRifle:
                     if(m_CurrentAssaultRifleAmmo > 0)
                         m_CurrentAssaultRifleAmmo -= amountToDecrease;
+                    if (m_CurrentAssaultRifleAmmo <= 0) m_CurrentAssaultRifleAmmo = 0;
                     break;
                 case Weapon.WeaponType.SMG:
                     if(m_CurrentSMGAmmo > 0)
                         m_CurrentSMGAmmo -= amountToDecrease;
+                    if (m_CurrentSMGAmmo <= 0) m_CurrentSMGAmmo = 0;
                     break;
                 case Weapon.WeaponType.DMR:
                     if(m_CurrentDMRAmmo > 0)
                         m_CurrentDMRAmmo -= amountToDecrease;
+                    if (m_CurrentDMRAmmo <= 0) m_CurrentDMRAmmo = 0;
                     break;
                 case Weapon.WeaponType.Sniper:
                     if(m_CurrentSniperAmmo > 0)
                         m_CurrentSniperAmmo -= amountToDecrease;
+                    if (m_CurrentSniperAmmo <= 0) m_CurrentSniperAmmo = 0;
                     break;
                 case Weapon.WeaponType.LMG:
                     if(m_CurrentLMGAmmo > 0)
                         m_CurrentLMGAmmo -= amountToDecrease;
+                    if (m_CurrentLMGAmmo <= 0) m_CurrentLMGAmmo = 0;
                     break;
             }
         }

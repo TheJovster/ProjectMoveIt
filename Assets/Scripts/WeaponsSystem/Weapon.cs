@@ -304,28 +304,36 @@ namespace WeaponSystem
                 {
                     m_AmmoInventory.DecreaseAmmoCount(m_MaxAmmoInMag, m_Type);
                     m_CurrentAmmoInMag = m_MaxAmmoInMag;
+                    Debug.Log("Case1");
                 }
                 //case 2: current mag has less than max ammo in mag
-                if (m_CurrentAmmoInMag < m_MaxAmmoInMag)
+                else if (m_CurrentAmmoInMag < m_MaxAmmoInMag && m_CurrentAmmoInMag + m_AmmoInventory.GetAmmoCountByType(m_Type) > m_MaxAmmoInMag)
                 {
                     int amountToDecrease = m_MaxAmmoInMag - m_CurrentAmmoInMag;
                     m_AmmoInventory.DecreaseAmmoCount(amountToDecrease, m_Type);
                     m_CurrentAmmoInMag = m_MaxAmmoInMag;
+                    Debug.Log("Case2");
                 }
-                //case 3: current mag has less than max ammo in mag - CASE 3 NOT WORKING AS INTENDED
-                if (m_AmmoInventory.GetAmmoCountByType(m_Type) < m_MaxAmmoInMag)
-                {
-                    int amountToDecrease = m_AmmoInventory.GetAmmoCountByType(m_Type);
-                    m_CurrentAmmoInMag += amountToDecrease; //shouldn't compound this
-                    m_AmmoInventory.DecreaseAmmoCount(amountToDecrease, m_Type);
-                }
-                //case 4: if current mag and current inventory is less than the current max ammo in mag
-                if (m_AmmoInventory.GetAmmoCountByType(m_Type) + m_CurrentAmmoInMag < m_MaxAmmoInMag)
+                //case 3: if current mag and current inventory is less than the current max ammo in mag
+                else if (m_AmmoInventory.GetAmmoCountByType(m_Type) + m_CurrentAmmoInMag < m_MaxAmmoInMag)
                 {
                     int amountInMag = m_CurrentAmmoInMag + m_AmmoInventory.GetAmmoCountByType(m_Type);
                     int amountToDecrease = m_AmmoInventory.GetAmmoCountByType(m_Type);
                     m_CurrentAmmoInMag = amountInMag;
                     m_AmmoInventory.DecreaseAmmoCount(amountToDecrease, m_Type);
+                    Debug.Log("Case3");
+                }
+                //case 4: if current mag + current inventory ammo are equal than the max ammo in mag
+                else if (m_MaxAmmoInMag == m_CurrentAmmoInMag + m_AmmoInventory.GetAmmoCountByType(m_Type))
+                {
+                    m_CurrentAmmoInMag = m_MaxAmmoInMag;
+                    m_AmmoInventory.DecreaseAmmoCount(m_AmmoInventory.GetAmmoCountByType(m_Type),
+                        m_Type); //get everything down to zero
+                    Debug.Log("Case4");
+                }
+                else
+                {
+                    Debug.Log("No Case");
                 }
                 
                 //Update HUD
