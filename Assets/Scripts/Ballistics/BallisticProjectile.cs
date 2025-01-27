@@ -90,17 +90,22 @@ namespace WeaponSystem
         if (hit.transform.CompareTag("Target"))
         {
             hit.transform.gameObject.GetComponent<Target>().SetActive();
-            //Destroy(gameObject);
+            PlayImpactEffect(hit);
         }
         else if (!hit.transform.CompareTag("Player"))
         {
-            GameObject particleInstance = Instantiate(m_ImpactParticle, hit.point, Quaternion.identity);
-            particleInstance.GetComponent<ParticleSystem>().Play();             
-            //Destroy(gameObject);
-            Destroy(particleInstance, 0.2f);
+            PlayImpactEffect(hit);
         }
 
         if (!m_bIsFlying) Destroy(gameObject);
+    }
+
+    private void PlayImpactEffect(RaycastHit hit)
+    {
+        GameObject particleInstance = Instantiate(m_ImpactParticle, hit.point, Quaternion.identity);
+        particleInstance.GetComponent<ParticleSystem>().Play();             
+        //Destroy(gameObject);
+        Destroy(particleInstance, 0.2f);
     }
 
     private bool HandleRicochet(RaycastHit hit, Vector3 incomingDirection)
@@ -120,6 +125,7 @@ namespace WeaponSystem
                     m_vCurrentVelocity = reflectedVelocity * (1.0f - m_fRicochetVelocityLoss);
                     m_iRicochetCount++;
                     transform.position = hit.point + hit.normal * 0.1f;
+                    PlayImpactEffect(hit);
                     return true;
                 }
             }
