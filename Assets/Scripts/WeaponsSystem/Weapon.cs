@@ -82,6 +82,7 @@ namespace WeaponSystem
         {
             m_Player = GetComponentInParent<PlayerController>();
             m_AmmoInventory = GetComponentInParent<AmmoInventory>();
+            m_aimPoint.GetComponent<MeshRenderer>().enabled = false;
         }
 
         private void Start()
@@ -272,11 +273,13 @@ namespace WeaponSystem
                 // Smoothly interpolate between current and target aim points
                 m_fInterpolationProgress += Time.deltaTime / m_fAimSmoothingTime;
                 Vector3 smoothAimPoint = Vector3.Lerp(m_vCurrentAimPoint, m_vTargetAimPoint, m_fInterpolationProgress);
+                m_aimPoint.position = smoothAimPoint;
+                /*
                 if(!m_bIsFiring)
                 {
-                    m_aimPoint.position = smoothAimPoint;
-                }
-                else if(m_bIsFiring && m_CurrentAmmoInMag > 0)
+                   
+                }*/
+                /*else if(m_bIsFiring && m_CurrentAmmoInMag > 0)
                 {
                     if (m_bIsFullAuto)
                     {
@@ -286,7 +289,7 @@ namespace WeaponSystem
                     {
                         m_aimPoint.position += m_aimPoint.up * (Time.deltaTime * m_fSingleFireRecoilAmount); 
                     }
-                }
+                }*/
             }
             else
             {
