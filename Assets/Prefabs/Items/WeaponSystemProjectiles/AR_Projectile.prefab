@@ -283,7 +283,7 @@ MonoBehaviour:
   m_fInitialProjectileVelocity: 910
   m_fGravityValue: -9.81
   m_fDragCoeficient: 0.1
-  m_fCollisionRadius: 0.5
+  m_fCollisionRadius: 0.05
   m_iMaxRicochetCount: 3
   m_fRicochetVelocityLoss: 0.2
   m_fMinRicochetAngle: 10
