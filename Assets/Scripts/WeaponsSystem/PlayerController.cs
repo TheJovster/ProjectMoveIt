@@ -126,8 +126,7 @@ namespace WeaponSystem
             }
             else return;
         }
-
-
+        
         private void SwitchFireMode()
         {
             if (m_InputActions.Player.ToggleFireMode.WasPerformedThisFrame())
