@@ -49,12 +49,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 18bfb80724278dd4fb56268faa7eb970, type: 3}
-  m_Name: 
+  m_Name: AKM
   m_EditorClassIdentifier: 
   projectile: {fileID: 3690487023071457683, guid: 6623f48c9d3cf454a859a26f3378509a, type: 3}
   m_AmmoInventory: {fileID: 0}
   <MuzzlePoint>k__BackingField: {fileID: 786883037202472340}
   m_MuzzleFlash: {fileID: 0}
+  m_WeaponName: AKM
   m_RateOfFire: 0.5
   m_bHasFireSelect: 1
   m_bIsFullAuto: 1

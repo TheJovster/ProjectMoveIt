@@ -41,6 +41,9 @@ namespace WeaponSystem
             GenerateWeaponsList();
             DeactivateWeapons();
             SetCurrentWeaponOnInitializationActive(); //what is up with that naming?
+            HUDManager.Instance.UpdateAmmoInMag(m_CurrentWeapon.CurrentAmmoInMag);
+            HUDManager.Instance.UpdateMaxAmmo(m_AmmoInventory.GetAmmoCountByType(m_CurrentWeapon.Type));
+            HUDManager.Instance.UpdateName(m_CurrentWeapon.WeaponName);
         }
 
         public int CurrentWeaponIndex

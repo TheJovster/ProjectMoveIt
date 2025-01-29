@@ -19,14 +19,15 @@ namespace WeaponSystem
         }
         
         [SerializeField] private BallisticProjectile projectile;
-        [SerializeField]private AmmoInventory m_AmmoInventory;
+        [SerializeField] private AmmoInventory m_AmmoInventory;
         [field:SerializeField] public Transform MuzzlePoint { get; private set;}
 
         private PlayerController m_Player;
         private Vector3 m_AimDirection;
         [SerializeField]private ParticleSystem m_MuzzleFlash;
 
-        private float m_TimeSinceLastShot;
+        private float m_TimeSinceLastShot; 
+        [SerializeField] private string m_WeaponName;
         [SerializeField] private float m_RateOfFire = 0.5f;
         [SerializeField] private bool m_bHasFireSelect;
         [SerializeField] private bool m_bIsFullAuto;
@@ -76,7 +77,9 @@ namespace WeaponSystem
         public ParticleSystem MuzzleFlash => m_MuzzleFlash;
         
         public WeaponType Type => m_Type;
-      
+
+        public string WeaponName => m_WeaponName;
+        
         #endregion'
 
         private void Awake()
@@ -90,8 +93,6 @@ namespace WeaponSystem
         {
             m_originalPosition = transform.localPosition;
             m_CurrentAmmoInMag = m_MaxAmmoInMag;
-            HUDManager.Instance.UpdateAmmoInMag(m_CurrentAmmoInMag);
-            HUDManager.Instance.UpdateMaxAmmo(m_AmmoInventory.GetAmmoCountByType(m_Type));
         }
         
         private void Update()

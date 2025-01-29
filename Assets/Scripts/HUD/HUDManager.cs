@@ -21,6 +21,7 @@ namespace WeaponSystem
         
         [SerializeField] private TMP_Text m_AmmoInMag;
         [SerializeField] private TMP_Text m_AmmoMax;
+        [SerializeField] private TMP_Text m_WeaponName;
 
         public void UpdateAmmoInMag(int ammoInMag)
         {
@@ -34,8 +35,12 @@ namespace WeaponSystem
 
         private void OnDisable()
         {
-            if(Instance != null)
             Instance = null;
+        }
+
+        public void UpdateName(string newName)
+        {
+            m_WeaponName.text = newName;
         }
     }
 }

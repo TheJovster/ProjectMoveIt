@@ -89,9 +89,6 @@ namespace WeaponSystem
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             m_weaponOriginalPos = m_weapon.localPosition;
-            /*HUDManager.Instance.UpdateAmmoInMag(m_WeaponInventory.CurrentWeapon.CurrentAmmoInMag);
-            HUDManager.Instance.UpdateMaxAmmo(m_WeaponInventory.CurrentWeapon.AmmoInventory.GetAmmoCountByType
-            (m_WeaponInventory.CurrentWeapon.Type));*/
         }
 
         void Update()
@@ -123,6 +120,7 @@ namespace WeaponSystem
                 }
                 HUDManager.Instance.UpdateMaxAmmo(m_WeaponInventory.CurrentWeapon.AmmoInventory.GetAmmoCountByType(
                     m_WeaponInventory.CurrentWeapon.Type));
+                HUDManager.Instance.UpdateName(m_WeaponInventory.CurrentWeapon.WeaponName);
             }
             else return;
         }
