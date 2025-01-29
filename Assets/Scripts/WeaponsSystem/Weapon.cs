@@ -28,6 +28,7 @@ namespace WeaponSystem
 
         private float m_TimeSinceLastShot;
         [SerializeField] private float m_RateOfFire = 0.5f;
+        [SerializeField] private bool m_bHasFireSelect;
         [SerializeField] private bool m_bIsFullAuto;
         
         [SerializeField] private WeaponType m_Type;
@@ -148,6 +149,7 @@ namespace WeaponSystem
 
         public void ToggleFireMode()
         {
+            if(m_bHasFireSelect)
             m_bIsFullAuto = !m_bIsFullAuto;
         }
         

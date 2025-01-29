@@ -109,6 +109,7 @@ MonoBehaviour:
   <MuzzlePoint>k__BackingField: {fileID: 786883037202472340}
   m_MuzzleFlash: {fileID: 0}
   m_RateOfFire: 0.025
+  m_bHasFireSelect: 1
   m_bIsFullAuto: 0
   m_Type: 2
   m_fCircleRadius: 1.2
