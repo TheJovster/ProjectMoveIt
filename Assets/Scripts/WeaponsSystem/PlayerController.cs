@@ -1,5 +1,6 @@
 using System;
 using JetBrains.Annotations;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
@@ -120,6 +121,8 @@ namespace WeaponSystem
                     m_WeaponInventory.SwitchWeaponDecrement();
                     HUDManager.Instance.UpdateAmmoInMag(m_WeaponInventory.CurrentWeapon.CurrentAmmoInMag);
                 }
+                HUDManager.Instance.UpdateMaxAmmo(m_WeaponInventory.CurrentWeapon.AmmoInventory.GetAmmoCountByType(
+                    m_WeaponInventory.CurrentWeapon.Type));
             }
             else return;
         }
