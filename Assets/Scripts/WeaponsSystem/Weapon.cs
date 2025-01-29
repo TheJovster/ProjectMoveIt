@@ -90,6 +90,7 @@ namespace WeaponSystem
             m_originalPosition = transform.localPosition;
             m_CurrentAmmoInMag = m_MaxAmmoInMag;
             HUDManager.Instance.UpdateAmmoInMag(m_CurrentAmmoInMag);
+            HUDManager.Instance.UpdateMaxAmmo(m_AmmoInventory.GetAmmoCountByType(m_Type));
         }
         
         private void Update()
@@ -139,7 +140,7 @@ namespace WeaponSystem
             //instantiate projectile
             BallisticProjectile bulletInstance = Instantiate(projectile, MuzzlePoint.position, MuzzlePoint.rotation);
             bulletInstance.Fire(MuzzlePoint.forward);
-            m_MuzzleFlash?.Play();
+            //m_MuzzleFlash?.Play();
             m_TimeSinceLastShot = 0;
             m_CurrentAmmoInMag--;
             HUDManager.Instance.UpdateAmmoInMag(m_CurrentAmmoInMag);

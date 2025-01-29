@@ -10,50 +10,68 @@ namespace WeaponSystem
     {
         private InputSystem_Actions m_InputActions;
         private CharacterController m_CharacterController;
+        private WeaponInventory m_WeaponInventory;
         private Camera m_Camera;
         [SerializeField] private bool m_bIsInvertedYAxis = false;
         [Header("Aiming Values")] [SerializeField]
         private float m_fMinLookUpValue = -60.0f;
-
         [SerializeField] private float m_fMaxLookUpValue = 60.0f;
         [SerializeField] private float m_fRotationSpeed = 30.0f;
         [SerializeField] private Transform m_weapon;
         private Vector3 m_weaponOriginalPos;
-
-
-
-
+        
         [SerializeField]
         private Vector3 m_weaponAimPos =>
             new Vector3(0.0f, m_weaponOriginalPos.y, m_weaponOriginalPos.z); //serialized for test purposes
 
 
         private float m_fCurrentLookUpValue = 0.0f;
-
-
-
+        
         #region Properties
 
         public static PlayerController Instance;
+
+        public WeaponInventory WeaponInventory => m_WeaponInventory;
         
         public Camera Camera => m_Camera;
 
         public InputSystem_Actions PlayerActions => m_InputActions;
         
-        [field: SerializeField] public Weapon EquippedWeapon { get; private set; }
         [field: SerializeField] public float MoveSpeed { get; private set; }
         
         #endregion Properties
 
-
-
-
+        
         private void OnEnable()
         {
+            if (m_CharacterController == null)
+            {
+                m_CharacterController = GetComponent<CharacterController>();
+            }
             if (m_InputActions == null)
             {
                 m_InputActions = new InputSystem_Actions();
                 m_InputActions.Enable();
+            }
+
+
+            if (m_WeaponInventory == null)
+            {
+                m_WeaponInventory = GetComponent<WeaponInventory>();
+            }
+        }
+
+        private void OnDisable()
+        {
+            m_InputActions.Disable();
+        }
+
+        private void Awake()
+        {
+            
+            if (m_Camera == null)
+            {
+                m_Camera = GetComponentInChildren<Camera>();
             }
             if (Instance == null)
             {
@@ -65,29 +83,14 @@ namespace WeaponSystem
             }
         }
 
-        private void OnDisable()
-        {
-            m_InputActions.Disable();
-        }
-
-        private void Awake()
-        {
-            if (m_Camera == null)
-            {
-                m_Camera = GetComponentInChildren<Camera>();
-            }
-
-            if (m_CharacterController == null)
-            {
-                m_CharacterController = GetComponent<CharacterController>();
-            }
-        }
-
         void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             m_weaponOriginalPos = m_weapon.localPosition;
+            /*HUDManager.Instance.UpdateAmmoInMag(m_WeaponInventory.CurrentWeapon.CurrentAmmoInMag);
+            HUDManager.Instance.UpdateMaxAmmo(m_WeaponInventory.CurrentWeapon.AmmoInventory.GetAmmoCountByType
+            (m_WeaponInventory.CurrentWeapon.Type));*/
         }
 
         void Update()
@@ -100,15 +103,33 @@ namespace WeaponSystem
             Fire();
             SwitchFireMode();
             ReloadWeapon();
+            SwitchWeapon();
         }
 
+        private void SwitchWeapon()
+        {
+            if (m_InputActions.Player.SwitchWeapon.WasPerformedThisFrame())
+            {
+                if (m_InputActions.Player.SwitchWeapon.ReadValue<float>() > 0)
+                {
+                    m_WeaponInventory.SwitchWeaponIncrement();
+                    HUDManager.Instance.UpdateAmmoInMag(m_WeaponInventory.CurrentWeapon.CurrentAmmoInMag);
+                }
+                else if(m_InputActions.Player.SwitchWeapon.ReadValue<float>() < 0)
+                {
+                    m_WeaponInventory.SwitchWeaponDecrement();
+                    HUDManager.Instance.UpdateAmmoInMag(m_WeaponInventory.CurrentWeapon.CurrentAmmoInMag);
+                }
+            }
+            else return;
+        }
 
 
         private void SwitchFireMode()
         {
             if (m_InputActions.Player.ToggleFireMode.WasPerformedThisFrame())
             {
-                EquippedWeapon.ToggleFireMode();;
+                m_WeaponInventory.CurrentWeapon.ToggleFireMode();;
             }
         }
 
@@ -146,22 +167,22 @@ namespace WeaponSystem
             //rudimantary - TOOD: Expand the functinality
             //tiered if statements don't really do anything in terms of performance
             if (m_InputActions.Player.Attack.WasPerformedThisFrame() && 
-                !EquippedWeapon.IsFullAuto &&
-                EquippedWeapon.CurrentAmmoInMag > 0)
+                !m_WeaponInventory.CurrentWeapon.IsFullAuto &&
+                m_WeaponInventory.CurrentWeapon.CurrentAmmoInMag > 0)
             {
-                if (EquippedWeapon.TimeSinceLastShot >= EquippedWeapon.RateOfFire)
+                if (m_WeaponInventory.CurrentWeapon.TimeSinceLastShot >= m_WeaponInventory.CurrentWeapon.RateOfFire)
                 {
-                    EquippedWeapon.Fire();
+                    m_WeaponInventory.CurrentWeapon.Fire();
                 }
 
             }
             else if (m_InputActions.Player.Attack.IsPressed() && 
-                     EquippedWeapon.IsFullAuto &&
-                     EquippedWeapon.CurrentAmmoInMag > 0)
+                     m_WeaponInventory.CurrentWeapon.IsFullAuto &&
+                     m_WeaponInventory.CurrentWeapon.CurrentAmmoInMag > 0)
             {
-                if (EquippedWeapon.TimeSinceLastShot >= EquippedWeapon.RateOfFire)
+                if (m_WeaponInventory.CurrentWeapon.TimeSinceLastShot >= m_WeaponInventory.CurrentWeapon.RateOfFire)
                 {
-                    EquippedWeapon.Fire();
+                    m_WeaponInventory.CurrentWeapon.Fire();
                 }
             }
         }
@@ -170,7 +191,7 @@ namespace WeaponSystem
         {
             if (m_InputActions.Player.Reload.WasPerformedThisFrame())
             {
-                EquippedWeapon.Reload();
+                m_WeaponInventory.CurrentWeapon.Reload();
             }
         }
 

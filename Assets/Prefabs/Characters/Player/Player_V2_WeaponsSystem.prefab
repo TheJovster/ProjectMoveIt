@@ -116,6 +116,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 769407982216464940}
+  - {fileID: 3391230447504178572}
   m_Father: {fileID: 8995455195684401379}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3016902640424654159
@@ -235,7 +236,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -368,7 +369,7 @@ MonoBehaviour:
   m_CurrentPistolAmmo: 0
   m_MaxPistolAmmo: 120
   m_CurrentAssaultRifleAmmo: 0
-  m_MaxAssaultRifleAmmo: 3
+  m_MaxAssaultRifleAmmo: 999
   m_CurrentSMGAmmo: 0
   m_MaxSMGAmmo: 300
   m_CurrentDMRAmmo: 0
@@ -377,6 +378,68 @@ MonoBehaviour:
   m_MaxSniperAmmo: 120
   m_CurrentLMGAmmo: 0
   m_MaxLMGAmmo: 600
+--- !u!1001 &5101723615393318581
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7221597561660826143}
+    m_Modifications:
+    - target: {fileID: 3478417997530276744, guid: 3136bdb869d9bfb4e97e2cc683aff512, type: 3}
+      propertyPath: m_Name
+      value: AKM
+      objectReference: {fileID: 0}
+    - target: {fileID: 7628223136311556921, guid: 3136bdb869d9bfb4e97e2cc683aff512, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7628223136311556921, guid: 3136bdb869d9bfb4e97e2cc683aff512, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7628223136311556921, guid: 3136bdb869d9bfb4e97e2cc683aff512, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 7628223136311556921, guid: 3136bdb869d9bfb4e97e2cc683aff512, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7628223136311556921, guid: 3136bdb869d9bfb4e97e2cc683aff512, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7628223136311556921, guid: 3136bdb869d9bfb4e97e2cc683aff512, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7628223136311556921, guid: 3136bdb869d9bfb4e97e2cc683aff512, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7628223136311556921, guid: 3136bdb869d9bfb4e97e2cc683aff512, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7628223136311556921, guid: 3136bdb869d9bfb4e97e2cc683aff512, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7628223136311556921, guid: 3136bdb869d9bfb4e97e2cc683aff512, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3136bdb869d9bfb4e97e2cc683aff512, type: 3}
+--- !u!4 &3391230447504178572 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7628223136311556921, guid: 3136bdb869d9bfb4e97e2cc683aff512, type: 3}
+  m_PrefabInstance: {fileID: 5101723615393318581}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7165676696532218133
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -443,23 +506,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
       propertyPath: m_fCircleRadius
-      value: 0.15
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
       propertyPath: m_aimLayer.m_Bits
-      value: 127
+      value: 123
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
       propertyPath: m_fCircleAimRadius
-      value: 0.05
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
       propertyPath: m_fAimSmoothingTime
-      value: 0.7
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
       propertyPath: m_kickbackAmplitude
       value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470566525184341646, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
+      propertyPath: m_fSingleFireRecoilAmount
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

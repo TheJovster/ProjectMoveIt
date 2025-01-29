@@ -284,9 +284,9 @@ MonoBehaviour:
   m_fGravityValue: -9.81
   m_fDragCoeficient: 0.1
   m_fCollisionRadius: 0.05
-  m_iMaxRicochetCount: 3
+  m_iMaxRicochetCount: 5
   m_fRicochetVelocityLoss: 0.2
   m_fMinRicochetAngle: 10
   m_fMaxRicochetAngle: 60
-  m_fRicochetChance: 0.01
+  m_fRicochetChance: 0.05
   m_ImpactParticle: {fileID: 1643851402782444, guid: 4f703a1da613efc43b08b1d2bdcfd49f, type: 3}

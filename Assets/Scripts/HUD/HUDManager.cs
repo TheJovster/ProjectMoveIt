@@ -18,13 +18,7 @@ namespace WeaponSystem
                 Destroy(gameObject);
             }
         }
-
-        private void Start()
-        {
-            UpdateMaxAmmo(PlayerController.Instance.EquippedWeapon.AmmoInventory.GetAmmoCountByType(PlayerController.Instance.EquippedWeapon.Type));
-        }
-
-
+        
         [SerializeField] private TMP_Text m_AmmoInMag;
         [SerializeField] private TMP_Text m_AmmoMax;
 
