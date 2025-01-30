@@ -328,7 +328,7 @@ MonoBehaviour:
   m_RateOfFire: 0.75
   m_bHasFireSelect: 0
   m_bIsFullAuto: 0
-  m_fAccuracyCoefficient: 0.1
+  m_fAccuracyCoefficient: 0.01
   m_Type: 3
   m_fCircleRadius: 0.175
   m_fCircleAimRadius: 0.05
