@@ -1,5 +1,6 @@
 using System;
 using System.Security.Cryptography.X509Certificates;
+using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -31,7 +32,7 @@ namespace WeaponSystem
         [SerializeField] private float m_RateOfFire = 0.5f;
         [SerializeField] private bool m_bHasFireSelect;
         [SerializeField] private bool m_bIsFullAuto;
-        [SerializeField] private float m_fAccuracyCoefficient;
+        [SerializeField, Range(0.01f, 0.05f)] private float m_fAccuracyCoefficient;
         private float m_fDistanceToTarget;
         
         [SerializeField] private WeaponType m_Type;
@@ -216,7 +217,7 @@ namespace WeaponSystem
                 float randomRadius = UnityEngine.Random.Range(0f, m_fCircleRadius);
 
                 Vector3 randomPoint = center + upDirection * randomRadius;
-                randomPoint += rightDirection * UnityEngine.Random.Range(-m_fCircleRadius, m_fCircleRadius);
+                randomPoint += rightDirection * UnityEngine.Random.Range(-m_fCircleRadius + -(m_fDistanceToTarget * m_fAccuracyCoefficient), m_fCircleRadius + (m_fDistanceToTarget * m_fAccuracyCoefficient));
 
                 // Maintain the same depth as the center point
                 //return new Vector3(x, y, center.z);
@@ -243,10 +244,8 @@ namespace WeaponSystem
                 Vector3 rightDirection = Vector3.Cross(normal, upDirection);
                 float randomRadius = UnityEngine.Random.Range(-m_fCircleAimRadius, m_fCircleAimRadius);
                 Vector3 randomPoint = center + upDirection * randomRadius;
-                randomPoint += rightDirection * UnityEngine.Random.Range(
-                    -m_fCircleAimRadius, m_fCircleAimRadius); 
+                randomPoint += rightDirection * UnityEngine.Random.Range(-m_fCircleAimRadius, m_fCircleAimRadius); 
                                ;
-
                 // Maintain the same depth as the center point
                 return randomPoint;
             }

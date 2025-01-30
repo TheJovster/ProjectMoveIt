@@ -97,7 +97,6 @@ namespace WeaponSystem
             Move();
             LookUp();
             RotatePlayer();
-            
             Fire();
             SwitchFireMode();
             ReloadWeapon();
