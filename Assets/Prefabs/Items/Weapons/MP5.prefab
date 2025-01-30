@@ -106,25 +106,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 3690487023071457683, guid: 410b3442451403e4aa4ee7a7b5c38035, type: 3}
   m_AmmoInventory: {fileID: 0}
-  <MuzzlePoint>k__BackingField: {fileID: 786883037202472340}
+  m_muzzlePoint: {fileID: 786883037202472340}
   m_MuzzleFlash: {fileID: 0}
   m_WeaponName: MP5
   m_RateOfFire: 0.025
   m_bHasFireSelect: 1
   m_bIsFullAuto: 0
+  m_fAccuracyCoefficient: 0.4
   m_Type: 2
-  m_fCircleRadius: 1.2
-  m_fCircleAimRadius: 0.4
+  m_fCircleRadius: 0.2
+  m_fCircleAimRadius: 0.15
   m_fAimSmoothingTime: 0.33
   m_bIsAiming: 0
   m_bIsFiring: 0
-  m_bSingleFireTriggered: 0
-  m_fAimPointRaycastDistance: 1000
+  m_fAimPointRaycastDistance: 700
   m_aimLayer:
     serializedVersion: 2
     m_Bits: 123
   m_aimPoint: {fileID: 0}
-  m_fSingleFireRecoilAmount: 3
   m_originalPosition: {x: 0, y: 0, z: 0}
   m_MaxAmmoInMag: 30
 --- !u!1 &4561034452949244827

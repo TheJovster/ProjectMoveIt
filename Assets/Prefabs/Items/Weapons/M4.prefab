@@ -30,8 +30,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.1, z: 0.666}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 786883037202472340}
+  m_Children: []
   m_Father: {fileID: 7628223136311556921}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &389258013438223535
@@ -211,6 +210,7 @@ Transform:
   - {fileID: 7482854372047399847}
   - {fileID: 2403490455769502544}
   - {fileID: 1499739143791977277}
+  - {fileID: 786883037202472340}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7197487997189354001
@@ -280,25 +280,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 3690487023071457683, guid: 6623f48c9d3cf454a859a26f3378509a, type: 3}
   m_AmmoInventory: {fileID: 0}
-  <MuzzlePoint>k__BackingField: {fileID: 786883037202472340}
+  m_muzzlePoint: {fileID: 786883037202472340}
   m_MuzzleFlash: {fileID: 4378911981913536610}
   m_WeaponName: M4
-  m_RateOfFire: 0.1
+  m_RateOfFire: 0.4
   m_bHasFireSelect: 1
   m_bIsFullAuto: 1
+  m_fAccuracyCoefficient: 0.5
   m_Type: 0
-  m_fCircleRadius: 1
-  m_fCircleAimRadius: 0.25
+  m_fCircleRadius: 0.125
+  m_fCircleAimRadius: 0.1
   m_fAimSmoothingTime: 0.5
   m_bIsAiming: 0
   m_bIsFiring: 0
-  m_bSingleFireTriggered: 0
-  m_fAimPointRaycastDistance: 1000
+  m_fAimPointRaycastDistance: 700
   m_aimLayer:
     serializedVersion: 2
     m_Bits: 0
   m_aimPoint: {fileID: 0}
-  m_fSingleFireRecoilAmount: 3
   m_originalPosition: {x: 0, y: 0, z: 0}
   m_MaxAmmoInMag: 0
 --- !u!64 &4364234292082304947
@@ -348,12 +347,12 @@ Transform:
   m_GameObject: {fileID: 7063493300781308227}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.33}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0.99600005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4470741321636784558}
-  m_Father: {fileID: 1499739143791977277}
+  m_Father: {fileID: 7628223136311556921}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8012664146318018510
 GameObject:

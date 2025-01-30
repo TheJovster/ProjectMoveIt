@@ -2578,6 +2578,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300000, guid: dd8b671c25e4a824eb0b640e3869c126, type: 3}
+    - target: {fileID: 1656453425869981595, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
+      propertyPath: m_fCircleRadius
+      value: 0.125
+      objectReference: {fileID: 0}
+    - target: {fileID: 1656453425869981595, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
+      propertyPath: m_fCircleAimRadius
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 3693384872871653435, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
       propertyPath: m_aimPoint
       value: 
@@ -2585,6 +2593,10 @@ PrefabInstance:
     - target: {fileID: 3693384872871653435, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
       propertyPath: m_RateOfFire
       value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5921120300281714683, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6350577932635915963, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
       propertyPath: m_Name

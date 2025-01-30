@@ -20,7 +20,7 @@ namespace WeaponSystem
         
         [SerializeField] private BallisticProjectile projectile;
         [SerializeField] private AmmoInventory m_AmmoInventory;
-        [field:SerializeField] public Transform MuzzlePoint { get; private set;}
+        [SerializeField] private Transform m_muzzlePoint;
 
         private PlayerController m_Player;
         private Vector3 m_AimDirection;
@@ -31,6 +31,8 @@ namespace WeaponSystem
         [SerializeField] private float m_RateOfFire = 0.5f;
         [SerializeField] private bool m_bHasFireSelect;
         [SerializeField] private bool m_bIsFullAuto;
+        [SerializeField] private float m_fAccuracyCoefficient;
+        private float m_fDistanceToTarget;
         
         [SerializeField] private WeaponType m_Type;
         
@@ -47,7 +49,7 @@ namespace WeaponSystem
 
         [SerializeField]private bool m_bIsAiming; //exposed for testing
         [SerializeField]private bool m_bIsFiring = false;
-        [SerializeField]private bool m_bSingleFireTriggered = false;
+        //[SerializeField]private bool m_bSingleFireTriggered;
         private bool m_bFireButtonHeld;
         private bool m_bFireButtonPressed;
         
@@ -56,7 +58,7 @@ namespace WeaponSystem
         [SerializeField] private Transform m_aimPoint;
         
         private float m_timeSinceStarted = 0;
-        [SerializeField] private float m_fSingleFireRecoilAmount = 3.0f; //default setting at 3.
+        //[SerializeField] private float m_fSingleFireRecoilAmount = 3.0f; //default setting at 3.
         [SerializeField] private Vector3 m_originalPosition;
         /*[SerializeField] private float m_kickbackForce = 10.0f;
         [SerializeField] private float m_kickbackAmplitude = 0.5f;*/
@@ -66,6 +68,8 @@ namespace WeaponSystem
         
         #region Properties
 
+        public Transform MuzzlePoint => m_muzzlePoint;
+        
         public float TimeSinceLastShot => m_TimeSinceLastShot;
         public float RateOfFire => m_RateOfFire;
         public bool IsFullAuto => m_bIsFullAuto;
@@ -86,7 +90,7 @@ namespace WeaponSystem
         {
             m_Player = GetComponentInParent<PlayerController>();
             m_AmmoInventory = GetComponentInParent<AmmoInventory>();
-            m_aimPoint.GetComponent<MeshRenderer>().enabled = false;
+            //m_aimPoint.GetComponent<MeshRenderer>().enabled = false;
         }
 
         private void Start()
@@ -108,22 +112,22 @@ namespace WeaponSystem
 
             RaycastHit hit;
             bool aim = Physics.Raycast(
-                MuzzlePoint.position,
-                MuzzlePoint.position - m_aimPoint.position, 
+                m_muzzlePoint.position,
+                m_muzzlePoint.position - m_aimPoint.position, 
                 out hit, 
-                1000.0f, 
+                m_fAimPointRaycastDistance, 
                 m_aimLayer);
             if (aim)
             {
-                m_AimDirection = MuzzlePoint.position - hit.point;
-                Debug.DrawRay(MuzzlePoint.position, m_AimDirection * 1000.0f, Color.green);
+                m_AimDirection = m_muzzlePoint.position - hit.point;
+                Debug.DrawRay(m_muzzlePoint.position, m_AimDirection * m_fAimPointRaycastDistance, Color.green);
             }
             else
             {
-                m_AimDirection = MuzzlePoint.forward;
-                Debug.DrawRay(MuzzlePoint.position, m_AimDirection * 1000.0f, Color.green);
+                m_AimDirection = m_muzzlePoint.forward;
+                Debug.DrawRay(m_muzzlePoint.position, m_AimDirection * m_fAimPointRaycastDistance, Color.green);
             }
-
+            
         }
 
         private void SetIsAiming()
@@ -140,8 +144,8 @@ namespace WeaponSystem
         public void Fire()
         {
             //instantiate projectile
-            BallisticProjectile bulletInstance = Instantiate(projectile, MuzzlePoint.position, MuzzlePoint.rotation);
-            bulletInstance.Fire(MuzzlePoint.forward);
+            BallisticProjectile bulletInstance = Instantiate(projectile, m_muzzlePoint.position, m_muzzlePoint.rotation);
+            bulletInstance.Fire(m_muzzlePoint.forward);
             //m_MuzzleFlash?.Play();
             m_TimeSinceLastShot = 0;
             m_CurrentAmmoInMag--;
@@ -150,8 +154,10 @@ namespace WeaponSystem
 
         public void ToggleFireMode()
         {
-            if(m_bHasFireSelect)
-            m_bIsFullAuto = !m_bIsFullAuto;
+            if (m_bHasFireSelect)
+            {
+                m_bIsFullAuto = !m_bIsFullAuto;
+            }
         }
         
         private void SetIsFiring()
@@ -166,12 +172,12 @@ namespace WeaponSystem
             else if (m_bFireButtonPressed && !m_bIsFullAuto && m_CurrentAmmoInMag > 0)
             {
                 m_bIsFiring = true;
-                m_bSingleFireTriggered = true;
+                //m_bSingleFireTriggered = true;
             }
             else
             {
                 m_bIsFiring = false;
-                m_bSingleFireTriggered = false;
+                //m_bSingleFireTriggered = false;
             }
             if (m_bIsFiring && m_bIsFullAuto)
             {
@@ -237,7 +243,9 @@ namespace WeaponSystem
                 Vector3 rightDirection = Vector3.Cross(normal, upDirection);
                 float randomRadius = UnityEngine.Random.Range(-m_fCircleAimRadius, m_fCircleAimRadius);
                 Vector3 randomPoint = center + upDirection * randomRadius;
-                randomPoint += rightDirection * UnityEngine.Random.Range(-m_fCircleAimRadius, m_fCircleAimRadius);
+                randomPoint += rightDirection * UnityEngine.Random.Range(
+                    -m_fCircleAimRadius, m_fCircleAimRadius); 
+                               ;
 
                 // Maintain the same depth as the center point
                 return randomPoint;
@@ -281,17 +289,17 @@ namespace WeaponSystem
                 /*
                 if(!m_bIsFiring)
                 {
-                   
+
                 }*/
                 /*else if(m_bIsFiring && m_CurrentAmmoInMag > 0)
                 {
                     if (m_bIsFullAuto)
                     {
-                        m_aimPoint.position += m_aimPoint.up * (Time.deltaTime * m_timeSinceStarted); 
+                        m_aimPoint.position += m_aimPoint.up * (Time.deltaTime * m_timeSinceStarted);
                     }
                     if(!m_bIsFullAuto && m_bSingleFireTriggered)
                     {
-                        m_aimPoint.position += m_aimPoint.up * (Time.deltaTime * m_fSingleFireRecoilAmount); 
+                        m_aimPoint.position += m_aimPoint.up * (Time.deltaTime * m_fSingleFireRecoilAmount);
                     }
                 }*/
             }
@@ -300,6 +308,9 @@ namespace WeaponSystem
                 // Go back to original direction if no hit detected
                 m_aimPoint.position = direction;
             }
+
+            m_fDistanceToTarget = Vector3.Distance(m_muzzlePoint.position, m_aimPoint.position);
+            Debug.Log(m_fDistanceToTarget * m_fAccuracyCoefficient);
         }
 
         public void Reload()
@@ -350,8 +361,6 @@ namespace WeaponSystem
         {
             Debug.Log("Kickback triggered");
         }
-
-
     }
 }
 
