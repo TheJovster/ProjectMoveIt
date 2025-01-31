@@ -31,6 +31,8 @@ namespace WeaponSystem
     [SerializeField] private float m_fMaxRicochetAngle = 60.0f;
     [SerializeField, Range(0.0f, 1.0f)] private float m_fRicochetChance = 1.0f; //the chance of ricochet spawning
     [SerializeField] private GameObject m_ImpactParticle;
+    [SerializeField] private GameObject m_DecalGameObject;
+    [SerializeField] private float m_fDecalLifetime;
     private int m_iRicochetCount = 0;
     
     private void Start()
@@ -91,10 +93,12 @@ namespace WeaponSystem
         {
             hit.transform.gameObject.GetComponent<Target>().SetActive();
             PlayImpactEffect(hit);
+            ProjectDecal(hit);
         }
         else if (!hit.transform.CompareTag("Player"))
         {
             PlayImpactEffect(hit);
+            ProjectDecal(hit);
         }
 
         if (!m_bIsFlying) Destroy(gameObject);
@@ -106,6 +110,13 @@ namespace WeaponSystem
         particleInstance.GetComponent<ParticleSystem>().Play();             
         //Destroy(gameObject);
         Destroy(particleInstance, 0.2f);
+    }
+
+    private void ProjectDecal(RaycastHit hit)
+    {
+        Quaternion rotation = Quaternion.FromToRotation(hit.point, hit.normal) * transform.rotation;
+        GameObject decalInstance = Instantiate(m_DecalGameObject, hit.point,  rotation);
+        Destroy(decalInstance, m_fDecalLifetime);
     }
 
     private bool HandleRicochet(RaycastHit hit, Vector3 incomingDirection)

@@ -290,3 +290,5 @@ MonoBehaviour:
   m_fMaxRicochetAngle: 60
   m_fRicochetChance: 0.05
   m_ImpactParticle: {fileID: 1643851402782444, guid: 4f703a1da613efc43b08b1d2bdcfd49f, type: 3}
+  m_DecalGameObject: {fileID: 2587081985691798039, guid: 7924740de1ca8e847850f317c1ab33c1, type: 3}
+  m_fDecalLifetime: 10

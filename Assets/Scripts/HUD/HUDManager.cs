@@ -1,6 +1,8 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections.Generic;
 
 namespace WeaponSystem
 {
@@ -22,6 +24,8 @@ namespace WeaponSystem
         [SerializeField] private TMP_Text m_AmmoInMag;
         [SerializeField] private TMP_Text m_AmmoMax;
         [SerializeField] private TMP_Text m_WeaponName;
+        [SerializeField] private List<Image> m_FireRateImages = new List<Image>();
+        [SerializeField] private bool m_bFireRateCheck;
 
         public void UpdateAmmoInMag(int ammoInMag)
         {
@@ -41,6 +45,21 @@ namespace WeaponSystem
         public void UpdateName(string newName)
         {
             m_WeaponName.text = newName;
+        }
+
+        public void UpdateFireRateImage(bool value)
+        {
+            m_bFireRateCheck = value;
+            if(m_bFireRateCheck)
+            {
+                m_FireRateImages[0].enabled = true;
+                m_FireRateImages[1].enabled = false;
+            }
+            else if(!m_bFireRateCheck)
+            {
+                m_FireRateImages[1].enabled = true;
+               m_FireRateImages[0].enabled = false;
+            }
         }
     }
 }

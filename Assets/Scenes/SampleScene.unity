@@ -176,6 +176,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1811788513}
     - target: {fileID: 8470566525184341646, guid: aa48c4322edf3904e83f7696a188f37e, type: 3}
+      propertyPath: m_fCircleRadiusBase
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470566525184341646, guid: aa48c4322edf3904e83f7696a188f37e, type: 3}
       propertyPath: m_fAccuracyCoefficient
       value: 0.01
       objectReference: {fileID: 0}
@@ -2229,6 +2233,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1811788513}
     - target: {fileID: 8470566525184341646, guid: 7ee4e9bedc143de4fafdc5e69b502dc3, type: 3}
+      propertyPath: m_fCircleRadiusBase
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470566525184341646, guid: 7ee4e9bedc143de4fafdc5e69b502dc3, type: 3}
       propertyPath: m_fAccuracyCoefficient
       value: 0.01
       objectReference: {fileID: 0}
@@ -2595,6 +2603,10 @@ PrefabInstance:
       value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1656453425869981595, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
+      propertyPath: m_fCircleRadiusBase
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1656453425869981595, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
       propertyPath: m_fAccuracyCoefficient
       value: 0.01
       objectReference: {fileID: 0}
@@ -2605,6 +2617,10 @@ PrefabInstance:
     - target: {fileID: 3693384872871653435, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
       propertyPath: m_RateOfFire
       value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3693384872871653435, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
+      propertyPath: m_fCircleRadiusBase
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3693384872871653435, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
       propertyPath: m_fAccuracyCoefficient

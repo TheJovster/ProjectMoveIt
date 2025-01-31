@@ -38,10 +38,11 @@ namespace WeaponSystem
         [SerializeField] private WeaponType m_Type;
         
         [Header("Aim Point Smoothing")] [SerializeField]
-        private float m_fCircleRadius = 1f;
+        private float m_fCircleRadiusBase = 1f;
 
         [SerializeField] private float m_fCircleAimRadius = 0.25f;
         [SerializeField] private float m_fAimSmoothingTime = 0.5f;
+        private float m_fCircleRadiusActual;
 
 
         private Vector3 m_vCurrentAimPoint;
@@ -87,6 +88,11 @@ namespace WeaponSystem
         
         #endregion'
 
+        private void OnEnable()
+        {
+            HUDManager.Instance.UpdateFireRateImage(m_bIsFullAuto);
+        }
+
         private void Awake()
         {
             m_Player = GetComponentInParent<PlayerController>();
@@ -98,11 +104,13 @@ namespace WeaponSystem
         {
             m_originalPosition = transform.localPosition;
             m_CurrentAmmoInMag = m_MaxAmmoInMag;
+            HUDManager.Instance.UpdateFireRateImage(m_bIsFullAuto);
         }
         
         private void Update()
         {
             m_TimeSinceLastShot += Time.deltaTime;
+            m_fCircleRadiusActual = m_fCircleRadiusBase + (m_fDistanceToTarget * m_fAccuracyCoefficient);
 
             SetIsAiming();
             SetIsFiring();
@@ -159,6 +167,7 @@ namespace WeaponSystem
             {
                 m_bIsFullAuto = !m_bIsFullAuto;
             }
+            HUDManager.Instance.UpdateFireRateImage(m_bIsFullAuto);
         }
         
         private void SetIsFiring()
@@ -214,10 +223,10 @@ namespace WeaponSystem
                 //normals
                 Vector3 upDirection = tangent;
                 Vector3 rightDirection = Vector3.Cross(normal, upDirection);
-                float randomRadius = UnityEngine.Random.Range(0f, m_fCircleRadius);
+                float randomRadius = UnityEngine.Random.Range(0f, m_fCircleRadiusActual);
 
                 Vector3 randomPoint = center + upDirection * randomRadius;
-                randomPoint += rightDirection * UnityEngine.Random.Range(-m_fCircleRadius + -(m_fDistanceToTarget * m_fAccuracyCoefficient), m_fCircleRadius + (m_fDistanceToTarget * m_fAccuracyCoefficient));
+                randomPoint += rightDirection * UnityEngine.Random.Range(-m_fCircleRadiusActual, m_fCircleRadiusActual);
 
                 // Maintain the same depth as the center point
                 //return new Vector3(x, y, center.z);
@@ -309,7 +318,6 @@ namespace WeaponSystem
             }
 
             m_fDistanceToTarget = Vector3.Distance(m_muzzlePoint.position, m_aimPoint.position);
-            Debug.Log(m_fDistanceToTarget * m_fAccuracyCoefficient);
         }
 
         public void Reload()
