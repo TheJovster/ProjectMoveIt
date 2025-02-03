@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3101518132733157704}
   - component: {fileID: 4596338337468298433}
   m_Layer: 0
-  m_Name: BulletHoleDecalProjector
+  m_Name: DecalProjector_BulletHole_Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

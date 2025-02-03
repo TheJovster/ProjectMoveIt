@@ -1,5 +1,6 @@
 using System;
 using System.Security.Cryptography.X509Certificates;
+using Math;
 using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -22,6 +23,10 @@ namespace WeaponSystem
         [SerializeField] private BallisticProjectile projectile;
         [SerializeField] private AmmoInventory m_AmmoInventory;
         [SerializeField] private Transform m_muzzlePoint;
+        [SerializeField] private float m_fADSTime = 10.0f;
+        private Vector3 m_VOriginalPosition;
+
+        [SerializeField] Vector3 m_VADSPosition;
 
         private PlayerController m_Player;
         private Vector3 m_AimDirection;
@@ -41,7 +46,9 @@ namespace WeaponSystem
         private float m_fCircleRadiusBase = 1f;
 
         [SerializeField] private float m_fCircleAimRadius = 0.25f;
-        [SerializeField] private float m_fAimSmoothingTime = 0.5f;
+        private float m_fAimSmoothingTime;
+        [SerializeField] private float m_fAimSmoothingTimeHip = 0.5f;
+        [SerializeField] private float m_fAimSmoothingTimeADS = 0.25f;
         private float m_fCircleRadiusActual;
 
 
@@ -60,8 +67,6 @@ namespace WeaponSystem
         [SerializeField] private Transform m_aimPoint;
         
         private float m_timeSinceStarted = 0;
-        //[SerializeField] private float m_fSingleFireRecoilAmount = 3.0f; //default setting at 3.
-        [SerializeField] private Vector3 m_originalPosition;
         /*[SerializeField] private float m_kickbackForce = 10.0f;
         [SerializeField] private float m_kickbackAmplitude = 0.5f;*/
         private float m_kickbackTimer;
@@ -102,8 +107,12 @@ namespace WeaponSystem
 
         private void Start()
         {
-            m_originalPosition = transform.localPosition;
+            if (!m_bIsAiming)
+            {
+                m_VOriginalPosition = transform.localPosition;
+            }
             m_CurrentAmmoInMag = m_MaxAmmoInMag;
+            m_fAimSmoothingTime = m_fAimSmoothingTimeHip;
             HUDManager.Instance.UpdateFireRateImage(m_bIsFullAuto);
         }
         
@@ -137,6 +146,8 @@ namespace WeaponSystem
                 Debug.DrawRay(m_muzzlePoint.position, m_AimDirection * m_fAimPointRaycastDistance, Color.green);
             }
             
+            SetADS();
+            
         }
 
         private void SetIsAiming()
@@ -168,6 +179,20 @@ namespace WeaponSystem
                 m_bIsFullAuto = !m_bIsFullAuto;
             }
             HUDManager.Instance.UpdateFireRateImage(m_bIsFullAuto);
+        }
+
+        private void SetADS()
+        {
+            if (m_bIsAiming)
+            {
+                m_fAimSmoothingTime = m_fAimSmoothingTimeADS;
+                transform.localPosition = Vector3.Lerp(transform.localPosition, m_VADSPosition, m_fADSTime * Time.deltaTime);
+            }
+            else
+            {
+                m_fAimSmoothingTime = m_fAimSmoothingTimeHip;
+                transform.localPosition = Vector3.Lerp(transform.localPosition, m_VOriginalPosition, m_fADSTime * Time.deltaTime);
+            }
         }
         
         private void SetIsFiring()

@@ -1,16 +1,12 @@
-
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-
 namespace WeaponSystem
 {
     public class WeaponInventory : MonoBehaviour
     {
-
-        
         [FormerlySerializedAs("m_iCurrentWeapoinIndex")] [SerializeField] private int m_iCurrentWeaponIndex;
         [SerializeField] private Weapon m_CurrentWeapon;
         [SerializeField] private List<Weapon> m_WeaponsList = new List<Weapon>();
@@ -19,11 +15,9 @@ namespace WeaponSystem
 
         private AmmoInventory m_AmmoInventory;
         
-        
         #region Properties
 
         public Weapon CurrentWeapon => m_CurrentWeapon;
-
 
         #endregion
         
@@ -45,15 +39,7 @@ namespace WeaponSystem
             HUDManager.Instance.UpdateMaxAmmo(m_AmmoInventory.GetAmmoCountByType(m_CurrentWeapon.Type));
             HUDManager.Instance.UpdateName(m_CurrentWeapon.WeaponName);
         }
-
-        public int CurrentWeaponIndex
-        {
-            get
-            {
-                return m_iCurrentWeaponIndex;
-            }
-        }
-
+        
         public void GenerateWeaponsList()
         {
             foreach (Weapon weapon in m_WeaponSocket.GetComponentsInChildren<Weapon>())

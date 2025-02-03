@@ -153,10 +153,6 @@ namespace WeaponSystem
         m_vStartPosition = transform.position;
     }
 
-    private void AnimateMovement()
-    {
-        
-    }
 }
 }
 
