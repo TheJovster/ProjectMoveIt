@@ -465,7 +465,7 @@ PrefabInstance:
       objectReference: {fileID: 6857646963918435650}
     - target: {fileID: 8470566525184341646, guid: aa48c4322edf3904e83f7696a188f37e, type: 3}
       propertyPath: m_VADSPosition.y
-      value: -0.175
+      value: -0.19
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: aa48c4322edf3904e83f7696a188f37e, type: 3}
       propertyPath: m_VADSPosition.z
@@ -715,6 +715,10 @@ PrefabInstance:
       propertyPath: m_aimPoint
       value: 
       objectReference: {fileID: 6857646963918435650}
+    - target: {fileID: 8470566525184341646, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
+      propertyPath: m_RateOfFire
+      value: 0.175
+      objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
       propertyPath: m_MaxAmmoInMag
       value: 30

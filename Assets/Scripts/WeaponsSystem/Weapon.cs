@@ -390,6 +390,7 @@ namespace WeaponSystem
         private void Kickback()
         {
             Debug.Log("Kickback triggered");
+            
         }
 
         private IEnumerator KickbackCoroutine()
