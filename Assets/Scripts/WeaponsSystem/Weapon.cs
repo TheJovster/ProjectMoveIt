@@ -1,10 +1,8 @@
 using System;
-using System.Security.Cryptography.X509Certificates;
-using Math;
-using Unity.Collections;
+using System.Collections.Generic;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace WeaponSystem
 {
@@ -392,6 +390,15 @@ namespace WeaponSystem
         private void Kickback()
         {
             Debug.Log("Kickback triggered");
+        }
+
+        private IEnumerator KickbackCoroutine()
+        {
+            //maybe just be lazy and use a coroutine?
+            //I know there's a lot of overhead
+            //maybe use an async operation?
+            //I have no clue, actually?
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }
