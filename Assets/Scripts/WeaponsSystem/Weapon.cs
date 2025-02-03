@@ -48,6 +48,8 @@ namespace WeaponSystem
         [SerializeField] private float m_fAimSmoothingTimeHip = 0.5f;
         [SerializeField] private float m_fAimSmoothingTimeADS = 0.25f;
         private float m_fCircleRadiusActual;
+        private float m_fCircleRadiusActualOriginal;
+        private float m_fCircleAimRadiusOriginal;
 
 
         private Vector3 m_vCurrentAimPoint;
@@ -65,6 +67,9 @@ namespace WeaponSystem
         [SerializeField] private Transform m_aimPoint;
         
         private float m_timeSinceStarted = 0;
+
+        private float m_fMaxTimeSinceStarted = 5.0f;
+        
         /*[SerializeField] private float m_kickbackForce = 10.0f;
         [SerializeField] private float m_kickbackAmplitude = 0.5f;*/
         private float m_kickbackTimer;
@@ -112,6 +117,8 @@ namespace WeaponSystem
             m_CurrentAmmoInMag = m_MaxAmmoInMag;
             m_fAimSmoothingTime = m_fAimSmoothingTimeHip;
             HUDManager.Instance.UpdateFireRateImage(m_bIsFullAuto);
+            m_fCircleAimRadiusOriginal = m_fCircleAimRadius;
+            m_fCircleRadiusActualOriginal = m_fCircleRadiusBase;
         }
         
         private void Update()
@@ -203,15 +210,37 @@ namespace WeaponSystem
             if (m_bFireButtonHeld && m_bIsFullAuto && m_CurrentAmmoInMag > 0)
             {
                 m_bIsFiring = true;
+                m_timeSinceStarted += Time.deltaTime;
+                if (m_timeSinceStarted >= m_fMaxTimeSinceStarted)
+                {
+                    m_timeSinceStarted = m_fMaxTimeSinceStarted;
+                }
+                m_fCircleAimRadius += m_timeSinceStarted * Time.deltaTime;
+                m_fCircleRadiusActual += m_TimeSinceLastShot * Time.deltaTime;
             }
             else if (m_bFireButtonPressed && !m_bIsFullAuto && m_CurrentAmmoInMag > 0)
             {
                 m_bIsFiring = true;
+                float timeSinceStartedSaved = m_timeSinceStarted;
+                m_timeSinceStarted = 0;
+                timeSinceStartedSaved -= Time.deltaTime;
+                if (timeSinceStartedSaved <= 0.0f)
+                {
+                    timeSinceStartedSaved = 0.0f;
+                }
+
+                m_fCircleAimRadius -= timeSinceStartedSaved * Time.deltaTime;
+                if (m_fCircleAimRadius <= m_fCircleAimRadiusOriginal)
+                {
+                    m_fCircleAimRadius = m_fCircleAimRadiusOriginal;
+                }
                 //m_bSingleFireTriggered = true;
             }
             else
             {
                 m_bIsFiring = false;
+                m_fCircleAimRadius = m_fCircleAimRadiusOriginal;
+                m_fCircleRadiusActual = m_fCircleRadiusActualOriginal;
                 //m_bSingleFireTriggered = false;
             }
             if (m_bIsFiring && m_bIsFullAuto)
