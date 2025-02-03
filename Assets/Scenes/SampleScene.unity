@@ -2481,6 +2481,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8293807768731745901, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
+      propertyPath: m_VADSPosition.y
+      value: -0.075
+      objectReference: {fileID: 0}
+    - target: {fileID: 8293807768731745901, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
+      propertyPath: m_fCircleAimRadius
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8293807768731745901, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
+      propertyPath: m_fCircleRadiusBase
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

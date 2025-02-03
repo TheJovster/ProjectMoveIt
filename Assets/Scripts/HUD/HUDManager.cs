@@ -26,6 +26,7 @@ namespace WeaponSystem
         [SerializeField] private TMP_Text m_WeaponName;
         [SerializeField] private List<Image> m_FireRateImages = new List<Image>();
         [SerializeField] private bool m_bFireRateCheck;
+        [SerializeField] private GameObject m_aimReticule;
 
         public void UpdateAmmoInMag(int ammoInMag)
         {
@@ -60,6 +61,16 @@ namespace WeaponSystem
                 m_FireRateImages[1].enabled = true;
                m_FireRateImages[0].enabled = false;
             }
+        }
+
+        public void EnableAimReticle()
+        {
+            m_aimReticule.SetActive(true);
+        }
+
+        public void DisableAimReticle()
+        {
+            m_aimReticule.SetActive(false);
         }
     }
 }

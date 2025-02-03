@@ -100,7 +100,7 @@ namespace WeaponSystem
         {
             m_Player = GetComponentInParent<PlayerController>();
             m_AmmoInventory = GetComponentInParent<AmmoInventory>();
-            //m_aimPoint.GetComponent<MeshRenderer>().enabled = false;
+            m_aimPoint.GetComponent<MeshRenderer>().enabled = false;
         }
 
         private void Start()
@@ -185,11 +185,13 @@ namespace WeaponSystem
             {
                 m_fAimSmoothingTime = m_fAimSmoothingTimeADS;
                 transform.localPosition = Vector3.Lerp(transform.localPosition, m_VADSPosition, m_fADSTime * Time.deltaTime);
+                HUDManager.Instance.DisableAimReticle();
             }
             else
             {
                 m_fAimSmoothingTime = m_fAimSmoothingTimeHip;
                 transform.localPosition = Vector3.Lerp(transform.localPosition, m_VOriginalPosition, m_fADSTime * Time.deltaTime);
+                HUDManager.Instance.EnableAimReticle();
             }
         }
         

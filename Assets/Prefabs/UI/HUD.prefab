@@ -830,6 +830,7 @@ MonoBehaviour:
   - {fileID: 1060386540483634189}
   - {fileID: 1118203504744696672}
   m_bFireRateCheck: 0
+  m_aimReticule: {fileID: 2100095305543860401}
 --- !u!1 &7085400079383481927
 GameObject:
   m_ObjectHideFlags: 0
