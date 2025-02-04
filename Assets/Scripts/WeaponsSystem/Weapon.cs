@@ -75,6 +75,8 @@ namespace WeaponSystem
         private float m_kickbackTimer;
         private int m_CurrentAmmoInMag;
         [SerializeField] private int m_MaxAmmoInMag;
+
+        [SerializeField] private GameObject m_PIPRenderTexture;
         
         #region Properties
 
@@ -193,6 +195,10 @@ namespace WeaponSystem
                 m_fAimSmoothingTime = m_fAimSmoothingTimeADS;
                 transform.localPosition = Vector3.Lerp(transform.localPosition, m_VADSPosition, m_fADSTime * Time.deltaTime);
                 HUDManager.Instance.DisableAimReticle();
+                if (m_Type == WeaponType.Sniper || m_Type == WeaponType.DMR)
+                {
+                    
+                }
             }
             else
             {
