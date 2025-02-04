@@ -441,22 +441,25 @@ namespace WeaponSystem
 
         private void SetScopeZoom()
         {
-            
-            if (m_Player.PlayerActions.Player.SwitchZoom.ReadValue<float>() > 0)
+            if (m_bIsAiming)
             {
-                /*float testValue = 0;
-                testValue++;
-                Debug.Log(testValue);*/
-                m_fOriginalZoom++;
-                m_ScopeCamera.fieldOfView = m_fOriginalZoom;
-            }
-            else if (m_Player.PlayerActions.Player.SwitchZoom.ReadValue<float>() < 0)
-            {
-                /*float testValue = 0;
-                testValue--;
-                Debug.Log(testValue);*/
-                m_fOriginalZoom--;
-                m_ScopeCamera.fieldOfView = m_fOriginalZoom;
+                if (m_Player.PlayerActions.Player.SwitchZoom.ReadValue<float>() > 0)
+                {
+                    /*float testValue = 0;
+                    testValue++;
+                    Debug.Log(testValue);*/
+                    m_fOriginalZoom--;
+                    m_ScopeCamera.fieldOfView = m_fOriginalZoom;
+                }
+                else if (m_Player.PlayerActions.Player.SwitchZoom.ReadValue<float>() < 0)
+                {
+                    /*float testValue = 0;
+                    testValue--;
+                    Debug.Log(testValue);*/
+                    m_fOriginalZoom++;
+                    m_ScopeCamera.fieldOfView = m_fOriginalZoom;
+                }
+                else return;
             }
             else return;
         }
