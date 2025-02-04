@@ -188,7 +188,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.08
+  near clip plane: 0.04
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -470,7 +470,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: aa48c4322edf3904e83f7696a188f37e, type: 3}
       propertyPath: m_VADSPosition.z
-      value: 0.33
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: aa48c4322edf3904e83f7696a188f37e, type: 3}
       propertyPath: m_fCircleRadiusBase
@@ -571,20 +571,32 @@ PrefabInstance:
       value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: acd50935b7df2cc4bb349a0d09de1ca3, type: 3}
+      propertyPath: m_WeaponName
+      value: P226
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470566525184341646, guid: acd50935b7df2cc4bb349a0d09de1ca3, type: 3}
       propertyPath: m_MaxAmmoInMag
       value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: acd50935b7df2cc4bb349a0d09de1ca3, type: 3}
       propertyPath: m_VADSPosition.y
-      value: -0.05
+      value: -0.075
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: acd50935b7df2cc4bb349a0d09de1ca3, type: 3}
       propertyPath: m_VADSPosition.z
-      value: 0.45
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: acd50935b7df2cc4bb349a0d09de1ca3, type: 3}
       propertyPath: m_aimLayer.m_Bits
       value: 123
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470566525184341646, guid: acd50935b7df2cc4bb349a0d09de1ca3, type: 3}
+      propertyPath: m_fCircleAimRadius
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470566525184341646, guid: acd50935b7df2cc4bb349a0d09de1ca3, type: 3}
+      propertyPath: m_fCircleRadiusBase
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -686,7 +698,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: 3136bdb869d9bfb4e97e2cc683aff512, type: 3}
       propertyPath: m_VADSPosition.z
-      value: 0.33
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: 3136bdb869d9bfb4e97e2cc683aff512, type: 3}
       propertyPath: m_fCircleRadiusBase
@@ -753,6 +765,18 @@ PrefabInstance:
     - target: {fileID: 4468049365952061638, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6495098742600117502, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6495098742600117502, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6495098742600117502, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6496614727245988770, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
       propertyPath: m_Layer
@@ -840,7 +864,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
       propertyPath: m_VADSPosition.z
-      value: 0.33
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
       propertyPath: m_aimLayer.m_Bits
@@ -966,7 +990,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: 7ee4e9bedc143de4fafdc5e69b502dc3, type: 3}
       propertyPath: m_VADSPosition.z
-      value: 0.1
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: 7ee4e9bedc143de4fafdc5e69b502dc3, type: 3}
       propertyPath: m_fCircleRadiusBase

@@ -391,6 +391,7 @@ MonoBehaviour:
   projectile: {fileID: 3690487023071457683, guid: 6623f48c9d3cf454a859a26f3378509a, type: 3}
   m_AmmoInventory: {fileID: 0}
   m_muzzlePoint: {fileID: 786883037202472340}
+  m_fADSTime: 10
   m_VADSPosition: {x: 0, y: 0, z: 0}
   m_MuzzleFlash: {fileID: 4378911981913536610}
   m_WeaponName: M4
@@ -401,7 +402,8 @@ MonoBehaviour:
   m_Type: 0
   m_fCircleRadiusBase: 1
   m_fCircleAimRadius: 0.1
-  m_fAimSmoothingTime: 0.5
+  m_fAimSmoothingTimeHip: 0.5
+  m_fAimSmoothingTimeADS: 0.25
   m_bIsAiming: 0
   m_bIsFiring: 0
   m_fAimPointRaycastDistance: 700
@@ -823,6 +825,18 @@ PrefabInstance:
       value: SM_Wep_Crosshair_03
       objectReference: {fileID: 0}
     - target: {fileID: 4276726312041136, guid: f0fe04b33f8be704a82e360f8ae933cc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4276726312041136, guid: f0fe04b33f8be704a82e360f8ae933cc, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4276726312041136, guid: f0fe04b33f8be704a82e360f8ae933cc, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4276726312041136, guid: f0fe04b33f8be704a82e360f8ae933cc, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
       objectReference: {fileID: 0}
@@ -832,7 +846,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4276726312041136, guid: f0fe04b33f8be704a82e360f8ae933cc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.065
+      value: -0.015
       objectReference: {fileID: 0}
     - target: {fileID: 4276726312041136, guid: f0fe04b33f8be704a82e360f8ae933cc, type: 3}
       propertyPath: m_LocalRotation.w
@@ -861,6 +875,10 @@ PrefabInstance:
     - target: {fileID: 4276726312041136, guid: f0fe04b33f8be704a82e360f8ae933cc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4276726312041136, guid: f0fe04b33f8be704a82e360f8ae933cc, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
