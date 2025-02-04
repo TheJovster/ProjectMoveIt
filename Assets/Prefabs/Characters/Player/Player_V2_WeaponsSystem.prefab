@@ -964,6 +964,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Weapon
       objectReference: {fileID: 0}
+    - target: {fileID: 4813169466006519957, guid: 7ee4e9bedc143de4fafdc5e69b502dc3, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7063493300781308227, guid: 7ee4e9bedc143de4fafdc5e69b502dc3, type: 3}
       propertyPath: m_Layer
       value: 8
