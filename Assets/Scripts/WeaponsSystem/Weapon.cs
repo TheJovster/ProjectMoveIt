@@ -450,6 +450,10 @@ namespace WeaponSystem
                     Debug.Log(testValue);*/
                     m_fOriginalZoom--;
                     m_ScopeCamera.fieldOfView = m_fOriginalZoom;
+                    if (m_ScopeCamera.fieldOfView <= m_fMinScopeFOV)
+                    {
+                        m_ScopeCamera.fieldOfView = m_fMinScopeFOV;
+                    }
                 }
                 else if (m_Player.PlayerActions.Player.SwitchZoom.ReadValue<float>() < 0)
                 {
@@ -458,6 +462,10 @@ namespace WeaponSystem
                     Debug.Log(testValue);*/
                     m_fOriginalZoom++;
                     m_ScopeCamera.fieldOfView = m_fOriginalZoom;
+                    if (m_ScopeCamera.fieldOfView >= m_fMaxScopeFOV)
+                    {
+                        m_ScopeCamera.fieldOfView = m_fMaxScopeFOV;
+                    }
                 }
                 else return;
             }
