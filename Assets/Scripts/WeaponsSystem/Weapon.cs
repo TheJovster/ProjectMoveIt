@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using System.Security.Cryptography.X509Certificates;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -77,7 +78,10 @@ namespace WeaponSystem
         [SerializeField] private int m_MaxAmmoInMag;
 
         [SerializeField] private GameObject m_PIPRenderTexture;
-        
+        [SerializeField] private Camera m_ScopeCamera;
+        [SerializeField, Range(1.0f, 60.0f)] private float m_fMinScopeFOV = 10.0f;
+        [SerializeField, Range(60.0f, 120.0f)] private float m_fMaxScopeFOV = 60.0f;
+        private float m_fOriginalZoom;
         #region Properties
 
         public Transform MuzzlePoint => m_muzzlePoint;
@@ -121,6 +125,12 @@ namespace WeaponSystem
             HUDManager.Instance.UpdateFireRateImage(m_bIsFullAuto);
             m_fCircleAimRadiusOriginal = m_fCircleAimRadius;
             m_fCircleRadiusActualOriginal = m_fCircleRadiusBase;
+            if (m_ScopeCamera)
+            {
+                m_fOriginalZoom = 60.0f;
+                m_ScopeCamera.fieldOfView = m_fOriginalZoom;
+            }
+
         }
         
         private void Update()
@@ -154,7 +164,12 @@ namespace WeaponSystem
             }
             
             SetADS();
-            
+            if (m_ScopeCamera)
+            {
+                m_ScopeCamera?.transform.LookAt(m_aimPoint.position);
+                SetScopeZoom();
+            }
+
         }
 
         private void SetIsAiming()
@@ -422,6 +437,28 @@ namespace WeaponSystem
                 HUDManager.Instance.UpdateMaxAmmo((m_AmmoInventory.GetAmmoCountByType(m_Type)));
             }
 
+        }
+
+        private void SetScopeZoom()
+        {
+            
+            if (m_Player.PlayerActions.Player.SwitchZoom.ReadValue<float>() > 0)
+            {
+                /*float testValue = 0;
+                testValue++;
+                Debug.Log(testValue);*/
+                m_fOriginalZoom++;
+                m_ScopeCamera.fieldOfView = m_fOriginalZoom;
+            }
+            else if (m_Player.PlayerActions.Player.SwitchZoom.ReadValue<float>() < 0)
+            {
+                /*float testValue = 0;
+                testValue--;
+                Debug.Log(testValue);*/
+                m_fOriginalZoom--;
+                m_ScopeCamera.fieldOfView = m_fOriginalZoom;
+            }
+            else return;
         }
 
         private void Kickback()

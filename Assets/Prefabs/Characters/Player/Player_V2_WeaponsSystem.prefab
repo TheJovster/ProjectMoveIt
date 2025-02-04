@@ -706,7 +706,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: 3136bdb869d9bfb4e97e2cc683aff512, type: 3}
       propertyPath: m_VADSPosition.y
-      value: -0.2
+      value: -0.215
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: 3136bdb869d9bfb4e97e2cc683aff512, type: 3}
       propertyPath: m_VADSPosition.z
@@ -1018,7 +1018,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: 7ee4e9bedc143de4fafdc5e69b502dc3, type: 3}
       propertyPath: m_VADSPosition.z
-      value: 0.05
+      value: 0.075
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: 7ee4e9bedc143de4fafdc5e69b502dc3, type: 3}
       propertyPath: m_fCircleRadiusBase
@@ -1027,6 +1027,18 @@ PrefabInstance:
     - target: {fileID: 8470566525184341646, guid: 7ee4e9bedc143de4fafdc5e69b502dc3, type: 3}
       propertyPath: m_fAccuracyCoefficient
       value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159250603428941632, guid: 7ee4e9bedc143de4fafdc5e69b502dc3, type: 3}
+      propertyPath: orthographic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159250603428941632, guid: 7ee4e9bedc143de4fafdc5e69b502dc3, type: 3}
+      propertyPath: field of view
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159250603428941632, guid: 7ee4e9bedc143de4fafdc5e69b502dc3, type: 3}
+      propertyPath: m_FOVAxisMode
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1056,15 +1068,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4059482867916506, guid: e69527996e0d4464f86a17588b7e8e36, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 4059482867916506, guid: e69527996e0d4464f86a17588b7e8e36, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 4059482867916506, guid: e69527996e0d4464f86a17588b7e8e36, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 4059482867916506, guid: e69527996e0d4464f86a17588b7e8e36, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1110,6 +1122,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 23289047466176114, guid: e69527996e0d4464f86a17588b7e8e36, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b5b3b269871205f48969fab7a80c18e0, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
