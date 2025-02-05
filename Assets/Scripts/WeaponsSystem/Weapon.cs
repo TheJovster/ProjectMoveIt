@@ -413,7 +413,7 @@ namespace WeaponSystem
                     }
                 }*/
             }
-            else if (DistanceToAimPoint() < 5.0f)
+            else if (DistanceToAimPoint() < 5.0f) //arbitrary number, need to do a calc
             {
                 //do magic here to prevent me from shooting
                 //OH! Maybe add cover like in Battlefield 4? 
@@ -421,7 +421,7 @@ namespace WeaponSystem
                 //peek out and
                 //can shoot
                 //else 
-                m_aimPoint.position = direction + Vector3.right;
+                /*m_aimPoint.position = direction + Vector3.right;*/
                 //can't shoot
             }
             else
