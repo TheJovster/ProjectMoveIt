@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 
 namespace WeaponSystem
 {
@@ -45,13 +46,9 @@ namespace WeaponSystem
             }
             else if (!m_bShouldFadeOut)
             {
-                //fade out
+                FadeOut();
             }
             
-            if (Mathf.Approximately(m_FadeImage.color.a, 1))
-            {
-                m_bShouldFadeIn = false;
-            }
         }
 
         public void UpdateAmmoInMag(int ammoInMag)
@@ -103,6 +100,11 @@ namespace WeaponSystem
         {
             m_bShouldFadeIn = value;
         }
+
+        public void SetFadeOut(bool value)
+        {
+            m_bShouldFadeOut = value;
+        }
         
         private void FadeIn()
         {
@@ -113,7 +115,18 @@ namespace WeaponSystem
                 currentColor.a = 0.0f;
             }
             m_FadeImage.color = currentColor;
-            
+        }
+
+        private void FadeOut()
+        {
+            Color currentColor = m_FadeImage.color;
+            currentColor.a = Mathf.Lerp(currentColor.a, 1.0f, m_fFadeTime * Time.deltaTime);
+            if (Mathf.Approximately(currentColor.a, 1.0f))
+            {
+                currentColor.a = 1.0f;
+            }
+
+            m_FadeImage.color = currentColor;
         }
     }
 }

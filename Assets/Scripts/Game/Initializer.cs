@@ -17,15 +17,7 @@ public class Initializer : MonoBehaviour
     {
         GameObject gameinstance = Instantiate(m_GameManager, transform.position, quaternion.identity);
         GameObject hudInstance = Instantiate(m_HUDManager, transform.position, quaternion.identity);
-        GameObject soundInstance = Instantiate(m_SoundManager, transform.position, quaternion.identity);
-        GameObject levelInstance = Instantiate(m_LevelManager, transform.position, quaternion.identity);
-        if (gameinstance 
-            && 
-            hudInstance
-            && 
-            soundInstance
-            &&
-            levelInstance)
+        if (gameinstance && hudInstance)
         {
             Destroy(this.gameObject);
         }
