@@ -105,6 +105,8 @@ namespace WeaponSystem
         public string WeaponName => m_WeaponName;
 
         public bool IsAiming => m_bIsAiming;
+
+        public Transform AimPoint => m_aimPoint;
         
         #endregion'
 
@@ -411,6 +413,17 @@ namespace WeaponSystem
                     }
                 }*/
             }
+            else if (DistanceToAimPoint() < 5.0f)
+            {
+                //do magic here to prevent me from shooting
+                //OH! Maybe add cover like in Battlefield 4? 
+                //when aiming
+                //peek out and
+                //can shoot
+                //else 
+                m_aimPoint.position = direction + Vector3.right;
+                //can't shoot
+            }
             else
             {
                 // Go back to original direction if no hit detected
@@ -489,19 +502,9 @@ namespace WeaponSystem
             else return;
         }
 
-        private void Kickback()
+        public float DistanceToAimPoint()
         {
-            Debug.Log("Kickback triggered");
-            
-        }
-
-        private IEnumerator KickbackCoroutine()
-        {
-            //maybe just be lazy and use a coroutine?
-            //I know there's a lot of overhead
-            //maybe use an async operation?
-            //I have no clue, actually?
-            yield return new WaitForSeconds(0.5f);
+            return Vector3.Distance(m_Player.transform.position, m_aimPoint.position);
         }
     }
 }
