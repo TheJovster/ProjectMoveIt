@@ -22,8 +22,6 @@ public class CircularQuadMeshGeneration : MonoBehaviour
 
     public void GenerateCircularQuad()
     {
-        Debug.Log("Generating Circular Quad");
-
         MeshFilter meshFilter = GetComponent<MeshFilter>();
         Mesh mesh = new Mesh();
 
@@ -73,12 +71,4 @@ public class CircularQuadMeshGeneration : MonoBehaviour
         }
         mesh.RecalculateBounds();
 ;    }
-    
-#if UNITY_EDITOR
-    private void OnValidate()
-    {
-        /*if (Application.isPlaying) return;
-        GenerateCircularQuad();*/
-    }
-#endif
 }

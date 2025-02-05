@@ -243,11 +243,7 @@ namespace WeaponSystem
                 m_CharacterController.Move(moveDirection * (SprintSpeed * Time.deltaTime));
             }
         }
-
         
-
-
-
     // Visalization
         /*private void OnDrawGizmosSelected()
         {
