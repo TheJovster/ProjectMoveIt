@@ -9,6 +9,7 @@ namespace WeaponSystem
     public class HUDManager : MonoBehaviour
     {
         public static HUDManager Instance;
+        private bool m_bIsLoading = true;
         private void OnEnable()
         {
             if (Instance == null)
@@ -27,6 +28,31 @@ namespace WeaponSystem
         [SerializeField] private List<Image> m_FireRateImages = new List<Image>();
         [SerializeField] private bool m_bFireRateCheck;
         [SerializeField] private GameObject m_aimReticule;
+
+        
+        [Header("Fade In/Out")]
+        [SerializeField] private Image m_FadeImage;
+        [SerializeField] private float m_fFadeTime = 0.5f;
+
+        private bool m_bShouldFadeIn = false;
+        private bool m_bShouldFadeOut = false;
+
+        private void Update()
+        {
+            if (m_bShouldFadeIn)
+            {
+                FadeIn();
+            }
+            else if (!m_bShouldFadeOut)
+            {
+                //fade out
+            }
+            
+            if (Mathf.Approximately(m_FadeImage.color.a, 1))
+            {
+                m_bShouldFadeIn = false;
+            }
+        }
 
         public void UpdateAmmoInMag(int ammoInMag)
         {
@@ -71,6 +97,23 @@ namespace WeaponSystem
         public void DisableAimReticle()
         {
             m_aimReticule.SetActive(false);
+        }
+
+        public void SetFadeIn(bool value)
+        {
+            m_bShouldFadeIn = value;
+        }
+        
+        private void FadeIn()
+        {
+            Color currentColor = m_FadeImage.color;
+            currentColor.a = Mathf.Lerp(currentColor.a, 0, m_fFadeTime * Time.deltaTime);
+            if (Mathf.Approximately(currentColor.a, 0))
+            {
+                currentColor.a = 0.0f;
+            }
+            m_FadeImage.color = currentColor;
+            
         }
     }
 }
