@@ -314,7 +314,11 @@ MonoBehaviour:
   m_fMaxLookUpValue: 60
   m_fRotationSpeed: 30
   m_weapon: {fileID: 769407982216464940}
-  <MoveSpeed>k__BackingField: 10
+  m_fMouseSensitivity: 1
+  m_fMouseScopedSensitivity: 0.3
+  m_fWalkSpeedModifier: 0.5
+  <MoveSpeed>k__BackingField: 12
+  <SprintSpeed>k__BackingField: 24
 --- !u!143 &4641367519115807856
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1017,6 +1021,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6857646963918435650}
     - target: {fileID: 8470566525184341646, guid: 7ee4e9bedc143de4fafdc5e69b502dc3, type: 3}
+      propertyPath: m_fMaxScopeFOV
+      value: 160
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470566525184341646, guid: 7ee4e9bedc143de4fafdc5e69b502dc3, type: 3}
+      propertyPath: m_fMinScopeFOV
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470566525184341646, guid: 7ee4e9bedc143de4fafdc5e69b502dc3, type: 3}
       propertyPath: m_VADSPosition.y
       value: -0.2175
       objectReference: {fileID: 0}
@@ -1032,17 +1044,29 @@ PrefabInstance:
       propertyPath: m_fAccuracyCoefficient
       value: 0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 8470566525184341646, guid: 7ee4e9bedc143de4fafdc5e69b502dc3, type: 3}
+      propertyPath: m_fAimSmoothingTimeADS
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470566525184341646, guid: 7ee4e9bedc143de4fafdc5e69b502dc3, type: 3}
+      propertyPath: m_fMagnificationFactor
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 9159250603428941632, guid: 7ee4e9bedc143de4fafdc5e69b502dc3, type: 3}
       propertyPath: orthographic
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9159250603428941632, guid: 7ee4e9bedc143de4fafdc5e69b502dc3, type: 3}
       propertyPath: field of view
-      value: 35.983395
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 9159250603428941632, guid: 7ee4e9bedc143de4fafdc5e69b502dc3, type: 3}
       propertyPath: m_FOVAxisMode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159250603428941632, guid: 7ee4e9bedc143de4fafdc5e69b502dc3, type: 3}
+      propertyPath: m_FocalLength
+      value: 10.392307
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

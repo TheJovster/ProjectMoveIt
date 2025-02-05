@@ -23,8 +23,7 @@ namespace WeaponSystem
 
         [SerializeField,Range (0.001f, 1.0f)] private float m_fMouseSensitivity = 1.0f;
         [SerializeField,Range (0.001f, 1.0f)] private float m_fMouseScopedSensitivity = 0.5f;
-        
-        [SerializeField]
+        [SerializeField, Range(0.1f, 1.0f)] private float m_fWalkSpeedModifier = 0.5f;
         private Vector3 m_weaponAimPos =>
             new Vector3(0.0f, m_weaponOriginalPos.y, m_weaponOriginalPos.z); //serialized for test purposes
 
@@ -36,13 +35,15 @@ namespace WeaponSystem
         public static PlayerController Instance;
 
         public WeaponInventory WeaponInventory => m_WeaponInventory;
+
+        public bool IsSprinting => m_InputActions.Player.Sprint.IsPressed();
         
         public Camera Camera => m_Camera;
 
         public InputSystem_Actions PlayerActions => m_InputActions;
         
         [field: SerializeField] public float MoveSpeed { get; private set; }
-        
+        [field: SerializeField] public float SprintSpeed { get; private set; }
         #endregion Properties
 
         
@@ -224,7 +225,23 @@ namespace WeaponSystem
             moveDirection.Normalize();
 
             //Apply to Movement
-            m_CharacterController.Move(moveDirection * MoveSpeed * Time.deltaTime);
+            if (m_WeaponInventory.CurrentWeapon.IsAiming)
+            {
+                m_CharacterController.Move(moveDirection * (MoveSpeed * m_fWalkSpeedModifier * Time.deltaTime));
+            }
+            else
+            {
+                m_CharacterController.Move(moveDirection * (MoveSpeed * Time.deltaTime));
+            }
+
+            if (!m_WeaponInventory.CurrentWeapon.IsAiming && !IsSprinting)
+            {
+                m_CharacterController.Move(moveDirection * (MoveSpeed * Time.deltaTime));
+            }
+            else if (!m_WeaponInventory.CurrentWeapon.IsAiming && IsSprinting)
+            {
+                m_CharacterController.Move(moveDirection * (SprintSpeed * Time.deltaTime));
+            }
         }
 
         

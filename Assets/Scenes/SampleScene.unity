@@ -2602,41 +2602,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 326091046833375828, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
-      propertyPath: m_fMaxScopeFOV
-      value: 160
-      objectReference: {fileID: 0}
-    - target: {fileID: 326091046833375828, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
-      propertyPath: m_fMinScopeFOV
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 326091046833375828, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
-      propertyPath: m_fAimSmoothingTimeADS
-      value: 0.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 326091046833375828, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
-      propertyPath: m_fMagnificationFactor
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 913559007503684899, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
-      propertyPath: m_fMouseScopedSensitivity
-      value: 0.3
-      objectReference: {fileID: 0}
     - target: {fileID: 913559007503684899, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
       propertyPath: <MoveSpeed>k__BackingField
-      value: 12
+      value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 1015505164594262938, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
-      propertyPath: field of view
-      value: 60
+    - target: {fileID: 913559007503684899, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
+      propertyPath: <SprintSpeed>k__BackingField
+      value: 18
       objectReference: {fileID: 0}
-    - target: {fileID: 1015505164594262938, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
-      propertyPath: m_FocalLength
-      value: 10.392307
-      objectReference: {fileID: 0}
-    - target: {fileID: 1015505164594262938, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
-      propertyPath: m_projectionMatrixMode
-      value: 1
+    - target: {fileID: 1656453425869981595, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
+      propertyPath: m_fCircleRadiusBase
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 3729030333217012815, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
       propertyPath: m_Mesh

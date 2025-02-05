@@ -252,7 +252,15 @@ namespace WeaponSystem
                     m_timeSinceStarted = m_fMaxTimeSinceStarted;
                 }
                 m_fCircleAimRadius += m_timeSinceStarted * Time.deltaTime;
-                m_fCircleRadiusActual += m_TimeSinceLastShot * Time.deltaTime;
+                m_fCircleRadiusActual += m_timeSinceStarted * Time.deltaTime;
+                if (m_fCircleAimRadius >= 1.0f)
+                {
+                    m_fCircleAimRadius = 1.0f;
+                }
+                /*if (m_fCircleRadiusActual >= 2.0f)
+                {
+                    m_fCircleAimRadius = 2.0f;
+                }*/
             }
             else if (m_bFireButtonPressed && !m_bIsFullAuto && m_CurrentAmmoInMag > 0)
             {
@@ -313,10 +321,12 @@ namespace WeaponSystem
                 //normals
                 Vector3 upDirection = tangent;
                 Vector3 rightDirection = Vector3.Cross(normal, upDirection);
-                float randomRadius = UnityEngine.Random.Range(0f, m_fCircleRadiusActual);
-
+                /*float randomRadius = UnityEngine.Random.Range(-m_fCircleRadiusActual, m_fCircleRadiusActual);
                 Vector3 randomPoint = center + upDirection * randomRadius;
-                randomPoint += rightDirection * UnityEngine.Random.Range(-m_fCircleRadiusActual, m_fCircleRadiusActual);
+                randomPoint += rightDirection * UnityEngine.Random.Range(-m_fCircleRadiusActual, m_fCircleRadiusActual);*/
+                float randomRadius = UnityEngine.Random.Range(-m_fCircleAimRadius, m_fCircleAimRadius);
+                Vector3 randomPoint = center + upDirection * randomRadius;
+                randomPoint += rightDirection * UnityEngine.Random.Range(-m_fCircleAimRadius, m_fCircleAimRadius); 
 
                 // Maintain the same depth as the center point
                 //return new Vector3(x, y, center.z);
