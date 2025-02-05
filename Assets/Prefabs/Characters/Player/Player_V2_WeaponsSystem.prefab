@@ -317,8 +317,8 @@ MonoBehaviour:
   m_fMouseSensitivity: 1
   m_fMouseScopedSensitivity: 0.3
   m_fWalkSpeedModifier: 0.5
-  <MoveSpeed>k__BackingField: 12
-  <SprintSpeed>k__BackingField: 24
+  <MoveSpeed>k__BackingField: 8
+  <SprintSpeed>k__BackingField: 18
 --- !u!143 &4641367519115807856
 CharacterController:
   m_ObjectHideFlags: 0
@@ -912,7 +912,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
       propertyPath: m_fCircleRadiusBase
-      value: 0.15
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8470566525184341646, guid: 96ae764c78ec51a408d7423c3ff07a2c, type: 3}
       propertyPath: m_kickbackAmplitude
