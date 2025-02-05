@@ -15,7 +15,7 @@ public class CircularQuadMeshGeneration : MonoBehaviour
     [SerializeField] private Material baseMaterial;
     [SerializeField] private Material renderTextureMaterial;
 
-    private void Start()
+    private void OnEnable()
     {
         GenerateCircularQuad();
     }
@@ -77,8 +77,8 @@ public class CircularQuadMeshGeneration : MonoBehaviour
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        if (Application.isPlaying) return;
-        GenerateCircularQuad();
+        /*if (Application.isPlaying) return;
+        GenerateCircularQuad();*/
     }
 #endif
 }

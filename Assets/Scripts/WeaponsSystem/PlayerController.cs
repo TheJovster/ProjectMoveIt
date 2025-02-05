@@ -20,6 +20,9 @@ namespace WeaponSystem
         [SerializeField] private float m_fRotationSpeed = 30.0f;
         [SerializeField] private Transform m_weapon;
         private Vector3 m_weaponOriginalPos;
+
+        [SerializeField,Range (0.001f, 1.0f)] private float m_fMouseSensitivity = 1.0f;
+        [SerializeField,Range (0.001f, 1.0f)] private float m_fMouseScopedSensitivity = 0.5f;
         
         [SerializeField]
         private Vector3 m_weaponAimPos =>
@@ -149,7 +152,16 @@ namespace WeaponSystem
             float fClampedLookUpValue = Mathf.Clamp(m_fCurrentLookUpValue, m_fMinLookUpValue, m_fMaxLookUpValue);
 
             //apply to camera
-            m_Camera.transform.localRotation = Quaternion.Euler(fClampedLookUpValue, 0.0f, 0.0f);
+            
+            //check if weapon is aiming
+            if (!m_WeaponInventory.CurrentWeapon.IsAiming)
+            {
+                m_Camera.transform.localRotation = Quaternion.Euler(fClampedLookUpValue * m_fMouseSensitivity, 0.0f, 0.0f);
+            }
+            else
+            {
+                m_Camera.transform.localRotation = Quaternion.Euler(fClampedLookUpValue * m_fMouseScopedSensitivity, 0.0f, 0.0f);
+            }
         }
 
         private void RotatePlayer()
@@ -157,7 +169,14 @@ namespace WeaponSystem
             //get mouse delta
             Vector2 vMouseDelta = m_InputActions.Player.Look.ReadValue<Vector2>();
             //apply to transform
-            transform.Rotate(0.0f, vMouseDelta.x * m_fRotationSpeed * Time.deltaTime, 0.0f);
+            if(!m_WeaponInventory.CurrentWeapon.IsAiming)
+            {
+                transform.Rotate(0.0f, vMouseDelta.x * m_fRotationSpeed * m_fMouseSensitivity * Time.deltaTime, 0.0f);
+            }
+            else
+            {
+                transform.Rotate(0.0f, vMouseDelta.x * m_fRotationSpeed * m_fMouseScopedSensitivity * Time.deltaTime, 0.0f);
+            }
         }
 
 

@@ -79,10 +79,14 @@ namespace WeaponSystem
 
         [SerializeField] private GameObject m_PIPRenderTexture;
         [SerializeField] private Camera m_ScopeCamera;
-        [SerializeField, Range(1.0f, 60.0f)] private float m_fMinScopeFOV = 10.0f;
-        [SerializeField, Range(60.0f, 120.0f)] private float m_fMaxScopeFOV = 60.0f;
+        [SerializeField, Range(1.0f, 60.0f)] private float m_fMinScopeFOV = 5.0f;
+        [SerializeField, Range(5.0f, 180.0f)] private float m_fMaxScopeFOV = 150.0f;
+        [SerializeField, Range (5.0f, 30.0f)] private float m_fMagnificationFactor = 2.0f;
         private float m_fOriginalZoom;
         #region Properties
+
+        private float m_fMinMagnificationFactor = 5.0f; //it needs to correspond to the min value in the Range property for m_MagnificationFactor;
+        private float m_fMaxMagnificationFactor = 30.0f; //it needs to correspond to the max value in the Range property for m_MagnificationFactor;
 
         public Transform MuzzlePoint => m_muzzlePoint;
         
@@ -99,6 +103,8 @@ namespace WeaponSystem
         public WeaponType Type => m_Type;
 
         public string WeaponName => m_WeaponName;
+
+        public bool IsAiming => m_bIsAiming;
         
         #endregion'
 
@@ -168,8 +174,10 @@ namespace WeaponSystem
             {
                 m_ScopeCamera?.transform.LookAt(m_aimPoint.position);
                 SetScopeZoom();
+                if (m_ScopeCamera.fieldOfView >= m_fMaxScopeFOV) m_ScopeCamera.fieldOfView = m_fMaxScopeFOV;
+                if (m_ScopeCamera.fieldOfView <= m_fMinScopeFOV) m_ScopeCamera.fieldOfView = m_fMinScopeFOV;
             }
-
+            
         }
 
         private void SetIsAiming()
@@ -212,7 +220,10 @@ namespace WeaponSystem
                 HUDManager.Instance.DisableAimReticle();
                 if (m_Type == WeaponType.Sniper || m_Type == WeaponType.DMR)
                 {
-                    
+                    if (m_ScopeCamera)
+                    {
+                        m_ScopeCamera.fieldOfView = m_fOriginalZoom / m_fMagnificationFactor;
+                    }
                 }
             }
             else
@@ -220,6 +231,10 @@ namespace WeaponSystem
                 m_fAimSmoothingTime = m_fAimSmoothingTimeHip;
                 transform.localPosition = Vector3.Lerp(transform.localPosition, m_VOriginalPosition, m_fADSTime * Time.deltaTime);
                 HUDManager.Instance.EnableAimReticle();
+                if (m_ScopeCamera)
+                {
+                    m_ScopeCamera.fieldOfView = m_fOriginalZoom;
+                }
             }
         }
         
@@ -445,26 +460,18 @@ namespace WeaponSystem
             {
                 if (m_Player.PlayerActions.Player.SwitchZoom.ReadValue<float>() > 0)
                 {
-                    /*float testValue = 0;
-                    testValue++;
-                    Debug.Log(testValue);*/
-                    m_fOriginalZoom--;
-                    m_ScopeCamera.fieldOfView = m_fOriginalZoom;
-                    if (m_ScopeCamera.fieldOfView <= m_fMinScopeFOV)
+                    m_fMagnificationFactor++;
+                    if (m_fMagnificationFactor >= m_fMaxMagnificationFactor)
                     {
-                        m_ScopeCamera.fieldOfView = m_fMinScopeFOV;
+                        m_fMagnificationFactor = m_fMaxMagnificationFactor;
                     }
                 }
                 else if (m_Player.PlayerActions.Player.SwitchZoom.ReadValue<float>() < 0)
                 {
-                    /*float testValue = 0;
-                    testValue--;
-                    Debug.Log(testValue);*/
-                    m_fOriginalZoom++;
-                    m_ScopeCamera.fieldOfView = m_fOriginalZoom;
-                    if (m_ScopeCamera.fieldOfView >= m_fMaxScopeFOV)
+                    m_fMagnificationFactor--;
+                    if (m_fMagnificationFactor <= m_fMinMagnificationFactor)
                     {
-                        m_ScopeCamera.fieldOfView = m_fMaxScopeFOV;
+                        m_fMagnificationFactor = m_fMinMagnificationFactor;
                     }
                 }
                 else return;
