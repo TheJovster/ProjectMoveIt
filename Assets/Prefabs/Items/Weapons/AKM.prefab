@@ -75,6 +75,11 @@ MonoBehaviour:
     m_Bits: 123
   m_aimPoint: {fileID: 0}
   m_MaxAmmoInMag: 30
+  m_PIPRenderTexture: {fileID: 0}
+  m_ScopeCamera: {fileID: 0}
+  m_fMinScopeFOV: 5
+  m_fMaxScopeFOV: 150
+  m_fMagnificationFactor: 5
 --- !u!23 &376417008850939887
 MeshRenderer:
   m_ObjectHideFlags: 0

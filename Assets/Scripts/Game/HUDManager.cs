@@ -35,7 +35,7 @@ namespace WeaponSystem
         [SerializeField] private Image m_FadeImage;
         [SerializeField] private float m_fFadeTime = 0.5f;
 
-        private bool m_bShouldFadeIn = false;
+        private bool m_bShouldFadeIn = true;
         private bool m_bShouldFadeOut = false;
 
         private void Update()
@@ -106,7 +106,7 @@ namespace WeaponSystem
             m_bShouldFadeOut = value;
         }
         
-        private void FadeIn()
+        public void FadeIn()
         {
             Color currentColor = m_FadeImage.color;
             currentColor.a = Mathf.Lerp(currentColor.a, 0, m_fFadeTime * Time.deltaTime);
@@ -115,9 +115,13 @@ namespace WeaponSystem
                 currentColor.a = 0.0f;
             }
             m_FadeImage.color = currentColor;
+            if (currentColor.a == 1.0f && m_FadeImage.color.a == 1.0f) //possible loss of precision
+            {
+                m_bShouldFadeIn = false;
+            }
         }
 
-        private void FadeOut()
+        public void FadeOut()
         {
             Color currentColor = m_FadeImage.color;
             currentColor.a = Mathf.Lerp(currentColor.a, 1.0f, m_fFadeTime * Time.deltaTime);
@@ -125,8 +129,11 @@ namespace WeaponSystem
             {
                 currentColor.a = 1.0f;
             }
-
             m_FadeImage.color = currentColor;
+            if (currentColor.a == 0.0f && m_FadeImage.color.a == 0)
+            {
+                m_bShouldFadeOut = false;
+            }
         }
     }
 }

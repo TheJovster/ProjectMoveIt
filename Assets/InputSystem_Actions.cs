@@ -152,6 +152,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""TestButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""833672fb-1d3d-42fe-b808-7aca083d48e3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -660,6 +669,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""SwitchZoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3a296b3-2c14-4c5a-ad53-d246cef2effa"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TestButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1259,6 +1279,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_SwitchWeapon = m_Player.FindAction("SwitchWeapon", throwIfNotFound: true);
         m_Player_SwitchZoom = m_Player.FindAction("SwitchZoom", throwIfNotFound: true);
+        m_Player_TestButton = m_Player.FindAction("TestButton", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1352,6 +1373,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_SwitchWeapon;
     private readonly InputAction m_Player_SwitchZoom;
+    private readonly InputAction m_Player_TestButton;
     public struct PlayerActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1370,6 +1392,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
         public InputAction @SwitchWeapon => m_Wrapper.m_Player_SwitchWeapon;
         public InputAction @SwitchZoom => m_Wrapper.m_Player_SwitchZoom;
+        public InputAction @TestButton => m_Wrapper.m_Player_TestButton;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1421,6 +1444,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @SwitchZoom.started += instance.OnSwitchZoom;
             @SwitchZoom.performed += instance.OnSwitchZoom;
             @SwitchZoom.canceled += instance.OnSwitchZoom;
+            @TestButton.started += instance.OnTestButton;
+            @TestButton.performed += instance.OnTestButton;
+            @TestButton.canceled += instance.OnTestButton;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1467,6 +1493,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @SwitchZoom.started -= instance.OnSwitchZoom;
             @SwitchZoom.performed -= instance.OnSwitchZoom;
             @SwitchZoom.canceled -= instance.OnSwitchZoom;
+            @TestButton.started -= instance.OnTestButton;
+            @TestButton.performed -= instance.OnTestButton;
+            @TestButton.canceled -= instance.OnTestButton;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1663,6 +1692,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnReload(InputAction.CallbackContext context);
         void OnSwitchWeapon(InputAction.CallbackContext context);
         void OnSwitchZoom(InputAction.CallbackContext context);
+        void OnTestButton(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

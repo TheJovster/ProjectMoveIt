@@ -147,6 +147,11 @@ MonoBehaviour:
     m_Bits: 0
   m_aimPoint: {fileID: 0}
   m_MaxAmmoInMag: 0
+  m_PIPRenderTexture: {fileID: 0}
+  m_ScopeCamera: {fileID: 0}
+  m_fMinScopeFOV: 10
+  m_fMaxScopeFOV: 60
+  m_fMagnificationFactor: 5
 --- !u!1 &7063493300781308227
 GameObject:
   m_ObjectHideFlags: 0

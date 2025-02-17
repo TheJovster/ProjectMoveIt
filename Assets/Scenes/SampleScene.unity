@@ -1115,7 +1115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3285980634808742154, guid: f75f1c2b860811844bcd35f653567824, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.63
+      value: -71.52
       objectReference: {fileID: 0}
     - target: {fileID: 3285980634808742154, guid: f75f1c2b860811844bcd35f653567824, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1123,7 +1123,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3285980634808742154, guid: f75f1c2b860811844bcd35f653567824, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.02
+      value: 97.11
       objectReference: {fileID: 0}
     - target: {fileID: 3285980634808742154, guid: f75f1c2b860811844bcd35f653567824, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2606,6 +2606,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 326091046833375828, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
+      propertyPath: m_fAimSmoothingTimeADS
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3729030333217012815, guid: 945f798bcd5bae44495b13dc3f65e1c9, type: 3}
       propertyPath: m_Mesh
       value: 

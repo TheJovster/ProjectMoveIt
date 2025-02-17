@@ -105,6 +105,24 @@ namespace WeaponSystem
             SwitchFireMode();
             ReloadWeapon();
             SwitchWeapon();
+            
+            //testing
+            /*if (m_InputActions.Player.TestButton.WasCompletedThisFrame())
+            {
+                bool pressed = false;
+                pressed = !pressed;
+
+                if (pressed)
+                {
+                    HUDManager.Instance.SetFadeOut(pressed);
+                    HUDManager.Instance.FadeOut();
+                }
+                else
+                {
+                    HUDManager.Instance.SetFadeIn(!pressed);
+                    HUDManager.Instance.FadeIn();
+                }
+            }*/
         }
 
         private void SwitchWeapon()

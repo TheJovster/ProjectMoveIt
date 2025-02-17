@@ -399,7 +399,7 @@ MonoBehaviour:
   m_bHasFireSelect: 1
   m_bIsFullAuto: 1
   m_fAccuracyCoefficient: 0.019
-  m_Type: 0
+  m_Type: 1
   m_fCircleRadiusBase: 1
   m_fCircleAimRadius: 0.1
   m_fAimSmoothingTimeHip: 0.5
@@ -412,6 +412,11 @@ MonoBehaviour:
     m_Bits: 0
   m_aimPoint: {fileID: 0}
   m_MaxAmmoInMag: 0
+  m_PIPRenderTexture: {fileID: 0}
+  m_ScopeCamera: {fileID: 0}
+  m_fMinScopeFOV: 5
+  m_fMaxScopeFOV: 150
+  m_fMagnificationFactor: 5
 --- !u!64 &4364234292082304947
 MeshCollider:
   m_ObjectHideFlags: 0

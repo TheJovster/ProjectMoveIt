@@ -12,6 +12,16 @@ namespace WeaponSystem
 
         [SerializeField] private Camera m_MainMenuCamera;
 
+        public enum GameState
+        {
+            MainMenu,
+            Loading,
+            Game,
+            Paused,
+            GameOver
+        }
+        
+
         private void Awake()
         {
             if (Instance == null)
@@ -41,6 +51,12 @@ namespace WeaponSystem
         {
             HUDManager.Instance.SetFadeIn(true);
             Debug.Log("Game Initialized");
+        }
+
+        public void Transition()
+        {
+            HUDManager.Instance.SetFadeOut(true);
+            HUDManager.Instance.FadeOut();
         }
     }
 
